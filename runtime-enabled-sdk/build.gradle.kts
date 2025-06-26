@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-    namespace = "com.runtimeenabled"
+    namespace = "com.michaeltchuang.walletsdk.runtimeenabled"
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 26
         compileSdk = 35
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -30,6 +30,8 @@ android {
 }
 
 dependencies {
+    api(libs.algosdk)
+    api(libs.algorand.go.mobile)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.kotlin.stdlib.jdk8)
     implementation(libs.androidx.lifecycle.common)
@@ -38,6 +40,11 @@ dependencies {
     implementation(libs.bundles.sdkruntimeBackcompat)
     implementation(libs.bundles.sdkruntimeUI)
     implementation(libs.sdkruntime.tools.tools)
+    // toml files don't support aar files yet
+    implementation("net.java.dev.jna:jna:5.17.0@aar")
+    implementation(libs.xhdwalletapi)
+    implementation(libs.kotlin.bip39)
+    implementation(libs.koin.android)
     ksp(libs.androidx.annotation)
     ksp(libs.sdkruntime.tools.apicompiler)
 }

@@ -4,8 +4,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath(libs.kotlin.gradlePlugin)
-        classpath(libs.ksp.gradlePlugin)
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.ksp.gradle.plugin)
     }
 }
 

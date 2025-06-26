@@ -1,9 +1,12 @@
 [versions]
+agp = "8.9.2"
+algoSdk = "2.8.2"
+algoGoMobilesdk = "1.0.1"
 activityCompose = "1.10.1"
 composeBom = "2025.06.00"
 kotlin = "2.1.20"
 ksp = "2.1.20-1.0.31"
-agp = "8.9.2"
+ktlint = "12.3.0"
 privacySandboxBuildPlugin = "1.0.0-alpha02"
 sdkRuntimeBackcompat = "1.0.0-alpha17"
 sdkRuntimeShim = "1.0.0-alpha13"
@@ -15,22 +18,24 @@ activityKtx = "1.10.1"
 lifecycleCommon = "2.8.7"
 coroutines = "1.7.3"
 annotation = "1.9.1"
+koin = "4.0.1-Beta1"
 kotlinStdlibJdk8 = "2.1.10"
+khex = "1.1.2"
+peraCompactDecimalFormat = "1.0.1"
+xhdwalletapi = "1.1.0"
+bip39 = "1.0.7"
 androidxTestRunner = "1.6.2"
 
-[plugins]
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
 [libraries]
-# Plugins
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 androidx-material3 = { module = "androidx.compose.material3:material3" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-ksp-gradlePlugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
+
+# Plugins
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
 # AndroidX Libraries
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -63,6 +68,23 @@ sdkruntime-tools-apicompiler = { module = "androidx.privacysandbox.tools:tools-a
 sdkruntime-tools-apigenerator = { module = "androidx.privacysandbox.tools:tools-apigenerator", version.ref = "sdkRuntimeShim" }
 sdkruntime-tools-apipackager = { module = "androidx.privacysandbox.tools:tools-apipackager", version.ref = "sdkRuntimeShim" }
 
+# Wallet SDK - Security / Blockchain / Crypto
+algosdk = { module = "com.algorand:algosdk", version.ref = "algoSdk" }
+algorand-go-mobile = { group = "io.github.perawallet", name = "algorand-go-mobile-sdk", version.ref = "algoGoMobilesdk" }
+khex = { module = "com.github.komputing:khex", version.ref = "khex" }
+pera-compact-decimal-format = { group = "io.github.perawallet", name = "peracompactdecimalformat", version.ref = "peraCompactDecimalFormat" }
+xhdwalletapi = { module = "foundation.algorand.xhdwalletapi:xhdwalletapi-android", version.ref = "xhdwalletapi" }
+kotlin-bip39 = { module = "cash.z.ecc.android:kotlin-bip39", version.ref = "bip39" }
+
+# Dependency Injection
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
+koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-viewmodel-navigation" }
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-core-viewmodel = { module = "io.insert-koin:koin-core-viewmodel" }
+
 [bundles]
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
 sdkruntimeRASDK = ["sdkruntime-backcompat-core", "sdkruntime-backcompat-client", "sdkruntime-ui-core", "sdkruntime-ui-client", "sdkruntime-activity-core", "sdkruntime-activity-client"]
@@ -70,3 +92,8 @@ sdkruntimeRESDK = ["sdkruntime-backcompat-core", "sdkruntime-backcompat-provider
 sdkruntimeUI = ["sdkruntime-ui-core", "sdkruntime-ui-client", "sdkruntime-ui-provider"]
 sdkruntimeActivity = ["sdkruntime-activity-core", "sdkruntime-activity-client", "sdkruntime-activity-provider"]
 sdkruntimeBackcompat = ["sdkruntime-backcompat-core", "sdkruntime-backcompat-client", "sdkruntime-backcompat-provider"]
+
+[plugins]
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }

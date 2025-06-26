@@ -4,11 +4,11 @@ plugins {
 
 android {
     compileSdk = 35
-    minSdk = 21
+    minSdk = 26
 
     bundle {
         // The package name is used to load this SDK in the SDK Runtime.
-        packageName = "com.runtimeenabled.sdk"
+        packageName = "com.michaeltchuang.walletsdk.runtimeenabled"
         setVersion(1, 0, 0)
 
         // Standard SDK Provider definition
@@ -17,7 +17,7 @@ android {
         // This is your custom implementation of this specific SDK's provider,
         // an implementation of based on your definition of @PrivacySandboxService,
         // which defines your entry-point.
-        compatSdkProviderClassName = "com.runtimeenabled.implementation.SdkProvider"
+        compatSdkProviderClassName = "com.michaeltchuang.walletsdk.runtimeenabled.runtime.data.service.SdkProvider"
     }
 }
 
