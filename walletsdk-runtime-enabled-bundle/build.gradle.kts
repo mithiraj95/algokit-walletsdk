@@ -20,7 +20,7 @@ android {
         compatSdkProviderClassName = "com.michaeltchuang.walletsdk.runtimeenabled.runtime.data.service.SdkProvider"
     }
 }
-
 dependencies {
-    include(project(":runtime-enabled-sdk"))
+    "include"(project(":walletsdk-runtime-enabled"))
 }
+

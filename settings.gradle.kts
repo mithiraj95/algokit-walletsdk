@@ -20,7 +20,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "algokit-walletsdk"
-include(":runtime-enabled-sdk")
-include(":runtime-enabled-sdk-bundle")
-include(":runtime-aware-sdk")
 include(":sample-app")
+include(":walletsdk-runtime-enabled")
+include(":walletsdk-runtime-enabled-bundle")
+include(":walletsdk-runtime-aware")

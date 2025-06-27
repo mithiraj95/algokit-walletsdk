@@ -46,8 +46,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":runtime-aware-sdk"))
 
+    implementation(project(":walletsdk-runtime-aware"))
     implementation(libs.androidx.activity.compose)
     // Correctly apply the Compose BOM as a platform
     implementation(platform(libs.androidx.compose.bom))
