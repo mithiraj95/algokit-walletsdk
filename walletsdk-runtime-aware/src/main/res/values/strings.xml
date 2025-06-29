@@ -100,7 +100,7 @@
 
     <string name="what_does_asset">What does Asset Verification mean? <annotation type="verified-icon"> </annotation> </string>
     <string name="verified_assets_first_paragraph">Assets that go through our verification process are known projects that have their website and public information verified against this specific ASA. Verification status is not an endorsement of the asset.</string>
-    <string name="verified_assets_second_paragraph">Pera Wallet does not have any relationship with verified ASA owners. This badge is for informational purposes only.</string>
+    <string name="verified_assets_second_paragraph">AlgoKit Wallet does not have any relationship with verified ASA owners. This badge is for informational purposes only.</string>
     <string name="verified_assets_third_paragraph">That being said, you should <annotation type="color">always double check</annotation> that the asset\'s ID is the one that you intended to choose before transacting with that asset.</string>
     <string name="verified_assets_fourth_paragraph">If you have questions about the verification process or general feedback about the app, we encourage you to visit;</string>
     <string name="advanced_troubleshooting">Advanced Troubleshooting</string>
@@ -133,7 +133,7 @@
     <string name="error_cancelled_title">Transaction Cancelled</string>
     <string name="error_cancelled_message">The paired ledger device has cancelled the transaction request.</string>
     <string name="error_unsupported_title">Unsupported Device</string>
-    <string name="error_unsupported_message">The device you are trying to connect to is not supported with the Pera Wallet.</string>
+    <string name="error_unsupported_message">The device you are trying to connect to is not supported with the AlgoKit Wallet.</string>
     <string name="bluetooth_location_services">Bluetooth Location Services Error</string>
     <string name="please_ensure">Please ensure that location services are enabled.</string>
     <string name="terms_and_services">Terms and Services</string>
@@ -195,9 +195,9 @@
     <string name="transaction_send_successful">Your transaction of <annotation font="dmsans_medium"><annotation replacement="amount">amountPlaceholder</annotation></annotation> <annotation replacement="asset">assetPlaceholder</annotation> from <annotation font="dmsans_medium"><annotation replacement="sender">addressPlaceholder</annotation></annotation> to <annotation font="dmsans_medium"><annotation replacement="receiver">addressPlaceholder</annotation></annotation> is complete.</string>
     <string name="transaction_send_failed">Your transaction of <annotation font="dmsans_medium"><annotation replacement="amount">amountPlaceholder</annotation></annotation> <annotation replacement="asset">assetPlaceholder</annotation> from <annotation font="dmsans_medium"><annotation replacement="sender">addressPlaceholder</annotation></annotation> to <annotation font="dmsans_medium"><annotation replacement="receiver">addressPlaceholder</annotation></annotation> has failed.</string>
     <string name="notification_algo_received_message"><annotation font="dmsans_medium"><annotation replacement="amount">amountPlaceholder</annotation></annotation> <annotation replacement="asset">assetPlaceholder</annotation> were sent to <annotation font="dmsans_medium"><annotation replacement="receiver">addressPlaceholder</annotation></annotation> by <annotation font="dmsans_medium"><annotation replacement="sender">addressPlaceholder</annotation></annotation>.</string>
-    <string name="pera_app_is_locked">Pera Wallet app is locked</string>
+    <string name="pera_app_is_locked">AlgoKit Wallet app is locked</string>
     <string name="too_many_pin_attempts">Too many PIN attempts</string>
-    <string name="this_ledger_device">This ledger device can sign transactions for the following accounts. Select the accounts to add to your Pera Wallet.</string>
+    <string name="this_ledger_device">This ledger device can sign transactions for the following accounts. Select the accounts to add to your AlgoKit Wallet.</string>
     <string name="auth_account_address">Auth Account Address</string>
     <string name="rekeying_account">Rekeying Account…</string>
     <string name="date">Date</string>
@@ -207,9 +207,9 @@
     <string name="algorand_dispenser">Algorand Dispenser</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="privacy_click">Privacy Policy</string>
-    <string name="by_creating_account">By creating an account, you agree to Pera Wallet\'s <annotation font="dmsans_medium"><annotation custom="terms_click">Terms and Conditions</annotation></annotation> and <annotation font="dmsans_medium"><annotation custom="privacy_click">Privacy Policy</annotation></annotation></string>
-    <string name="by_adding_a_wallet">By adding a wallet, you agree to Pera Wallet\'s <annotation font="dmsans_medium"><annotation custom="terms_click">Terms and Conditions</annotation></annotation> and <annotation font="dmsans_medium"><annotation custom="privacy_click">Privacy Policy</annotation></annotation></string>
-    <string name="by_creating_a_wallet">By creating a wallet, you agree to Pera Wallet\'s <annotation font="dmsans_medium"><annotation custom="terms_click">Terms and Conditions</annotation></annotation> and <annotation font="dmsans_medium"><annotation custom="privacy_click">Privacy Policy</annotation></annotation></string>
+    <string name="by_creating_account">By creating an account, you agree to AlgoKit Wallet\'s <annotation font="dmsans_medium"><annotation custom="terms_click">Terms and Conditions</annotation></annotation> and <annotation font="dmsans_medium"><annotation custom="privacy_click">Privacy Policy</annotation></annotation></string>
+    <string name="by_adding_a_wallet">By adding a wallet, you agree to AlgoKit Wallet\'s <annotation font="dmsans_medium"><annotation custom="terms_click">Terms and Conditions</annotation></annotation> and <annotation font="dmsans_medium"><annotation custom="privacy_click">Privacy Policy</annotation></annotation></string>
+    <string name="by_creating_a_wallet">By creating a wallet, you agree to AlgoKit Wallet\'s <annotation font="dmsans_medium"><annotation custom="terms_click">Terms and Conditions</annotation></annotation> and <annotation font="dmsans_medium"><annotation custom="privacy_click">Privacy Policy</annotation></annotation></string>
     <string name="create_new_account">Create new Account</string>
     <string name="watch_account">Watch Account</string>
     <string name="wallet_address">Wallet address</string>
@@ -240,7 +240,7 @@
     <string name="mute_notifications">Mute Notifications</string>
     <string name="unmute_notifications">Unmute Notifications</string>
     <string name="show_notification_for">Show notification for</string>
-    <string name="rate_pera_wallet">Rate Pera Wallet</string>
+    <string name="rate_pera_wallet">Rate AlgoKit Wallet</string>
     <string name="ledger_position">Ledger #<annotation replacement="account_index">accountIndexPlaceholder</annotation></string>
     <string name="can_be_signed_by">Can be signed by</string>
     <string name="can_sign_for_these">Can sign for these accounts</string>
@@ -271,12 +271,12 @@
     <string name="in_the_following_account">In the following steps, you\'ll enter your recovery passphrase to recover an Algorand account. Have your recovery phrase handy before you begin.</string>
     <string name="in_the_following_wallet">In the following steps, you\'ll enter your recovery passphrase to recover an Algorand wallet. Have your recovery phrase handy before you begin.</string>
     <string name="finish_account_creation">Finish Account Creation</string>
-    <string name="welcome_to_pera">Welcome to\nPera Wallet</string>
+    <string name="welcome_to_pera">Welcome to\nAlgoKit Wallet</string>
     <string name="i_want_to_monitor">I want to monitor an account that\'s held in cold storage.</string>
     <string name="recover">Recover</string>
     <string name="the_last_copied_text">The last copied text is not a valid passphrase. Please copy a valid passphrase and try again.</string>
     <string name="make_sure_to_record">Make sure to record these words in the correct order, using the corresponding numbers.</string>
-    <string name="this_6_digit_pin">This 6-digit PIN will be required to use the Pera Wallet. We highly recommend creating a PIN to help increase wallet security in the event your phone is stolen.</string>
+    <string name="this_6_digit_pin">This 6-digit PIN will be required to use the AlgoKit Wallet. We highly recommend creating a PIN to help increase wallet security in the event your phone is stolen.</string>
     <string name="increase_your_security">Increase your security with a PIN</string>
     <string name="name_your_account">Name your account</string>
     <plurals name="account_asset_count">
@@ -301,7 +301,7 @@
     <string name="verify_recovery_passphrase">Verify recovery passphrase backup</string>
     <string name="transacting_tips">Transacting Tips</string>
     <string name="monitor_activity_of">Monitor activity of an account without needing a recovery passphrase. This is useful for monitoring assets that are kept in cold storage</string>
-    <string name="name_your_account_to">Name your account to easily identify it while using the Pera Wallet. These names are stored locally, and can only be seen by you.</string>
+    <string name="name_your_account_to">Name your account to easily identify it while using the AlgoKit Wallet. These names are stored locally, and can only be seen by you.</string>
     <string name="learn_more">Learn More</string>
     <string name="no_contact_found">No contact found</string>
     <string name="you_can_make_the">You can make the process of sending assets faster by adding new contacts.</string>
@@ -374,7 +374,7 @@
     <string name="create_a_watch_account">Create a watch\naccount</string>
     <string name="paste_with_account">Paste (<annotation custom="account_text_size"><annotation custom="account_color"><annotation font="dmmono_regular"><annotation replacement="account">accountPlaceholder</annotation></annotation></annotation></annotation>)</string>
     <string name="transfer_from_another_phone">Transfer From Another Phone</string>
-    <string name="i_already_have_an">I already have an Pera Wallet but it\'s on a different phone.</string>
+    <string name="i_already_have_an">I already have an AlgoKit Wallet but it\'s on a different phone.</string>
 
     <string name="set_pin_code">Set PIN Code</string>
     <string name="your_faceid_or_fingerprintid">Your FaceID or FingerprintID will be required to use the app. We recommend enabling biometric authentication to help increase wallet security in the event your phone is stolen.</string>
@@ -392,8 +392,8 @@
 
     <string name="account_has_been_added">Account has been added!</string>
     <string name="congratulations_your_account">Congratulations, your account is ready to use.</string>
-    <string name="welcome_to_pera_your_account">Welcome to Pera Wallet! Your account is ready to use.</string>
-    <string name="start_using_pera">Start Using Pera Wallet</string>
+    <string name="welcome_to_pera_your_account">Welcome to AlgoKit Wallet! Your account is ready to use.</string>
+    <string name="start_using_pera">Start Using AlgoKit Wallet</string>
 
     <string name="verified">Verified</string>
     <string name="copy_id">Copy ID</string>
@@ -439,7 +439,7 @@
     <string name="on_the_ledger_home_screen">On the Ledger home screen, confirm pairing.</string>
     <string name="pairing_failed">Pairing failed!</string>
     <string name="having_ledger_nano_x">Having Ledger connection issues?</string>
-    <string name="make_sure_the_device_is">Make sure the device is unlocked, nearby and has bluetooth enabled. If problems persist, please remove the device from your phone\'s bluetooth settings, remove the ledger account, and then re-pair your Ledger following the Pera Wallet instructions.</string>
+    <string name="make_sure_the_device_is">Make sure the device is unlocked, nearby and has bluetooth enabled. If problems persist, please remove the device from your phone\'s bluetooth settings, remove the ledger account, and then re-pair your Ledger following the AlgoKit Wallet instructions.</string>
     <string name="become_a_governor">Become a governor.\nVote on Algorand\'s future.\nEarn rewards.</string>
     <string name="the_registration_window_for">The registration window for Governance Period #2 is Dec 25 to Jan 7, 16:00 UTC</string>
     <string name="connection_failed">Connection failed</string>
@@ -569,13 +569,13 @@
     <string name="show_note">Show Note</string>
     <string name="loading">Loading</string>
 
-    <string name="we_are_very_excited">We are very excited to announce that Algorand Wallet is now called Pera Wallet. This is much more than a new name and logo. We are relaunching the most popular wallet in the Algorand ecosystem with a renewed focus on our roadmap, partner integrations, and community.\n\nDon\'t worry, Pera Wallet is built and maintained by the same team and all the features you know and love are still here as usual – With many more to come in the upcoming months.\n\nTo read more about the relaunch and our roadmap, head over to the <annotation type="color"><annotation url="peraBlogUrl">Pera Wallet blog</annotation></annotation></string>
+    <string name="we_are_very_excited">We are very excited to announce that Algorand Wallet is now called AlgoKit Wallet. This is much more than a new name and logo. We are relaunching the most popular wallet in the Algorand ecosystem with a renewed focus on our roadmap, partner integrations, and community.\n\nDon\'t worry, AlgoKit Wallet is built and maintained by the same team and all the features you know and love are still here as usual – With many more to come in the upcoming months.\n\nTo read more about the relaunch and our roadmap, head over to the <annotation type="color"><annotation url="peraBlogUrl">AlgoKit Wallet blog</annotation></annotation></string>
 
     <string name="sorry_we_cant_show_account">Sorry, we can\'t show the details of this account. It looks like we are having issues for the calculation.\n\nPlease note that some asset values might not be available, therefore the total portfolio value should be considered an estimation.  </string>
     <string name="sorry_we_cant_show_portfolio">Sorry, we can\'t show the details of this portfolio. It looks like we are having issues for the calculation.\n\nPlease note that some asset values might not be available, therefore the total portfolio value should be considered an estimation.  </string>
 
     <string name="transaction_request_faq">Transaction Request FAQ</string>
-    <string name="external_applications_also">External applications, also called dApps, can initiate transaction requests independently from Pera Wallet. Please ensure you review these transactions carefully before approving and signing them.\n\nAll transactions are irreversible. As these requests are outside Pera Wallet\'s control, never approve transactions from a dApp you don\'t know.</string>
+    <string name="external_applications_also">External applications, also called dApps, can initiate transaction requests independently from AlgoKit Wallet. Please ensure you review these transactions carefully before approving and signing them.\n\nAll transactions are irreversible. As these requests are outside AlgoKit Wallet\'s control, never approve transactions from a dApp you don\'t know.</string>
     <string name="minimum_amount_required">Minimum Amount Required</string>
     <string name="this_is_the_first_transaction">This is the first transaction for the selected account. The first transactions require a minimum amount of at least 0.1 Algo. Please enter a valid amount and try again.</string>
     <string name="i_want_to_create">I want to create an account</string>
@@ -671,7 +671,7 @@
     </plurals>
     <string name="show_filtered_nfts_formatted">Show Filtered NFTs (%1$d)</string>
     <string name="enter_your_old">Enter your old\n6-digit PIN</string>
-    <string name="welcome_to_pera_wallet_your_watch">Welcome to Pera Wallet! Your Watch Account has been added successfully.</string>
+    <string name="welcome_to_pera_wallet_your_watch">Welcome to AlgoKit Wallet! Your Watch Account has been added successfully.</string>
     <string name="congratulations_your_watch_account_has">Congratulations, your Watch Account has been added successfully.</string>
     <string name="passphrase_verified">Passphrase Verified</string>
     <string name="keep_this_recovery">Keep this recovery passphrase in a secure location that is accessible only by you. Do not lose this recovery passphrase.</string>
@@ -733,7 +733,7 @@
     <string name="show_more_actions">Show more actions</string>
 
     <string name="asa_verification">ASA Verification</string>
-    <string name="pera_wallet_s_algorand">Pera Wallet\'s Algorand Standard Asset (ASA) Verification Program allows ASA creators to get <annotation type="bold">automatically</annotation> verified by validating that they are the owners of the asset.</string>
+    <string name="pera_wallet_s_algorand">AlgoKit Wallet\'s Algorand Standard Asset (ASA) Verification Program allows ASA creators to get <annotation type="bold">automatically</annotation> verified by validating that they are the owners of the asset.</string>
     <string name="the_main_purpose">The main purpose of ASA Verification is to <annotation type="bold">prevent an ASA from pretending to be affiliated with and acting as the token for a project it\'s not connected to.</annotation></string>
     <string name="asa_verification_is"><annotation type="bold">ASA Verification is not an endorsement of the project.</annotation> Neither Algorand nor Pera would ever use the verification process to endorse a project.</string>
 
@@ -770,7 +770,7 @@
     <string name="asset_not_found_please_make">Asset not found. Please make sure that you are using correct network.</string>
     <string name="asset_successfully_opted_in">%1$s successfully opted-in and added to your account.</string>
     <string name="parent_transaction_id">Parent\nTransaction ID</string>
-    <string name="it_looks_like">It looks like this transaction group contains one or more missing transactions. For your security, Pera Wallet won\'t allow you to sign transaction groups that have obscured details. Please contact the dApp that sent this transaction so they can rectify this problem.</string>
+    <string name="it_looks_like">It looks like this transaction group contains one or more missing transactions. For your security, AlgoKit Wallet won\'t allow you to sign transaction groups that have obscured details. Please contact the dApp that sent this transaction so they can rectify this problem.</string>
     <string name="self_transfer">Self Transfer</string>
     <string name="opt_in_self_transfer">Opt-In / Self Transfer</string>
 
@@ -859,7 +859,7 @@
     <string name="slippage_tolerance">Slippage Tolerance</string>
     <string name="slippage_is_the_price_difference">Slippage is the price difference between when you submit a transaction and when the transaction is confirmed on the blockchain. If slippage rate goes over the tolerance percentage you set here, transaction will be cancelled automatically to protect you from value loss.</string>
     <string name="swap_in_pera">Swap in Pera</string>
-    <string name="pera_wallet_now_provides_an">Pera Wallet now provides an easy and fast way to swap assets.</string>
+    <string name="pera_wallet_now_provides_an">AlgoKit Wallet now provides an easy and fast way to swap assets.</string>
     <string name="try_swap">Try Swap</string>
     <string name="later">Later</string>
 
@@ -868,7 +868,7 @@
     <string name="balance_percentage_must_be_between">Balance percentage must be between %1$d%% and %2$d%%</string>
     <string name="set_custom_percentage">Set custom percentage</string>
     <string name="balance_percentage">Balance Percentage</string>
-    <string name="pera_wallet_provides_an_easy">Pera Wallet provides an easy and fast way to swap assets. Swapping allows an ASA to be exchanged with another one using a smart contract, at market fees.</string>
+    <string name="pera_wallet_provides_an_easy">AlgoKit Wallet provides an easy and fast way to swap assets. Swapping allows an ASA to be exchanged with another one using a smart contract, at market fees.</string>
     <string name="by_continuing_you_agree_to">By continuing, you agree to our\nswap partner\'s <annotation url="vestigeTermsOfServiceUrl"><annotation type="bold"><annotation type="color">Terms of Service</annotation></annotation></annotation></string>
     <string name="start_swapping">Start Swapping</string>
     <string name="powered_by">Powered by</string>
@@ -1106,29 +1106,29 @@
 
     <!-- region WalletConnect Error Messages -->
     <string name="transaction_request_rejected_user">Transaction request rejected: the user has rejected the transaction request.</string>
-    <string name="missing_transactions_this_transaction">Missing transaction(s): this transaction request is missing one or more transactions. For your own safety, Pera Wallet won\'t allow you to sign requests that do not display the complete transaction group. To rectify this issue, please contact the dApp.</string>
+    <string name="missing_transactions_this_transaction">Missing transaction(s): this transaction request is missing one or more transactions. For your own safety, AlgoKit Wallet won\'t allow you to sign requests that do not display the complete transaction group. To rectify this issue, please contact the dApp.</string>
     <string name="transaction_request_pending_user">Transaction request pending: the user currently has another transaction request in progress.</string>
-    <string name="network_mismatch_error_this">Network mismatch error: this dApp and Pera Wallet are currently operating on different networks. Please make sure that they both run on either Mainnet or Testnet.</string>
-    <string name="missing_private_keys_pera">Missing private key(s): Pera Wallet is missing one or more private keys, needed to sign the transaction request.</string>
+    <string name="network_mismatch_error_this">Network mismatch error: this dApp and AlgoKit Wallet are currently operating on different networks. Please make sure that they both run on either Mainnet or Testnet.</string>
+    <string name="missing_private_keys_pera">Missing private key(s): AlgoKit Wallet is missing one or more private keys, needed to sign the transaction request.</string>
     <string name="unsupported_transaction_type_this">Unsupported transaction type: this transaction request contains one or more unsupported transaction types.</string>
-    <string name="multisig_required_this_transaction">Multi-sig required: this transaction request requires a multisig type signature, currently unsupported by Pera Wallet.</string>
-    <string name="transaction_limit_this_transaction">Transaction limit: this transaction request contains %1$d transactions, exceeding Pera Wallet transactions limit.</string>
-    <string name="arbitrary_data_limit_this">Arbirary Data limit: this arbitrary data request contains %1$d arbitrary data, exceeding Pera Wallet arbirary data limit.</string>
-    <string name="invalid_request_format_pera">Invalid request format: Pera Wallet is unable to parse the transaction request.</string>
-    <string name="invalid_arbitrary_data_request">Invalid request format: Pera Wallet is unable to parse the arbitrary data request.</string>
+    <string name="multisig_required_this_transaction">Multi-sig required: this transaction request requires a multisig type signature, currently unsupported by AlgoKit Wallet.</string>
+    <string name="transaction_limit_this_transaction">Transaction limit: this transaction request contains %1$d transactions, exceeding AlgoKit Wallet transactions limit.</string>
+    <string name="arbitrary_data_limit_this">Arbirary Data limit: this arbitrary data request contains %1$d arbitrary data, exceeding AlgoKit Wallet arbirary data limit.</string>
+    <string name="invalid_request_format_pera">Invalid request format: AlgoKit Wallet is unable to parse the transaction request.</string>
+    <string name="invalid_arbitrary_data_request">Invalid request format: AlgoKit Wallet is unable to parse the arbitrary data request.</string>
     <string name="invalid_public_key_transaction">Invalid public key(s): the transaction request contains one or more invalid account addresses.</string>
     <string name="invalid_asset_id_transaction">Invalid asset ID: the transaction request contains one or more invalid asset ID.</string>
-    <string name="invalid_input_pera_wallet">Invalid input: Pera Wallet is unable to sign the transaction request.</string>
-    <string name="transaction_group_is_missing">Transaction group is missing signer account(s): Pera Wallet is missing the necessary accounts to sign one or more transaction groups in the transaction request.</string>
-    <string name="missing_signer_account_pera">Missing signer account(s): Pera Wallet is missing one or more accounts needed to sign the transaction request.</string>
+    <string name="invalid_input_pera_wallet">Invalid input: AlgoKit Wallet is unable to sign the transaction request.</string>
+    <string name="transaction_group_is_missing">Transaction group is missing signer account(s): AlgoKit Wallet is missing the necessary accounts to sign one or more transaction groups in the transaction request.</string>
+    <string name="missing_signer_account_pera">Missing signer account(s): AlgoKit Wallet is missing one or more accounts needed to sign the transaction request.</string>
     <string name="unauthorized_wc_method_connected">Unauthorized WC_Method: the connected session does not have permission to sign transaction requests with Method type: %1$s.</string>
     <string name="unauthorized_wc_event_connected">Unauthorized WC_Event: the connected session does not have permission to sign transaction requests with Event type: %1$s.</string>
     <string name="unauthorized_wc_chain_connected">Unauthorized WC_Chain: the connected session does not have permission to sign transaction requests in: %1$s.</string>
-    <string name="user_rejected_chain_this">User_Rejected_Chain: this dApp is trying to connect to your account on %1$s, but Pera Wallet is set on %2$s.</string>
-    <string name="unsupported_blockchain_pera_wallet">Unsupported Blockchain: Pera Wallet currently supports only the Algorand blockchain.</string>
-    <string name="unsupported_wc_method_pera">Unsupported WC_Method: Pera Wallet currently does not support one or more of the WalletConnect Methods requested by this dApp.</string>
-    <string name="unsupported_wc_events_pera">Unsupported WC_Events: Pera Wallet currently does not support one or more of the WalletConnect Events requested by this dApp.</string>
-    <string name="pera_wallet_could_not_locate">Pera Wallet couldn\'t locate the WalletConnect session used by this dApp. Please disconnect and try again.</string>
+    <string name="user_rejected_chain_this">User_Rejected_Chain: this dApp is trying to connect to your account on %1$s, but AlgoKit Wallet is set on %2$s.</string>
+    <string name="unsupported_blockchain_pera_wallet">Unsupported Blockchain: AlgoKit Wallet currently supports only the Algorand blockchain.</string>
+    <string name="unsupported_wc_method_pera">Unsupported WC_Method: AlgoKit Wallet currently does not support one or more of the WalletConnect Methods requested by this dApp.</string>
+    <string name="unsupported_wc_events_pera">Unsupported WC_Events: AlgoKit Wallet currently does not support one or more of the WalletConnect Events requested by this dApp.</string>
+    <string name="pera_wallet_could_not_locate">AlgoKit Wallet couldn\'t locate the WalletConnect session used by this dApp. Please disconnect and try again.</string>
     <string name="connection_failed_upper_case">Connection Failed</string>
     <string name="confirmation_failed">Confirmation Failed</string>
     <string name="wc_session_not_found">WC session not found</string>
@@ -1175,7 +1175,7 @@
     <string name="an_error_occurred_while_generating">An error occurred while generating your Algorand Secure Backup. Please try again or <annotation font="dmsans_medium"><annotation custom="url_click">Contact support</annotation></annotation></string>
     <string name="backup_file_copied_to">Backup file copied to clipboard as text</string>
     <string name="can_t_save_backup_file">Can\'t save backup file</string>
-    <string name="please_allow_pera_wallet_to">Please allow Pera Wallet to access photos and media on your device to save your file.</string>
+    <string name="please_allow_pera_wallet_to">Please allow AlgoKit Wallet to access photos and media on your device to save your file.</string>
     <string name="have_you_stored_your">Have you stored your backup file?</string>
     <string name="if_you_lose_your_algorand">If you lose your Algorand Secure Backup file, you cannot restore your accounts.</string>
     <string name="yes_i_stored_my_file">Yes, I stored my file</string>
@@ -1358,7 +1358,7 @@
     <string name="your_data_is_being_processed">Your data is being processed!</string>
     <string name="the_data_has_been_signed">The data has been signed and sent to <annotation replacement="peer_name">peer_name_placeholder</annotation>. Please visit  <annotation replacement="peer_name">peer_name_placeholder</annotation> for the remaining process.</string>
 
-    <string name="buying_algo_through_pera_wallet">Buying Algo through Pera Wallet is not available at the
+    <string name="buying_algo_through_pera_wallet">Buying Algo through AlgoKit Wallet is not available at the
         moment</string>
     <string name="open_in_pera_explorer">Open in Pera Explorer</string>
     <string name="buy_algo_with_meld">Buy ALGO with Meld</string>
@@ -1443,7 +1443,7 @@
 
     <string name="xnote">xNote</string>
     <string name="try_stake">Try Stake</string>
-    <string name="pera_wallet_now_provides">Pera Wallet now provides an easy and fast way to stake with various dApps.</string>
+    <string name="pera_wallet_now_provides">AlgoKit Wallet now provides an easy and fast way to stake with various dApps.</string>
     <string name="stake_in_pera">Stake in Pera</string>
     <string name="save">Save</string>
     <string name="downloading_title">Downloading %1$s</string>
@@ -1542,7 +1542,7 @@
     <string name="you_need_to_backup_passphrase">You need to backup the passphrase</string>
     <string name="invite_friends">Invite Friends</string>
     <string name="menu">Menu</string>
-    <string name="share_pera_wallet_download">Share the Pera Wallet download\nlink with your friends.</string>
+    <string name="share_pera_wallet_download">Share the AlgoKit Wallet download\nlink with your friends.</string>
     <string name="simply_the_best_algorand">Simply the best Algorand wallet.</string>
     <string name="you_are_all_set">You\'re all set!</string>
     <string name="we_will_inform_this">We will inform this device via a push notification when we launch in your country.</string>
