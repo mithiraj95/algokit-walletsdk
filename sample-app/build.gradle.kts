@@ -21,7 +21,7 @@ android {
     }
 
     buildFeatures {
-        compose = true
+      //  compose = true
     }
 
     buildTypes {

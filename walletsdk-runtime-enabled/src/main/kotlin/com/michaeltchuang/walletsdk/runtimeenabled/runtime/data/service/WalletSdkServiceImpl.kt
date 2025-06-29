@@ -1,9 +1,11 @@
 package com.michaeltchuang.walletsdk.runtimeenabled.runtime.data.service
 
 import android.content.Context
-import android.util.Base64
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.di.algoSdkModule
+import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
+import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoAccountSdkImpl
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoKitBip39SdkImpl
+import com.michaeltchuang.walletsdk.runtimeenabled.foundation.security.di.securityModule
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkService
 import org.koin.core.context.startKoin
 
@@ -12,25 +14,40 @@ class WalletSdkServiceImpl(private val context: Context) : WalletSdkService {
 
     override suspend fun initialize() {
         startKoin {
+            modules(securityModule)
             modules(algoSdkModule)
         }
     }
 
     override suspend fun getEntropyFromMnemonic(mnemonic: String): String {
-        val entropy = AlgoKitBip39SdkImpl().getEntropyFromMnemonic(mnemonic)
-        return Base64.encodeToString(entropy, Base64.NO_WRAP)
+        return AlgoKitBip39SdkImpl().getEntropyFromMnemonic(mnemonic)?.decodeToString() ?: ""
     }
 
     override suspend fun getSeedFromEntropy(entropy: String): String {
-        val entropy = Base64.decode(entropy, Base64.NO_WRAP)
-        val seed = AlgoKitBip39SdkImpl().getSeedFromEntropy(entropy)
-        return Base64.encodeToString(seed, Base64.NO_WRAP)
+        val seed = AlgoKitBip39SdkImpl().getSeedFromEntropy(entropy.encodeToByteArray())
+        return seed?.decodeToString() ?: ""
     }
 
     override suspend fun getMnemonicFromEntropy(entropy: String): String {
-        val entropy = Base64.decode(entropy, Base64.NO_WRAP)
-        val mnemonic = AlgoKitBip39SdkImpl().getMnemonicFromEntropy(entropy) ?: ""
+        val mnemonic =
+            AlgoKitBip39SdkImpl().getMnemonicFromEntropy(entropy.encodeToByteArray()) ?: ""
         return mnemonic
+    }
+
+    override suspend fun createAlgo25Account(): Algo25Account? {
+        val algoAccountSdkImpl = AlgoAccountSdkImpl()
+        return algoAccountSdkImpl.createAlgo25Account()
+    }
+
+    override suspend fun recoverAlgo25Account(mnemonic: String): Algo25Account? {
+        val algoAccountSdkImpl = AlgoAccountSdkImpl()
+        return algoAccountSdkImpl.recoverAlgo25Account(mnemonic)
+    }
+
+    override suspend fun getMnemonicFromAlgo25SecretKey(secretKey: String): String {
+        val algoAccountSdkImpl = AlgoAccountSdkImpl()
+        return algoAccountSdkImpl.getMnemonicFromAlgo25SecretKey(secretKey.encodeToByteArray())
+            .toString()
     }
 
 }

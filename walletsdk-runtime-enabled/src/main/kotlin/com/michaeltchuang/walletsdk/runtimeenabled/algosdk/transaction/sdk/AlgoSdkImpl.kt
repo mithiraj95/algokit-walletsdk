@@ -1,6 +1,6 @@
+/*
 package com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk
 
-import com.algorand.algosdk.sdk.Sdk
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoSdkNumberExtensions.toUint64
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.mapper.SuggestedParamsMapper
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.model.SuggestedTransactionParams
@@ -17,7 +17,8 @@ internal class AlgoSdkImpl(private val suggestedParamsMapper: SuggestedParamsMap
         noteInByteArray: ByteArray?,
         suggestedTransactionParams: SuggestedTransactionParams
     ): ByteArray {
-        return Sdk.makeAssetTransferTxn(
+      */
+/*  return Sdk.makeAssetTransferTxn(
             senderAddress,
             receiverAddress,
             "",
@@ -25,7 +26,9 @@ internal class AlgoSdkImpl(private val suggestedParamsMapper: SuggestedParamsMap
             noteInByteArray,
             suggestedParamsMapper(suggestedTransactionParams, addGenesis = false),
             assetId
-        )
+        )*//*
+
+        return ByteArray(0)
     }
 
     override fun createAlgoTransferTxn(
@@ -111,3 +114,4 @@ internal class AlgoSdkImpl(private val suggestedParamsMapper: SuggestedParamsMap
         return Sdk.transactionMsgpackToJson(txnByteArray)
     }
 }
+*/

@@ -1,11 +1,15 @@
 package com.michaeltchuang.wallet
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.MaterialTheme
-import com.michaeltchuang.wallet.ui.AlgoKitBip39Screen
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
+import com.michaeltchuang.walletsdk.runtimeaware.wallet.theme.AlgoKitTheme
+import com.michaeltchuang.walletsdk.runtimeaware.wallet.ui.AccountScreen
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val runtimeAwareSdk by lazy { RuntimeAwareSdk(this) }
@@ -13,8 +17,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
-                AlgoKitBip39Screen(runtimeAwareSdk)
+            AlgoKitTheme {
+                AccountScreen(runtimeAwareSdk)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (runtimeAwareSdk.initialize()) {
+                Log.i("AlgoKit", "runtimeAwareSdk initialized")
+            } else {
+                Log.i("AlgoKit", "runtimeAwareSdk not initialize")
             }
         }
     }

@@ -3,7 +3,7 @@ package com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk
 import cash.z.ecc.android.bip39.Mnemonics
 import cash.z.ecc.android.bip39.toSeed
 
-internal class AlgoKitBip39SdkImpl() : AlgoKitBip39Sdk {
+internal class AlgoKitBip39SdkImpl : AlgoKitBip39Sdk {
     override fun getSeedFromEntropy(entropy: ByteArray): ByteArray? {
         return try {
             Mnemonics.MnemonicCode(entropy).toSeed()

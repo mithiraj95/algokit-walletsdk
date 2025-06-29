@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -30,4 +31,13 @@ dependencies {
     // and the AGP Plugin used to generate sources and compile the app.
     implementation(libs.androidx.appcompat)
     implementation(libs.bundles.sdkruntimeRASDK)
+    implementation(libs.androidx.activity.compose)
+    // Correctly apply the Compose BOM as a platform
+    implementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.material)
 }
