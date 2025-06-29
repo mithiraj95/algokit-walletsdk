@@ -1,4 +1,6 @@
-object Contants {
+package com.michaeltchuang.walletsdk.runtimeaware.utils
+
+object Constants {
     const val SAMPLE_ALGO25_MNEMONIC =
         "define claw hungry wave umbrella boost blind never muscle also grab gaze fluid echo predict describe turkey unaware dash phone urge crunch eyebrow abstract team"
     const val SAMPLE_HD_MNEMONIC =

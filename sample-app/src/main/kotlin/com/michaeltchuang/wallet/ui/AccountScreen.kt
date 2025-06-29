@@ -28,14 +28,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
+import com.michaeltchuang.walletsdk.runtimeaware.ui.AlgoKitEvent
+import com.michaeltchuang.walletsdk.runtimeaware.utils.Constants
 import kotlinx.coroutines.launch
-
-private const val SAMPLE_STRING =
-    "borrow among leopard smooth trade cake profit proud matrix bottom goose charge oxygen shine punch hotel era monitor fossil violin tip notice any visit"
 
 @Composable
 fun AccountScreen(runtimeAwareSdk: RuntimeAwareSdk) {
     val scope = rememberCoroutineScope()
+
     Column(
         Modifier
             .fillMaxHeight(0.5f)
@@ -60,10 +60,11 @@ fun AccountScreen(runtimeAwareSdk: RuntimeAwareSdk) {
         Button(onClick = {
             scope.launch {
                 if (runtimeAwareSdk.initialize()) {
-                    entropy = runtimeAwareSdk.getEntropyFromMnemonic(SAMPLE_STRING)
-                    Log.i("AlogKit", "runtimeAwareSdk initialized")
+                    // TODO: switch to open bottom sheet here
+                    entropy = runtimeAwareSdk.getEntropyFromMnemonic(Constants.SAMPLE_HD_MNEMONIC)
+                    Log.i("AlgoKit", "runtimeAwareSdk initialized")
                 } else {
-                    Log.i("AlogKit", "runtimeAwareSdk not initialize")
+                    Log.i("AlgoKit", "runtimeAwareSdk not initialize")
                 }
             }
         }) {

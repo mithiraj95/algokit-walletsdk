@@ -24,7 +24,7 @@ enum class OnBoardingScreen {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnBoardingBottomSheet(
-    runtimeAwareSdk: RuntimeAwareSdk, algoKitEvent: (event: AlgoKitEvent) -> Unit
+    runtimeAwareSdk: RuntimeAwareSdk, onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var onBoardingScreen by remember { mutableStateOf(OnBoardingScreen.REGISTER_TYPE_SELECTION) }
@@ -32,7 +32,7 @@ fun OnBoardingBottomSheet(
 
     ModalBottomSheet(
         onDismissRequest = {
-            algoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
+            onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
         }, sheetState = sheetState, dragHandle = null
     ) {
         when (onBoardingScreen) {
@@ -42,7 +42,6 @@ fun OnBoardingBottomSheet(
                         scope.launch {
                             //Algo25Account created
                             if (runtimeAwareSdk.createAlgo25Account() != null) {
-                                algoKitEvent(AlgoKitEvent.ALGO25_ACCOUNT_CREATED)
                                 onBoardingScreen = OnBoardingScreen.CREATE_ACCOUNT_NAME
                             } else {
                                 Log.d("AlgoKitAccount", "Account not created")
@@ -53,7 +52,11 @@ fun OnBoardingBottomSheet(
             }
 
             OnBoardingScreen.CREATE_ACCOUNT_NAME -> {
-                CreateAccountNameScreen(onFinishClick = {}, onBackClick = {})
+                CreateAccountNameScreen(onFinishClick = {
+                    onAlgoKitEvent(AlgoKitEvent.ALGO25_ACCOUNT_CREATED)
+                }, onBackClick = {
+                    onBoardingScreen = OnBoardingScreen.REGISTER_TYPE_SELECTION
+                })
             }
         }
     }
