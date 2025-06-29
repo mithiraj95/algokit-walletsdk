@@ -1,3 +1,4 @@
+/*
 package com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk
 
 import com.algorand.algosdk.sdk.Uint64
@@ -19,3 +20,4 @@ internal object AlgoSdkNumberExtensions {
         }
     }
 }
+*/

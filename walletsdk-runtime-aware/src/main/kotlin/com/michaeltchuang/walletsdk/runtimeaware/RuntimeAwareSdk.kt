@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.privacysandbox.sdkruntime.client.SdkSandboxManagerCompat
 import androidx.privacysandbox.sdkruntime.core.LoadSdkCompatException
+import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkService
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkServiceFactory
 
@@ -25,8 +26,13 @@ class RuntimeAwareSdk(private val context: Context) {
         val isRuntimeEnabledSdkLoaded = loadSdkIfNeeded(context) != null
         return isRuntimeEnabledSdkLoaded
     }
+
     suspend fun getEntropyFromMnemonic(mnemonic: String): String? {
         return loadSdkIfNeeded(context)?.getEntropyFromMnemonic(mnemonic = mnemonic)
+    }
+
+    suspend fun createAlgo25Account(): Algo25Account? {
+        return loadSdkIfNeeded(context)?.createAlgo25Account()
     }
 
     /** Keeps a reference to a sandboxed SDK and makes sure it's only loaded once. */
