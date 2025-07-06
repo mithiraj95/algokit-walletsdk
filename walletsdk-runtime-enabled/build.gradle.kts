@@ -8,7 +8,7 @@ android {
     namespace = "com.michaeltchuang.walletsdk.runtimeaware"
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 28
         compileSdk = 35
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

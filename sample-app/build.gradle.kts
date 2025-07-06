@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.michaeltchuang.wallet"
         compileSdk = 35
-        minSdk = 26
+        minSdk = 28
         versionCode = 3
         versionName = "0.0.3"
 

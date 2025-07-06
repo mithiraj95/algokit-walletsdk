@@ -4,7 +4,7 @@ plugins {
 
 android {
     compileSdk = 35
-    minSdk = 26
+    minSdk = 28
 
     bundle {
         // The package name is used to load this SDK in the SDK Runtime.
