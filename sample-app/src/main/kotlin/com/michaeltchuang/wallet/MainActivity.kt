@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import com.michaeltchuang.wallet.ui.AccountListScreen
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
-import com.michaeltchuang.walletsdk.runtimeaware.ui.AccountScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AlgoKitTheme {
-                AccountScreen(runtimeAwareSdk)
+                AccountListScreen(runtimeAwareSdk = runtimeAwareSdk)
             }
         }
     }

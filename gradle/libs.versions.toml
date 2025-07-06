@@ -4,9 +4,11 @@ algoSdk = "2.8.2"
 algoGoMobilesdk = "1.0.1"
 activityCompose = "1.10.1"
 composeBom = "2025.06.00"
+koinAndroidxCompose = "4.1.0"
 kotlin = "2.1.20"
 ksp = "2.1.20-1.0.31"
 ktlint = "12.3.0"
+lottieCompose = "6.6.7"
 privacySandboxBuildPlugin = "1.0.0-alpha02"
 sdkRuntimeBackcompat = "1.0.0-alpha17"
 sdkRuntimeShim = "1.0.0-alpha13"
@@ -25,6 +27,8 @@ peraCompactDecimalFormat = "1.0.1"
 xhdwalletapi = "1.1.0"
 bip39 = "1.0.7"
 androidxTestRunner = "1.6.2"
+room = "2.7.0-alpha07"
+converterGson = "2.11.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -34,6 +38,7 @@ androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 
 # Plugins
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
@@ -51,6 +56,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
 # Privacy Sandbox (SDK Runtime Focused)
+lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 sdkruntime-backcompat-client = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-client", version.ref = "sdkRuntimeBackcompat" }
 sdkruntime-backcompat-core = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-core", version.ref = "sdkRuntimeBackcompat" }
 sdkruntime-backcompat-provider = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-provider", version.ref = "sdkRuntimeBackcompat" }
@@ -85,6 +91,17 @@ koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-view
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-core-viewmodel = { module = "io.insert-koin:koin-core-viewmodel" }
 
+# Database / ORM
+room-gradle-plugin = { module = "androidx.room:room-gradle-plugin", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
+
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+
+
 [bundles]
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
 sdkruntimeRASDK = ["sdkruntime-backcompat-core", "sdkruntime-backcompat-client", "sdkruntime-ui-core", "sdkruntime-ui-client", "sdkruntime-activity-core", "sdkruntime-activity-client"]
@@ -97,3 +114,5 @@ sdkruntimeBackcompat = ["sdkruntime-backcompat-core", "sdkruntime-backcompat-cli
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+room = { id = "androidx.room", version.ref = "room" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

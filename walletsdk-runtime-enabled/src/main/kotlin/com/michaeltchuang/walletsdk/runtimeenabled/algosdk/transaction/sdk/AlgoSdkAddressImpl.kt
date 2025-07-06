@@ -1,8 +1,9 @@
+/*
 package com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk
 
 import android.util.Base64
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.model.AlgorandAddress
-import com.michaeltchuang.walletsdk.runtimeenabled.encryption.domain.manager.Base64Manager
+
 
 internal class AlgoSdkAddressImpl(
     private val base64Manager: Base64Manager
@@ -35,3 +36,4 @@ internal class AlgoSdkAddressImpl(
         return generateAddressFromPublicKey(publicKey)
     }
 }
+*/

@@ -1,10 +1,11 @@
 plugins {
     id("androidx.privacysandbox.library")
     id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.room)
 }
 
 android {
-    namespace = "com.michaeltchuang.walletsdk.runtimeenabled"
+    namespace = "com.michaeltchuang.walletsdk.runtimeaware"
 
     defaultConfig {
         minSdk = 26
@@ -46,6 +47,13 @@ dependencies {
     implementation(libs.xhdwalletapi)
     implementation(libs.kotlin.bip39)
     implementation(libs.koin.android)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation(libs.room.paging)
     ksp(libs.androidx.annotation)
     ksp(libs.sdkruntime.tools.apicompiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }

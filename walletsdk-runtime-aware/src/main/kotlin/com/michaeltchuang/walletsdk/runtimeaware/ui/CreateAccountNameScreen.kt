@@ -36,10 +36,11 @@ import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.Pera
 
 @Composable
 fun CreateAccountNameScreen(
+    address: String,
     onFinishClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
-    var accountName by remember { mutableStateOf("") }
+    var accountName by remember { mutableStateOf(address) }
 
     Box(
         modifier = Modifier
@@ -92,7 +93,10 @@ fun CreateAccountNameScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter),
-            {}, text = "Finish Account Creation"
+            {
+                onFinishClick()
+            },
+            text = "Finish Account Creation",
         )
     }
 }

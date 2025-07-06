@@ -61,4 +61,8 @@ dependencies {
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.lottie.compose)
+
 }

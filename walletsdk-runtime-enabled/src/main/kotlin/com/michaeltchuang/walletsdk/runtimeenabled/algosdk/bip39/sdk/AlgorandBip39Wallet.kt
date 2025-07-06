@@ -10,7 +10,7 @@ import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.model.HdKeyAddr
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.model.HdKeyAddressDerivationType
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.model.HdKeyAddressIndex
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.model.HdKeyAddressLite
-import com.michaeltchuang.walletsdk.runtimeenabled.encryption.domain.utils.clearFromMemory
+import com.michaeltchuang.walletsdk.runtimeenabled.utils.clearFromMemory
 import foundation.algorand.xhdwalletapi.Bip32DerivationType
 import foundation.algorand.xhdwalletapi.KeyContext
 import foundation.algorand.xhdwalletapi.XHDWalletAPIAndroid
