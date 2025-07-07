@@ -3,7 +3,7 @@ agp = "8.9.2"
 algoSdk = "2.8.2"
 algoGoMobilesdk = "1.0.1"
 activityCompose = "1.10.1"
-composeBom = "2025.06.00"
+composeBom = "2025.06.01"
 koinAndroidxCompose = "4.1.0"
 kotlin = "2.1.20"
 ksp = "2.1.20-1.0.31"
@@ -14,21 +14,21 @@ sdkRuntimeBackcompat = "1.0.0-alpha17"
 sdkRuntimeShim = "1.0.0-alpha13"
 sdkRuntimeUi = "1.0.0-alpha16"
 sdkRuntimeActivity = "1.0.0-alpha02"
-appcompat = "1.7.0"
+appcompat = "1.7.1"
 material = "1.12.0"
 activityKtx = "1.10.1"
-lifecycleCommon = "2.8.7"
-coroutines = "1.7.3"
+lifecycleCommon = "2.9.1"
+coroutines = "1.10.2"
 annotation = "1.9.1"
-koin = "4.0.1-Beta1"
+koin = "4.1.0"
 kotlinStdlibJdk8 = "2.1.10"
 khex = "1.1.2"
 peraCompactDecimalFormat = "1.0.1"
 xhdwalletapi = "1.1.0"
-bip39 = "1.0.7"
+bip39 = "1.0.9"
 androidxTestRunner = "1.6.2"
-room = "2.7.0-alpha07"
-converterGson = "2.11.0"
+room = "2.7.2"
+converterGson = "3.0.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -56,7 +56,6 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
 # Privacy Sandbox (SDK Runtime Focused)
-lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 sdkruntime-backcompat-client = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-client", version.ref = "sdkRuntimeBackcompat" }
 sdkruntime-backcompat-core = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-core", version.ref = "sdkRuntimeBackcompat" }
 sdkruntime-backcompat-provider = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-provider", version.ref = "sdkRuntimeBackcompat" }
@@ -99,8 +98,11 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 
-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+# UI
+lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 
+# Networking
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 
 [bundles]
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
