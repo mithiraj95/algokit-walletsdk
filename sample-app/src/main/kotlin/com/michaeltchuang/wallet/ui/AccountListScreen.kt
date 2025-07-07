@@ -28,17 +28,16 @@ import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.ui.AlgoKitEvent
 import com.michaeltchuang.walletsdk.runtimeaware.ui.OnBoardingBottomSheet
-import com.michaeltchuang.walletsdk.runtimeaware.viewmodel.NameRegistrationViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.ui.viewmodel.NameRegistrationViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
-
 @Composable
 fun AccountListScreen(
     viewModel: NameRegistrationViewModel = koinViewModel(),
-    runtimeAwareSdk: RuntimeAwareSdk
+    runtimeAwareSdk: RuntimeAwareSdk,
 ) {
     val accountList by viewModel.uiState.collectAsStateWithLifecycle()
     var showSheet by remember { mutableStateOf(false) }
@@ -51,22 +50,31 @@ fun AccountListScreen(
         }
     }
 
-
     Scaffold(
         topBar = {
-            Box(modifier = Modifier.padding(16.dp), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier.padding(32.dp),
+                contentAlignment = Alignment.Center,
+            ) {
                 Text(text = "Account List", style = typography.title.regular.sansMedium)
             }
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { showSheet = true }) {
+            FloatingActionButton(
+                onClick = { showSheet = true },
+                modifier =
+                    Modifier.padding(
+                        end = 32.dp,
+                        bottom = 32.dp,
+                    ),
+            ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Account")
             }
-        }
+        },
     ) { padding ->
         LazyColumn(
             contentPadding = padding,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             items(accountList) { account ->
                 AccountItem(account) { address ->
@@ -84,10 +92,9 @@ fun AccountListScreen(
                 AlgoKitEvent.ClOSE_BOTTOMSHEET -> {
                     showSheet = false
                 }
-
                 AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
-                AlgoKitEvent.HD_ACCOUNT_CREATED -> {
-                    // TODO: Show Confetti
+                AlgoKitEvent.HD_ACCOUNT_CREATED,
+                -> {
                     showConfetti = true
                     showSheet = false
                 }
@@ -97,9 +104,10 @@ fun AccountListScreen(
 
     if (showConfetti) {
         LottieConfetti(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.5f)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.5f),
         )
         LaunchedEffect(Unit) {
             delay(5000)

@@ -1,7 +1,6 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.local.di
 
 import androidx.room.Room
-import com.michaeltchuang.walletsdk.runtimeaware.account.local.data.database.AddressDatabase
 import com.michaeltchuang.walletsdk.runtimeaware.account.local.data.database.dao.Algo25Dao
 import com.michaeltchuang.walletsdk.runtimeaware.account.local.data.mapper.entity.Algo25EntityMapper
 import com.michaeltchuang.walletsdk.runtimeaware.account.local.data.mapper.entity.Algo25EntityMapperImpl
@@ -10,33 +9,28 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.local.data.mapper.model
 import com.michaeltchuang.walletsdk.runtimeaware.account.local.data.repository.Algo25AccountRepositoryImpl
 import com.michaeltchuang.walletsdk.runtimeaware.account.local.domain.repository.Algo25AccountRepository
 import com.michaeltchuang.walletsdk.runtimeaware.account.local.domain.usecase.SaveAlgo25Account
+import com.michaeltchuang.walletsdk.runtimeaware.foundation.database.AlgoKitDatabase
+import kotlin.jvm.java
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val localAccountsModule = module {
-
-    single<AddressDatabase> {
+    single<AlgoKitDatabase> {
         Room.databaseBuilder(
             context = androidContext(),
-            klass = AddressDatabase::class.java,
-            name = AddressDatabase.DATABASE_NAME
+            klass = AlgoKitDatabase::class.java,
+            name = AlgoKitDatabase.DATABASE_NAME
         ).build()
     }
 
-    single<Algo25Dao> { get<AddressDatabase>().algo25Dao() }
+    single<Algo25Dao> { get<AlgoKitDatabase>().algo25Dao() }
+    single<Algo25EntityMapper> { Algo25EntityMapperImpl(get()) }
+    single<Algo25Mapper> { Algo25MapperImpl() }
 
-    //mapper
-    single { Algo25EntityMapperImpl(get()) }
-    factory<Algo25EntityMapper> { get<Algo25EntityMapperImpl>() }
-    single { Algo25MapperImpl() }
-    factory<Algo25Mapper> { get<Algo25MapperImpl>() }
+    single<Algo25AccountRepository> {
+        Algo25AccountRepositoryImpl(get(), get(), get(), get(), get())
+    }
 
-
-    // Repositories
-    single { Algo25AccountRepositoryImpl(get(), get(), get(), get(), get()) }
-    factory<Algo25AccountRepository> { get<Algo25AccountRepositoryImpl>() }
-
-    // UseCases
     factory { SaveAlgo25Account(get<Algo25AccountRepository>()::addAccount) }
 }
 

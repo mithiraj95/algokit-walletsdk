@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.michaeltchuang.walletsdk.runtimeaware"
+    namespace = "com.michaeltchuang.walletsdk.runtimeenabled"
 
     defaultConfig {
         minSdk = 28

@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
-import com.michaeltchuang.walletsdk.runtimeaware.viewmodel.NameRegistrationViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.ui.viewmodel.NameRegistrationViewModel
 import kotlinx.coroutines.launch
 
 enum class AlgoKitEvent {

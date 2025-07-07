@@ -20,10 +20,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildFeatures {
-      //  compose = true
-    }
-
     buildTypes {
         release {
             proguardFiles(
@@ -64,5 +60,4 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     implementation(libs.lottie.compose)
-
 }

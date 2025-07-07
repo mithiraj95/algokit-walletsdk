@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.michaeltchuang.walletsdk.runtimeaware.account.domain.data.AccountDeserializer
+import com.michaeltchuang.walletsdk.runtimeaware.account.core.domain.data.AccountDeserializer
 import com.michaeltchuang.walletsdk.runtimeaware.cache.PersistentCacheProviderImpl
 import com.michaeltchuang.walletsdk.runtimeaware.encryption.data.manager.Base64ManagerImpl
 import com.michaeltchuang.walletsdk.runtimeaware.encryption.data.repository.StrongBoxRepositoryImpl

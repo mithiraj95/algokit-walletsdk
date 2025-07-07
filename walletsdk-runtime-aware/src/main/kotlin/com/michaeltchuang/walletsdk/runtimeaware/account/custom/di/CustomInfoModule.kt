@@ -35,7 +35,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.custom.domain.usecase.S
 import com.michaeltchuang.walletsdk.runtimeaware.account.custom.domain.usecase.SetHdSeedCustomInfo
 import com.michaeltchuang.walletsdk.runtimeaware.account.custom.domain.usecase.SetHdSeedCustomName
 import com.michaeltchuang.walletsdk.runtimeaware.account.custom.domain.usecase.SetHdSeedOrderIndex
-import com.michaeltchuang.walletsdk.runtimeaware.foundation.database.PeraDatabase
+import com.michaeltchuang.walletsdk.runtimeaware.foundation.database.AlgoKitDatabase
 
 import org.koin.dsl.module
 
@@ -43,8 +43,8 @@ import org.koin.dsl.module
 val customInfoModule = module {
 
     // DAOs
-    single { get<PeraDatabase>().customAccountInfoDao() }
-    single { get<PeraDatabase>().customHdSeedInfoDao() }
+    single { get<AlgoKitDatabase>().customAccountInfoDao() }
+    single { get<AlgoKitDatabase>().customHdSeedInfoDao() }
 
     // Mappers
     factory<CustomAccountInfoEntityMapper> { CustomAccountInfoEntityMapperImpl() }

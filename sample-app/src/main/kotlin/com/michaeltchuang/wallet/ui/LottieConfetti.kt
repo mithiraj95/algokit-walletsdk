@@ -15,11 +15,11 @@ fun LottieConfetti(modifier: Modifier = Modifier) {
     val progress by animateLottieCompositionAsState(
         composition,
         iterations = 1,
-        speed = 1.5f
+        speed = 1.5f,
     )
     LottieAnimation(
         composition = composition,
         progress = { progress },
-        modifier = modifier
+        modifier = modifier,
     )
 }
