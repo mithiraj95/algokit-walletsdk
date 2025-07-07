@@ -3,7 +3,7 @@ package com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk
 import com.algorand.algosdk.account.Account
 import com.algorand.algosdk.mnemonic.Mnemonic
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
-import com.michaeltchuang.walletsdk.runtimeenabled.encryption.domain.utils.clearFromMemory
+import com.michaeltchuang.walletsdk.runtimeenabled.utils.clearFromMemory
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.security.NoSuchAlgorithmException
 import java.security.Security

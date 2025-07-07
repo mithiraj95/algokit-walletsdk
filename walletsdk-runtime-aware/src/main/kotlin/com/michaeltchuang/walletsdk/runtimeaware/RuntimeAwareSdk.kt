@@ -9,6 +9,7 @@ import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Ac
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkService
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkServiceFactory
 
+
 /**
  * This class represents an SDK that was created before the SDK runtime was available. It is in the
  * process of migrating to use the SDK runtime. At this point, all of the functionality has been

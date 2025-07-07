@@ -5,7 +5,7 @@ import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.di.algoSdkModule
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoAccountSdkImpl
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoKitBip39SdkImpl
-import com.michaeltchuang.walletsdk.runtimeenabled.foundation.security.di.securityModule
+import com.michaeltchuang.walletsdk.runtimeenabled.security.di.securityModule
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkService
 import org.koin.core.context.startKoin
 

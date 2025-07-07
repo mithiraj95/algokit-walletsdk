@@ -1,7 +1,10 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -11,7 +14,7 @@ android {
     }
     defaultConfig {
         compileSdk = 35
-        minSdk = 26
+        minSdk = 28
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -40,4 +43,21 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
+    implementation(libs.koin.android)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation(libs.room.paging)
+    implementation(libs.converter.gson)
+    ksp(libs.room.compiler)
+    implementation(libs.koin.androidx.compose) // or latest
+
 }
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+/*
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}*/

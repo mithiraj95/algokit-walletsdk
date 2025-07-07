@@ -13,15 +13,11 @@ android {
     defaultConfig {
         applicationId = "com.michaeltchuang.wallet"
         compileSdk = 35
-        minSdk = 26
+        minSdk = 28
         versionCode = 3
         versionName = "0.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildFeatures {
-      //  compose = true
     }
 
     buildTypes {
@@ -61,4 +57,7 @@ dependencies {
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.lottie.compose)
 }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
+import com.michaeltchuang.walletsdk.runtimeaware.ui.viewmodel.NameRegistrationViewModel
 import kotlinx.coroutines.launch
 
 enum class AlgoKitEvent {
@@ -24,12 +25,14 @@ enum class OnBoardingScreen {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnBoardingBottomSheet(
-    runtimeAwareSdk: RuntimeAwareSdk, onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
+    viewModel: NameRegistrationViewModel,
+    runtimeAwareSdk: RuntimeAwareSdk,
+    onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var onBoardingScreen by remember { mutableStateOf(OnBoardingScreen.REGISTER_TYPE_SELECTION) }
     val scope = rememberCoroutineScope()
-
+    var address by remember { mutableStateOf("") }
     ModalBottomSheet(
         onDismissRequest = {
             onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
@@ -41,7 +44,9 @@ fun OnBoardingBottomSheet(
                     if (it == AlgoKitEvent.ALGO25_ACCOUNT_CREATED) {
                         scope.launch {
                             //Algo25Account created
-                            if (runtimeAwareSdk.createAlgo25Account() != null) {
+                            val algo25Account = viewModel.createAlgo25Account(runtimeAwareSdk)
+                            if (algo25Account != null) {
+                                address = algo25Account.address
                                 onBoardingScreen = OnBoardingScreen.CREATE_ACCOUNT_NAME
                             } else {
                                 Log.d("AlgoKitAccount", "Account not created")
@@ -52,7 +57,10 @@ fun OnBoardingBottomSheet(
             }
 
             OnBoardingScreen.CREATE_ACCOUNT_NAME -> {
-                CreateAccountNameScreen(onFinishClick = {
+                CreateAccountNameScreen(address, onFinishClick = {
+                    scope.launch {
+                        viewModel.addNewAccount()
+                    }
                     onAlgoKitEvent(AlgoKitEvent.ALGO25_ACCOUNT_CREATED)
                 }, onBackClick = {
                     onBoardingScreen = OnBoardingScreen.REGISTER_TYPE_SELECTION
@@ -61,3 +69,4 @@ fun OnBoardingBottomSheet(
         }
     }
 }
+
