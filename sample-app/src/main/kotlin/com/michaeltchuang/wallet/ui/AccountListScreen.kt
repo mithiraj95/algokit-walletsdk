@@ -1,9 +1,12 @@
 package com.michaeltchuang.wallet.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,38 +25,40 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
+import com.michaeltchuang.walletsdk.runtimeaware.account.local.domain.model.LocalAccount
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.ui.AlgoKitEvent
 import com.michaeltchuang.walletsdk.runtimeaware.ui.OnBoardingBottomSheet
-import com.michaeltchuang.walletsdk.runtimeaware.ui.viewmodel.NameRegistrationViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun AccountListScreen(
-    viewModel: NameRegistrationViewModel = koinViewModel(),
-    runtimeAwareSdk: RuntimeAwareSdk,
-) {
-    val accountList by viewModel.uiState.collectAsStateWithLifecycle()
+fun AccountListScreen() {
+    val accountList = remember { mutableStateOf(emptyList<LocalAccount.Algo25>()) }
+    val context = LocalContext.current
+    val runtimeAwareSdk = remember { RuntimeAwareSdk(context) }
     var showSheet by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     var showConfetti by remember { mutableStateOf(false) }
+    var fetchAccount by remember { mutableStateOf(true) }
 
-    LaunchedEffect(Unit) {
-        scope.launch(Dispatchers.IO) {
-            viewModel.getAccount()
+    LaunchedEffect(fetchAccount) {
+        scope.launch {
+            accountList.value = runtimeAwareSdk.fetchAccounts()
+            fetchAccount = false
+            Log.d("AccountListScreen", accountList.value.size.toString())
         }
     }
 
     Scaffold(
         topBar = {
             Box(
-                modifier = Modifier.padding(32.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(text = "Account List", style = typography.title.regular.sansMedium)
@@ -73,31 +78,36 @@ fun AccountListScreen(
         },
     ) { padding ->
         LazyColumn(
-            contentPadding = padding,
-            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 60.dp),
         ) {
-            items(accountList) { account ->
+            Log.d("AccountListScreen01", accountList.value.size.toString())
+            items(accountList.value, key = { it.algoAddress }) { account ->
                 AccountItem(account) { address ->
                     scope.launch {
-                        viewModel.deleteAccount(address)
+                        runtimeAwareSdk.deleteAccount(address)
+                        fetchAccount = true
                     }
                 }
+                Log.d("AccountItem", accountList.value.size.toString())
             }
         }
     }
 
-    if (showSheet) {
-        OnBoardingBottomSheet(viewModel, runtimeAwareSdk) {
-            when (it) {
-                AlgoKitEvent.ClOSE_BOTTOMSHEET -> {
-                    showSheet = false
-                }
-                AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
-                AlgoKitEvent.HD_ACCOUNT_CREATED,
+    OnBoardingBottomSheet(showSheet) {
+        when (it) {
+            AlgoKitEvent.ClOSE_BOTTOMSHEET -> {
+                showSheet = false
+            }
+
+            AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
+            AlgoKitEvent.HD_ACCOUNT_CREATED,
                 -> {
-                    showConfetti = true
-                    showSheet = false
-                }
+                showConfetti = true
+                showSheet = false
+                fetchAccount = true
             }
         }
     }

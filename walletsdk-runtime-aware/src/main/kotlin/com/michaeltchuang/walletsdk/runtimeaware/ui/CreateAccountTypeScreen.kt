@@ -1,5 +1,6 @@
 package com.michaeltchuang.walletsdk.runtimeaware.ui
 
+import android.util.Log
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,8 +13,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -26,19 +29,46 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.michaeltchuang.walletsdk.runtimeaware.R
+import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.GroupChoiceWidget
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.icon.PeraIcon
+import com.michaeltchuang.walletsdk.runtimeaware.ui.viewmodel.CreateAccountTypeViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 const val TERMS_AND_SERVICES_URL = "https://perawallet.app/terms-and-services/"
 const val PRIVACY_POLICY_URL = "https://perawallet.app/privacy-policy/"
 
 @Composable
-fun RegisterTypeSelectionScreen(
-    algoKitEvent: (event: AlgoKitEvent) -> Unit
-) {
+fun CreateAccountTypeScreen(navController: NavHostController) {
+
+    val viewModel: CreateAccountTypeViewModel = koinViewModel()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val runtimeAwareSdk = remember { RuntimeAwareSdk(context) }
+
+    LaunchedEffect(Unit) {
+        viewModel.viewEvent.collect {
+            when (it) {
+                is CreateAccountTypeViewModel.ViewEvent.Algo25AccountCreated -> {
+                    navController.currentBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("accountCreation", it.accountCreation)
+                    navController.navigate(OnBoardingScreens.CREATE_ACCOUNT_NAME.name)
+                    Log.d("CreateAccountTypeScreen", it.accountCreation.address)
+                }
+
+                is CreateAccountTypeViewModel.ViewEvent.Error -> {
+                    Log.d("CreateAccountTypeScreen", it.message)
+                }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -67,7 +97,7 @@ fun RegisterTypeSelectionScreen(
             )
         }
         Spacer(modifier = Modifier.weight(1f))
-        CreateAlgo25AccountWidget(algoKitEvent)
+        CreateAlgo25AccountWidget(viewModel, scope, runtimeAwareSdk)
         ImportAlgo25AccountWidget()
         WatchAddressWidget()
         Spacer(modifier = Modifier.weight(1f))
@@ -77,7 +107,9 @@ fun RegisterTypeSelectionScreen(
 
 @Composable
 private fun CreateAlgo25AccountWidget(
-    algoKitEvent: (event: AlgoKitEvent) -> Unit
+    viewModel: CreateAccountTypeViewModel,
+    scope: CoroutineScope,
+    runtimeAwareSdk: RuntimeAwareSdk
 ) {
     GroupChoiceWidget(
         title = stringResource(id = R.string.create_a_new_account),
@@ -85,7 +117,9 @@ private fun CreateAlgo25AccountWidget(
         icon = ImageVector.vectorResource(R.drawable.ic_wallet),
         iconContentDescription = stringResource(id = R.string.create_a_new_algorand_account_with),
         onClick = {
-            algoKitEvent(AlgoKitEvent.ALGO25_ACCOUNT_CREATED)
+            scope.launch {
+                viewModel.createAlgo25Account(runtimeAwareSdk)
+            }
         }
     )
 }
@@ -114,7 +148,6 @@ private fun WatchAddressWidget() {
 
 @Composable
 fun TermsAndPrivacy(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
     val layoutResult = remember {
         mutableStateOf<TextLayoutResult?>(null)
     }

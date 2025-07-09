@@ -1,14 +1,26 @@
 package com.michaeltchuang.walletsdk.runtimeaware.ui.di
 
-import com.michaeltchuang.walletsdk.runtimeaware.ui.viewmodel.NameRegistrationViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.ui.viewmodel.CreateAccountNameViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.ui.viewmodel.CreateAccountTypeViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-
-val viewModelModule = module {
+internal val viewModelModule = module {
     viewModel {
-        NameRegistrationViewModel(get(), get())
+        CreateAccountTypeViewModel(
+            get(),
+            get(),
+        )
+    }
+
+    viewModel {
+        CreateAccountNameViewModel(
+            get(),
+            get(),
+            get(),
+        )
     }
 }
+
 
 

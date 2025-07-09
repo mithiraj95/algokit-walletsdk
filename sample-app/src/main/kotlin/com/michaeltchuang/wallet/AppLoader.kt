@@ -1,27 +1,21 @@
 package com.michaeltchuang.wallet
 
 import android.app.Application
-import com.michaeltchuang.walletsdk.runtimeaware.account.core.di.accountCoreModule
-import com.michaeltchuang.walletsdk.runtimeaware.account.local.di.localAccountsModule
-import com.michaeltchuang.walletsdk.runtimeaware.encryption.di.encryptionModule
-import com.michaeltchuang.walletsdk.runtimeaware.foundation.commonModule
-import com.michaeltchuang.walletsdk.runtimeaware.ui.di.viewModelModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import android.util.Log
+import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AppLoader : Application() {
+    private val runtimeAwareSdk by lazy { RuntimeAwareSdk(this) }
     override fun onCreate() {
-        startKoin {
-            androidContext(this@AppLoader)
-            modules(
-                listOf(
-                    commonModule,
-                    encryptionModule,
-                    localAccountsModule,
-                    accountCoreModule,
-                    viewModelModule,
-                ),
-            )
+        CoroutineScope(Dispatchers.IO).launch {
+            if (runtimeAwareSdk.initialize()) {
+                Log.i("AlgoKit", "runtimeAwareSdk initialized")
+            } else {
+                Log.i("AlgoKit", "runtimeAwareSdk not initialize")
+            }
         }
         super.onCreate()
     }

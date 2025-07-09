@@ -14,3 +14,8 @@ val commonModule = module {
     // Provide LifecycleAwareManager via its implementation
     factory<LifecycleAwareManager> { LifecycleAwareManagerImpl() }
 }
+
+val delegateModule = module {
+    factory { StateDelegate<Any>() } // Generic; use with type casting in ViewModel
+    factory { EventDelegate<Any>() }
+}

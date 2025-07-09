@@ -1,5 +1,6 @@
 package com.michaeltchuang.walletsdk.runtimeaware.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,18 +31,43 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.michaeltchuang.walletsdk.runtimeaware.account.core.domain.data.AccountCreation
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.PeraPrimaryButton
+import com.michaeltchuang.walletsdk.runtimeaware.ui.viewmodel.CreateAccountNameViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.utils.toShortenedAddress
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun CreateAccountNameScreen(
-    address: String,
-    onFinishClick: () -> Unit,
-    onBackClick: () -> Unit
+    navController: NavController,
+    onFinish: () -> Unit
 ) {
-    var accountName by remember { mutableStateOf(address) }
+    val accountCreation = navController
+        .previousBackStackEntry
+        ?.savedStateHandle
+        ?.get<AccountCreation>("accountCreation")
+
+    accountCreation?.let {
+        Log.d("CreateAccountNameScreen", it.address)
+    }
+    val viewModel: CreateAccountNameViewModel = koinViewModel()
+    var accountName by remember { mutableStateOf(accountCreation?.address.toShortenedAddress()) }
+
+
+    LaunchedEffect(Unit) {
+        viewModel.viewEvent.collect {
+            when (it) {
+                CreateAccountNameViewModel.ViewEvent.FinishedAccountCreation -> {
+                    onFinish()
+                }
+            }
+        }
+    }
+
 
     Box(
         modifier = Modifier
@@ -51,9 +78,8 @@ fun CreateAccountNameScreen(
     ) {
         // Top Back Button
         IconButton(
-            onClick = onBackClick,
-            modifier = Modifier
-                .align(Alignment.TopStart)
+            onClick = { navController.popBackStack() },
+            modifier = Modifier.align(Alignment.TopStart)
         ) {
             Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
         }
@@ -94,7 +120,10 @@ fun CreateAccountNameScreen(
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter),
             {
-                onFinishClick()
+                accountCreation?.let {
+                    viewModel.addNewAccount(accountCreation = accountCreation)
+                    onFinish()
+                }
             },
             text = "Finish Account Creation",
         )
@@ -103,9 +132,7 @@ fun CreateAccountNameScreen(
 
 @Composable
 fun CustomBasicTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    onClearClick: () -> Unit
+    value: String, onValueChange: (String) -> Unit, onClearClick: () -> Unit
 ) {
     Column(
         Modifier
@@ -119,9 +146,7 @@ fun CustomBasicTextField(
         )
 
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
+            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
         ) {
             BasicTextField(
                 value = value,
@@ -131,8 +156,7 @@ fun CustomBasicTextField(
                     .padding(vertical = 8.dp),
                 singleLine = true,
                 textStyle = LocalTextStyle.current.copy(
-                    color = Color.Black,
-                    fontSize = 16.sp
+                    color = Color.Black, fontSize = 16.sp
                 ),
             )
             IconButton(onClick = onClearClick) {
@@ -146,8 +170,7 @@ fun CustomBasicTextField(
 
         // Bottom Line
         HorizontalDivider(
-            thickness = 1.dp,
-            color = Color.Gray
+            thickness = 1.dp, color = Color.Gray
         )
     }
 }
