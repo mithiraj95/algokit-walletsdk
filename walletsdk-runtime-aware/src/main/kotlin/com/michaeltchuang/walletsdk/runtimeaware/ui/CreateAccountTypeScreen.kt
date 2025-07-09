@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -31,7 +30,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.michaeltchuang.walletsdk.runtimeaware.R
-import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.GroupChoiceWidget
@@ -49,8 +47,6 @@ fun CreateAccountTypeScreen(navController: NavHostController) {
 
     val viewModel: CreateAccountTypeViewModel = koinViewModel()
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
-    val runtimeAwareSdk = remember { RuntimeAwareSdk(context) }
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect {
@@ -97,7 +93,7 @@ fun CreateAccountTypeScreen(navController: NavHostController) {
             )
         }
         Spacer(modifier = Modifier.weight(1f))
-        CreateAlgo25AccountWidget(viewModel, scope, runtimeAwareSdk)
+        CreateAlgo25AccountWidget(viewModel, scope)
         ImportAlgo25AccountWidget()
         WatchAddressWidget()
         Spacer(modifier = Modifier.weight(1f))
@@ -109,7 +105,6 @@ fun CreateAccountTypeScreen(navController: NavHostController) {
 private fun CreateAlgo25AccountWidget(
     viewModel: CreateAccountTypeViewModel,
     scope: CoroutineScope,
-    runtimeAwareSdk: RuntimeAwareSdk
 ) {
     GroupChoiceWidget(
         title = stringResource(id = R.string.create_a_new_account),
@@ -118,7 +113,7 @@ private fun CreateAlgo25AccountWidget(
         iconContentDescription = stringResource(id = R.string.create_a_new_algorand_account_with),
         onClick = {
             scope.launch {
-                viewModel.createAlgo25Account(runtimeAwareSdk)
+                viewModel.processIntent(CreateAccountTypeViewModel.CreateAccountIntent.CreateAlgo25Account)
             }
         }
     )

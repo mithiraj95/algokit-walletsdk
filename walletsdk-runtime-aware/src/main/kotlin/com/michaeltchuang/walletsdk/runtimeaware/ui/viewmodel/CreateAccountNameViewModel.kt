@@ -16,6 +16,16 @@ class CreateAccountNameViewModel(
 ) : ViewModel(),
     EventViewModel<CreateAccountNameViewModel.ViewEvent> by eventDelegate {
 
+    fun processIntent(intent: CreateAccountNameIntent) {
+        when (intent) {
+            is CreateAccountNameIntent.AddNewAccount -> {
+                viewModelScope.launch {
+                    addNewAccount(intent.accountCreation, intent.customName)
+                }
+            }
+        }
+    }
+
     fun addNewAccount(accountCreation: AccountCreation, customName: String? = null) {
         viewModelScope.launch {
             accountCreation.customName = customName // set custom name
@@ -24,6 +34,13 @@ class CreateAccountNameViewModel(
                 eventDelegate.sendEvent(ViewEvent.FinishedAccountCreation)
             }
         }
+    }
+
+    sealed interface CreateAccountNameIntent {
+        data class AddNewAccount(
+            val accountCreation: AccountCreation,
+            val customName: String? = null
+        ) : CreateAccountNameIntent
     }
 
     sealed interface ViewEvent {

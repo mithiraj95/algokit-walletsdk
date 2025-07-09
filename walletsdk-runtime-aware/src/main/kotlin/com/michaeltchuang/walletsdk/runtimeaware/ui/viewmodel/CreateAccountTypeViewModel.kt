@@ -8,15 +8,26 @@ import com.michaeltchuang.walletsdk.runtimeaware.encryption.domain.manager.AESPl
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventDelegate
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.utils.CreationType
+import kotlinx.coroutines.launch
 
 class CreateAccountTypeViewModel(
     private val aesPlatformManager: AESPlatformManager,
+    private val runtimeAwareSdk: RuntimeAwareSdk,
     private val eventDelegate: EventDelegate<ViewEvent>,
 ) : ViewModel(),
     EventViewModel<CreateAccountTypeViewModel.ViewEvent> by eventDelegate {
 
-    suspend fun createAlgo25Account(runtimeAwareSdk: RuntimeAwareSdk) {
+    fun processIntent(intent: CreateAccountIntent) {
+        when (intent) {
+            CreateAccountIntent.CreateAlgo25Account -> {
+                viewModelScope.launch {
+                    createAlgo25Account()
+                }
+            }
+        }
+    }
 
+    suspend fun createAlgo25Account() {
         runtimeAwareSdk.createAlgo25Account()?.let {
             val secretKey = it.secretKey.toByteArray()
             val accountCreation = AccountCreation(
@@ -30,6 +41,10 @@ class CreateAccountTypeViewModel(
         } ?: {
             eventDelegate.sendEvent(viewModelScope, ViewEvent.Error("Failed "))
         }
+    }
+
+    sealed interface CreateAccountIntent {
+        data object CreateAlgo25Account : CreateAccountIntent
     }
 
     sealed interface ViewEvent {

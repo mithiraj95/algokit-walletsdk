@@ -121,7 +121,12 @@ fun CreateAccountNameScreen(
                 .align(Alignment.BottomCenter),
             {
                 accountCreation?.let {
-                    viewModel.addNewAccount(accountCreation = accountCreation)
+                    viewModel.processIntent(
+                        CreateAccountNameViewModel.CreateAccountNameIntent.AddNewAccount(
+                            it,
+                            accountName
+                        )
+                    )
                     onFinish()
                 }
             },
