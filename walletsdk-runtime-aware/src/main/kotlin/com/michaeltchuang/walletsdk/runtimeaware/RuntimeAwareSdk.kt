@@ -5,16 +5,23 @@ import android.os.Bundle
 import android.util.Log
 import androidx.privacysandbox.sdkruntime.client.SdkSandboxManagerCompat
 import androidx.privacysandbox.sdkruntime.core.LoadSdkCompatException
+import com.michaeltchuang.walletsdk.runtimeaware.account.di.accountCoreModule
+import com.michaeltchuang.walletsdk.runtimeaware.account.di.localAccountsModule
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.NameRegistrationPreviewUseCase
+import com.michaeltchuang.walletsdk.runtimeaware.encryption.di.encryptionModule
+import com.michaeltchuang.walletsdk.runtimeaware.foundation.commonModule
+import com.michaeltchuang.walletsdk.runtimeaware.foundation.delegateModule
+import com.michaeltchuang.walletsdk.runtimeaware.account.di.viewModelModule
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkService
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkServiceFactory
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 
-
-/**
- * This class represents an SDK that was created before the SDK runtime was available. It is in the
- * process of migrating to use the SDK runtime. At this point, all of the functionality has been
- * migrated to the "runtime enabled SDK" and this SDK merely serves as a wrapper.
- */
 
 class RuntimeAwareSdk(private val context: Context) {
 
@@ -25,6 +32,7 @@ class RuntimeAwareSdk(private val context: Context) {
         // You can also have a fallback mechanism here, where if the SDK cannot be loaded in the SDK
         // runtime, initialize as you usually would.
         val isRuntimeEnabledSdkLoaded = loadSdkIfNeeded(context) != null
+        initializeKoin()
         return isRuntimeEnabledSdkLoaded
     }
 
@@ -34,6 +42,14 @@ class RuntimeAwareSdk(private val context: Context) {
 
     suspend fun createAlgo25Account(): Algo25Account? {
         return loadSdkIfNeeded(context)?.createAlgo25Account()
+    }
+
+    suspend fun fetchAccounts(): List<LocalAccount.Algo25> {
+        return GlobalContext.get().get<NameRegistrationPreviewUseCase>().getAccount()
+    }
+
+    suspend fun deleteAccount(address: String) {
+        GlobalContext.get().get<NameRegistrationPreviewUseCase>().deleteAccount(address)
     }
 
     /** Keeps a reference to a sandboxed SDK and makes sure it's only loaded once. */
@@ -75,5 +91,30 @@ class RuntimeAwareSdk(private val context: Context) {
         fun isSdkLoaded(): Boolean {
             return remoteInstance != null
         }
+    }
+
+    private fun initializeKoin() {
+        GlobalContext.getOrNull()?.let {
+            // Koin already started
+            loadKoinModules(
+                getModules()
+            )
+        } ?: run {
+            startKoin {
+                androidContext(context)
+                modules(getModules())
+            }
+        }
+    }
+
+    private fun getModules(): List<Module> {
+        return listOf(
+            commonModule,
+            encryptionModule,
+            localAccountsModule,
+            accountCoreModule,
+            delegateModule,
+            viewModelModule,
+        )
     }
 }

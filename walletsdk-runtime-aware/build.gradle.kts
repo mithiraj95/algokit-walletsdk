@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.converter.gson)
     ksp(libs.room.compiler)
     implementation(libs.koin.androidx.compose) // or latest
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
 }
 

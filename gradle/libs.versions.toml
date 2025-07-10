@@ -8,7 +8,9 @@ koinAndroidxCompose = "4.1.0"
 kotlin = "2.1.20"
 ksp = "2.1.20-1.0.31"
 ktlint = "12.3.0"
+lifecycleViewmodelCompose = "2.7.0"
 lottieCompose = "6.6.7"
+navigationCompose = "2.7.7"
 privacySandboxBuildPlugin = "1.0.0-alpha02"
 sdkRuntimeBackcompat = "1.0.0-alpha17"
 sdkRuntimeShim = "1.0.0-alpha13"
@@ -33,7 +35,9 @@ converterGson = "3.0.0"
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-material3 = { module = "androidx.compose.material3:material3" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 
