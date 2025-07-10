@@ -13,7 +13,6 @@ import org.koin.core.context.startKoin
 
 class WalletApplication : Application() {
     override fun onCreate() {
-
         startKoin {
             androidContext(this@WalletApplication)
             modules(runtimeAwareSdkModule)

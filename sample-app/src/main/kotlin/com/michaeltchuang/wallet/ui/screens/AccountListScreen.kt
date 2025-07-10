@@ -31,9 +31,9 @@ import com.michaeltchuang.wallet.ui.components.AccountItem
 import com.michaeltchuang.wallet.ui.components.LottieConfetti
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
-import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitEvent
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingBottomSheet
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -58,9 +58,10 @@ fun AccountListScreen() {
     Scaffold(
         topBar = {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(55.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(55.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(text = "Account List", style = typography.title.regular.sansMedium)
@@ -81,9 +82,10 @@ fun AccountListScreen() {
     ) { padding ->
         LazyColumn(
             contentPadding = PaddingValues(),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 60.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = 60.dp),
         ) {
             Log.d("AccountListScreen01", accountList.value.size.toString())
             items(accountList.value, key = { it.algoAddress }) { account ->
@@ -106,7 +108,7 @@ fun AccountListScreen() {
 
             AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
             AlgoKitEvent.HD_ACCOUNT_CREATED,
-                -> {
+            -> {
                 showConfetti = true
                 showSheet = false
                 fetchAccount = true
