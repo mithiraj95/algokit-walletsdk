@@ -2,6 +2,7 @@ package com.michaeltchuang.wallet
 
 import android.app.Application
 import android.util.Log
+import com.michaeltchuang.wallet.di.provideViewModelModules
 import com.michaeltchuang.wallet.di.runtimeAwareSdkModule
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +16,7 @@ class WalletApplication : Application() {
     override fun onCreate() {
         startKoin {
             androidContext(this@WalletApplication)
-            modules(runtimeAwareSdkModule)
+            modules(listOf(provideViewModelModules, runtimeAwareSdkModule))
         }
         CoroutineScope(Dispatchers.IO).launch {
             if (getKoin().get<RuntimeAwareSdk>().initialize()) {
