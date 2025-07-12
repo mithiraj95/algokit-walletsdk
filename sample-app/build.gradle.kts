@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -52,12 +53,16 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui.tooling.preview)
     debugImplementation(libs.androidx.ui.tooling)
-
     implementation(libs.bundles.sdkruntimeUI)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.compose)
     implementation(libs.lottie.compose)
+    implementation(libs.koin.androidx.compose) // or latest
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.core.viewmodel)
+    implementation(libs.koin.compose.viewmodel)
+    implementation(libs.kotlinx.serialization.json)
 }

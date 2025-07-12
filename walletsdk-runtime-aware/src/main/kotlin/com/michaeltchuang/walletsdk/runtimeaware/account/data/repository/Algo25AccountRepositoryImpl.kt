@@ -1,13 +1,11 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.data.repository
 
-import android.util.Log
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.dao.Algo25Dao
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.mapper.entity.Algo25EntityMapper
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.mapper.model.Algo25Mapper
-import com.michaeltchuang.walletsdk.runtimeaware.account.domain.repository.local.Algo25AccountRepository
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount.Algo25
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.repository.local.Algo25AccountRepository
 import com.michaeltchuang.walletsdk.runtimeaware.encryption.domain.manager.AESPlatformManager
-
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -59,7 +57,6 @@ internal class Algo25AccountRepositoryImpl(
         withContext(coroutineDispatcher) {
             val algo25Entity = algo25EntityMapper(account, privateKey)
             algo25Dao.insert(algo25Entity)
-            Log.d("Algo25AccountRepositoryImpl", "*********Account Added*********")
         }
     }
 
