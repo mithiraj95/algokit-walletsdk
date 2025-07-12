@@ -22,12 +22,13 @@ fun SettingsScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AlgoKitTheme.colors.background),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(AlgoKitTheme.colors.background),
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("SettingsScreen")
+            Text("Settings Screen")
         }
     }
 }

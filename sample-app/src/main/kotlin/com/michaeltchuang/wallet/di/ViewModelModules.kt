@@ -1,6 +1,5 @@
 package com.michaeltchuang.wallet.di
 
-
 import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel
 import com.michaeltchuang.wallet.ui.widgets.snackbar.SnackbarViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.StateDelegate
@@ -11,5 +10,11 @@ val provideViewModelModules =
     module {
         single { SnackbarViewModel() }
         factory { StateDelegate<Any>() }
-        viewModel<AccountListViewModel> { AccountListViewModel(get(), get()) }
+        viewModel<AccountListViewModel> {
+            AccountListViewModel(
+                get(),
+                get(),
+                get(),
+            )
+        }
     }

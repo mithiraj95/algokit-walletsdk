@@ -9,19 +9,16 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
-
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
     val snackbarHostState = remember { SnackbarHostState() }
     val isBottomSheetVisible = remember { mutableStateOf(false) }
-
 
     Scaffold(
         modifier =

@@ -12,9 +12,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.michaeltchuang.wallet.R
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import kotlinx.serialization.Serializable
-import com.michaeltchuang.wallet.R
 
 @Composable
 fun AlgoKitNavigationBar(
@@ -66,7 +66,11 @@ fun AlgoKitNavigationBar(
     }
 }
 
-data class TopLevelRouteDetails<T : Any>(val name: String, val route: T, @DrawableRes val icon: Int)
+data class TopLevelRouteDetails<T : Any>(
+    val name: String,
+    val route: T,
+    @DrawableRes val icon: Int,
+)
 
 private val topLevelRoutes: List<TopLevelRoute> = listOf(Accounts, Discover, Settings)
 

@@ -7,7 +7,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar() {
