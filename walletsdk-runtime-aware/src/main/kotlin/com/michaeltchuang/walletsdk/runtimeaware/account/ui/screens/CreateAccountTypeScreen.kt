@@ -114,7 +114,7 @@ private fun CreateAlgo25AccountWidget(
         iconContentDescription = stringResource(id = R.string.create_a_new_algorand_account_with),
         onClick = {
             scope.launch {
-                viewModel.processIntent(CreateAccountTypeViewModel.CreateAccountIntent.CreateAlgo25Account)
+                viewModel.createAlgo25Account()
             }
         }
     )
