@@ -12,11 +12,13 @@ internal val viewModelModule = module {
             get(),
             get(),
             get(),
+            get(),
         )
     }
 
     viewModel {
         CreateAccountNameViewModel(
+            get(),
             get(),
             get(),
             get(),

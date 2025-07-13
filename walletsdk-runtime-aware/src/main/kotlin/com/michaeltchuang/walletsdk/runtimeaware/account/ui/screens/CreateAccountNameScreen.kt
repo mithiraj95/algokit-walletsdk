@@ -61,8 +61,12 @@ fun CreateAccountNameScreen(
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect {
             when (it) {
-                CreateAccountNameViewModel.ViewEvent.FinishedAccountCreation -> {
+                is CreateAccountNameViewModel.ViewEvent.FinishedAccountCreation -> {
                     onFinish()
+                }
+
+                is CreateAccountNameViewModel.ViewEvent.Error -> {
+                    Log.d("CreateAccountTypeScreen", it.message)
                 }
             }
         }
@@ -107,7 +111,6 @@ fun CreateAccountNameScreen(
 
             Spacer(modifier = Modifier.height(50.dp))
 
-
             CustomBasicTextField(accountName, {
                 accountName = it
             }, {
@@ -121,11 +124,9 @@ fun CreateAccountNameScreen(
                 .align(Alignment.BottomCenter),
             {
                 accountCreation?.let {
-                    viewModel.processIntent(
-                        CreateAccountNameViewModel.CreateAccountNameIntent.AddNewAccount(
+                    viewModel.addNewAccount(
                             it,
                             accountName
-                        )
                     )
                     onFinish()
                 }

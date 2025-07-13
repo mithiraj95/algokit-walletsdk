@@ -7,44 +7,51 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.Nam
 import com.michaeltchuang.walletsdk.runtimeaware.encryption.domain.manager.AESPlatformManager
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventDelegate
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.foundation.StateDelegate
+import com.michaeltchuang.walletsdk.runtimeaware.foundation.StateViewModel
 import kotlinx.coroutines.launch
 
 class CreateAccountNameViewModel(
     private val nameRegistrationPreviewUseCase: NameRegistrationPreviewUseCase,
     private val aesPlatformManager: AESPlatformManager,
+    private val stateDelegate: StateDelegate<ViewState>,
     private val eventDelegate: EventDelegate<ViewEvent>,
 ) : ViewModel(),
+    StateViewModel<CreateAccountNameViewModel.ViewState> by stateDelegate,
     EventViewModel<CreateAccountNameViewModel.ViewEvent> by eventDelegate {
 
-    fun processIntent(intent: CreateAccountNameIntent) {
-        when (intent) {
-            is CreateAccountNameIntent.AddNewAccount -> {
-                viewModelScope.launch {
-                    addNewAccount(intent.accountCreation, intent.customName)
+    init {
+        stateDelegate.setDefaultState(ViewState.Idle)
+    }
+
+    fun addNewAccount(accountCreation: AccountCreation, customName: String? = null) {
+        stateDelegate.onState<ViewState.Idle> {
+            stateDelegate.updateState { ViewState.Loading }
+            viewModelScope.launch {
+                try {
+                    accountCreation.customName = customName
+                    nameRegistrationPreviewUseCase.addNewAccount(accountCreation)
+                    eventDelegate.sendEvent(ViewEvent.FinishedAccountCreation)
+                } catch (e: Exception) {
+                    displayError(e.message ?: "Unknown error")
                 }
             }
         }
     }
 
-    fun addNewAccount(accountCreation: AccountCreation, customName: String? = null) {
+    private fun displayError(message: String) {
         viewModelScope.launch {
-            accountCreation.customName = customName // set custom name
-            accountCreation.let {
-                nameRegistrationPreviewUseCase.addNewAccount(it)
-                eventDelegate.sendEvent(ViewEvent.FinishedAccountCreation)
-            }
+            eventDelegate.sendEvent(ViewEvent.Error(message))
         }
     }
 
-    sealed interface CreateAccountNameIntent {
-        data class AddNewAccount(
-            val accountCreation: AccountCreation,
-            val customName: String? = null
-        ) : CreateAccountNameIntent
+    sealed interface ViewState {
+        data object Idle : ViewState
+        data object Loading : ViewState
     }
 
     sealed interface ViewEvent {
         data object FinishedAccountCreation : ViewEvent
+        data class Error(val message: String) : ViewEvent
     }
-
 }
