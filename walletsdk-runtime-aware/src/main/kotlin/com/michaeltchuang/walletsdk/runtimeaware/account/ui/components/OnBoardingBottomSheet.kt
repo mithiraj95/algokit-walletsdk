@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountNameScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountTypeScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.HdWalletSelectionScreen
 
 enum class AlgoKitEvent {
     ClOSE_BOTTOMSHEET, ALGO25_ACCOUNT_CREATED, HD_ACCOUNT_CREATED
@@ -17,7 +18,8 @@ enum class AlgoKitEvent {
 
 enum class OnBoardingScreens() {
     CREATE_ACCOUNT_TYPE,
-    CREATE_ACCOUNT_NAME
+    CREATE_ACCOUNT_NAME,
+    HD_WALLET_SELECTION_SCREEN,
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +56,9 @@ fun OnBoardingBottomSheetNavHost(
                 navController, {
                     onFinish()
                 })
+        }
+        composable(OnBoardingScreens.HD_WALLET_SELECTION_SCREEN.name) {
+            HdWalletSelectionScreen(navController)
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,10 +34,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core.AccountCreation
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountNameViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.PeraPrimaryButton
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountNameViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.utils.toShortenedAddress
 import org.koin.androidx.compose.koinViewModel
 
@@ -75,6 +76,7 @@ fun CreateAccountNameScreen(
 
     Box(
         modifier = Modifier
+            .background(color = AlgoKitTheme.colors.background)
             .fillMaxHeight(.9f)
             .fillMaxWidth()
             .padding(16.dp)
@@ -85,7 +87,11 @@ fun CreateAccountNameScreen(
             onClick = { navController.popBackStack() },
             modifier = Modifier.align(Alignment.TopStart)
         ) {
-            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+            Icon(
+                tint = AlgoKitTheme.colors.textMain,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back"
+            )
         }
 
         // Main Content
@@ -125,10 +131,9 @@ fun CreateAccountNameScreen(
             {
                 accountCreation?.let {
                     viewModel.addNewAccount(
-                            it,
-                            accountName
+                        it,
+                        accountName
                     )
-                    onFinish()
                 }
             },
             text = "Finish Account Creation",
@@ -162,7 +167,7 @@ fun CustomBasicTextField(
                     .padding(vertical = 8.dp),
                 singleLine = true,
                 textStyle = LocalTextStyle.current.copy(
-                    color = Color.Black, fontSize = 16.sp
+                    color = AlgoKitTheme.colors.textMain, fontSize = 16.sp
                 ),
             )
             IconButton(onClick = onClearClick) {

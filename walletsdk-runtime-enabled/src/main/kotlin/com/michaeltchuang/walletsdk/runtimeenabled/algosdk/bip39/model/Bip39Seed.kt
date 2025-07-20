@@ -1,6 +1,9 @@
 package com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.model
 
-data class Bip39Seed internal constructor(val value: ByteArray) {
+import androidx.privacysandbox.tools.PrivacySandboxValue
+
+@PrivacySandboxValue
+data class Bip39Seed(val value: String) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -8,10 +11,10 @@ data class Bip39Seed internal constructor(val value: ByteArray) {
 
         other as Bip39Seed
 
-        return value.contentEquals(other.value)
+        return value.decodeToByteArray().contentEquals(other.value.decodeToByteArray())
     }
 
     override fun hashCode(): Int {
-        return value.contentHashCode()
+        return value.decodeToByteArray().contentHashCode()
     }
 }

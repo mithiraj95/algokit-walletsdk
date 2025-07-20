@@ -22,7 +22,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 
 @Composable
 fun AccountItem(
-    account: LocalAccount.Algo25,
+    account: LocalAccount.HdKey,
     onDelete: (address: String) -> Unit,
 ) {
     Card(
@@ -60,8 +60,14 @@ fun AccountItem(
 fun AccountItemPreview() {
     // Create a sample account for preview
     val sampleAccount =
-        LocalAccount.Algo25(
+        LocalAccount.HdKey(
             algoAddress = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            publicKey = ByteArray(0),
+            seedId = 0,
+            account = 0,
+            change = 0,
+            keyIndex = 0,
+            derivationType = 0,
         )
 
     AlgoKitTheme {

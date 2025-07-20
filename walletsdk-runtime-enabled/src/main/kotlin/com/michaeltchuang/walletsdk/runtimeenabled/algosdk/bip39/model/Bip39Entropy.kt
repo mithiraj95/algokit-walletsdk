@@ -1,6 +1,10 @@
 package com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.model
 
-data class Bip39Entropy internal constructor(val value: ByteArray) {
+import androidx.privacysandbox.tools.PrivacySandboxValue
+import java.util.Base64
+
+@PrivacySandboxValue
+data class Bip39Entropy(val value: String) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -8,10 +12,13 @@ data class Bip39Entropy internal constructor(val value: ByteArray) {
 
         other as Bip39Entropy
 
-        return value.contentEquals(other.value)
+        return value.decodeToByteArray().contentEquals(other.value.decodeToByteArray())
     }
 
     override fun hashCode(): Int {
-        return value.contentHashCode()
+        return value.decodeToByteArray().contentHashCode()
     }
+}
+fun String.decodeToByteArray(): ByteArray {
+    return Base64.getDecoder().decode(this)
 }

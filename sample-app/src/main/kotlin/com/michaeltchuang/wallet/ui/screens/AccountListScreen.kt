@@ -122,9 +122,11 @@ private fun AccountListContent(
         AccountsState.Idle -> {
             CenteredMessage("Ready to load accounts...")
         }
+
         AccountsState.Loading -> {
             CenteredLoader()
         }
+
         is AccountsState.Content -> {
             AccountsList(
                 accounts = state.accounts,
@@ -132,6 +134,7 @@ private fun AccountListContent(
                 onDeleteAccount = onDeleteAccount,
             )
         }
+
         is AccountsState.Error -> {
             CenteredMessage(
                 text = "Error: ${state.message}",
@@ -177,8 +180,10 @@ private fun AccountsList(
             contentPadding = padding,
             modifier = Modifier.fillMaxSize(),
         ) {
-            items(accounts) { account ->
-                AccountItem(account as LocalAccount.Algo25) { address ->
+            items(
+                accounts,
+                key = { account -> (account as LocalAccount.HdKey).algoAddress }) { account ->
+                AccountItem(account as LocalAccount.HdKey) { address ->
                     onDeleteAccount(address)
                 }
                 Log.d("AccountItem", "Total accounts: ${accounts.size}")
@@ -210,6 +215,7 @@ private fun handleEvent(
         is AccountsEvent.ShowError -> {
             Toast.makeText(context, event.message, Toast.LENGTH_LONG).show()
         }
+
         is AccountsEvent.ShowMessage -> {
             Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
         }
@@ -225,9 +231,10 @@ private fun handleBottomSheetEvent(
         AlgoKitEvent.ClOSE_BOTTOMSHEET -> {
             onCloseSheet()
         }
+
         AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
         AlgoKitEvent.HD_ACCOUNT_CREATED,
-        -> {
+            -> {
             onAccountCreated()
         }
     }

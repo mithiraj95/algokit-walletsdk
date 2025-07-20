@@ -1,12 +1,16 @@
 package com.michaeltchuang.walletsdk.runtimeenabled.runtime.data.service
 
 import android.content.Context
+import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.di.bip39Module
+import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.sdk.AlgorandBip39WalletProvider
+import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.sdk.Bip39Wallet
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.di.algoSdkModule
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoAccountSdkImpl
+import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoKitBip39Sdk
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoKitBip39SdkImpl
-import com.michaeltchuang.walletsdk.runtimeenabled.security.di.securityModule
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkService
+import com.michaeltchuang.walletsdk.runtimeenabled.security.di.securityModule
 import org.koin.core.context.startKoin
 
 
@@ -16,21 +20,22 @@ class WalletSdkServiceImpl(private val context: Context) : WalletSdkService {
         startKoin {
             modules(securityModule)
             modules(algoSdkModule)
+            modules(bip39Module)
         }
     }
 
     override suspend fun getEntropyFromMnemonic(mnemonic: String): String {
-        return AlgoKitBip39SdkImpl().getEntropyFromMnemonic(mnemonic)?.decodeToString() ?: ""
+        return AlgoKitBip39SdkImpl().getEntropyFromMnemonic(mnemonic) ?: ""
     }
 
     override suspend fun getSeedFromEntropy(entropy: String): String {
-        val seed = AlgoKitBip39SdkImpl().getSeedFromEntropy(entropy.encodeToByteArray())
-        return seed?.decodeToString() ?: ""
+        val seed = AlgoKitBip39SdkImpl().getSeedFromEntropy(entropy)
+        return seed ?: ""
     }
 
     override suspend fun getMnemonicFromEntropy(entropy: String): String {
         val mnemonic =
-            AlgoKitBip39SdkImpl().getMnemonicFromEntropy(entropy.encodeToByteArray()) ?: ""
+            AlgoKitBip39SdkImpl().getMnemonicFromEntropy(entropy) ?: ""
         return mnemonic
     }
 
@@ -48,6 +53,15 @@ class WalletSdkServiceImpl(private val context: Context) : WalletSdkService {
         val algoAccountSdkImpl = AlgoAccountSdkImpl()
         return algoAccountSdkImpl.getMnemonicFromAlgo25SecretKey(secretKey.encodeToByteArray())
             .toString()
+    }
+
+    override suspend fun createBip39Wallet(): Bip39Wallet {
+        val bip39WalletProvider = AlgorandBip39WalletProvider()
+        return bip39WalletProvider.createBip39Wallet()
+    }
+
+    override suspend fun algoKitBip39Sdk(): AlgoKitBip39Sdk {
+        return AlgoKitBip39SdkImpl()
     }
 
 }

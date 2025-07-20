@@ -5,10 +5,10 @@ import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoK
 class RecoverWithPassphrasePreviewUseCase(
     private val algokitBip39Sdk: AlgoKitBip39Sdk,
 ) {
-    fun getAccount(
+    suspend fun getAccount(
         mnemonics: String,
-    ): String {
+    ): String? {
         val entropy = algokitBip39Sdk.getEntropyFromMnemonic(mnemonics)
-        return entropy.contentToString()
+        return entropy
     }
 }

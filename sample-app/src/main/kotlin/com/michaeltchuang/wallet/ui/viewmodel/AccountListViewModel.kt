@@ -20,7 +20,6 @@ class AccountListViewModel(
     init {
         stateDelegate.setDefaultState(AccountsState.Idle)
     }
-
     fun fetchAccounts() {
         stateDelegate.updateState { AccountsState.Loading }
         viewModelScope.launch {
@@ -40,7 +39,7 @@ class AccountListViewModel(
         stateDelegate.updateState { AccountsState.Loading }
         viewModelScope.launch {
             try {
-                runtimeAwareSdk.deleteAccount(address)
+                runtimeAwareSdk.deleteHdKeyAccount(address)
                 eventDelegate.sendEvent(AccountsEvent.ShowMessage("Account deleted successfully."))
                 fetchAccounts() // Refresh the list after deletion
             } catch (e: Exception) {
@@ -55,7 +54,7 @@ class AccountListViewModel(
 
         data object Loading : AccountsState
 
-        data class Content(val accounts: List<LocalAccount.Algo25>) : AccountsState
+        data class Content(val accounts: List<LocalAccount>) : AccountsState
 
         data class Error(val message: String) : AccountsState
     }

@@ -2,29 +2,32 @@ package com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk
 
 import cash.z.ecc.android.bip39.Mnemonics
 import cash.z.ecc.android.bip39.toSeed
+import com.michaeltchuang.walletsdk.runtimeenabled.utils.base64DecodeToByteArray
+import com.michaeltchuang.walletsdk.runtimeenabled.utils.base64EncodeToString
 
 internal class AlgoKitBip39SdkImpl : AlgoKitBip39Sdk {
-    override fun getSeedFromEntropy(entropy: ByteArray): ByteArray? {
+    override suspend fun getSeedFromEntropy(entropy: String): String? {
         return try {
-            Mnemonics.MnemonicCode(entropy).toSeed()
+            Mnemonics.MnemonicCode(entropy.base64DecodeToByteArray()).toSeed().base64EncodeToString()
         } catch (e: Exception) {
             null
         }
     }
 
-    override fun getEntropyFromMnemonic(mnemonic: String): ByteArray? {
+    override suspend fun getEntropyFromMnemonic(mnemonic: String): String? {
         return try {
-            Mnemonics.MnemonicCode(mnemonic).toEntropy()
+            Mnemonics.MnemonicCode(mnemonic).toEntropy().base64EncodeToString()
         } catch (e: Exception) {
             null
         }
     }
 
-    override fun getMnemonicFromEntropy(entropy: ByteArray): String? {
+    override suspend fun getMnemonicFromEntropy(entropy: String): String? {
         return try {
-            val mnemonic = Mnemonics.MnemonicCode(entropy).words.joinToString(" ") { charArray ->
-                String(charArray)
-            }
+            val mnemonic =
+                Mnemonics.MnemonicCode(entropy.base64DecodeToByteArray()).words.joinToString(" ") { charArray ->
+                    String(charArray)
+                }
             mnemonic
         } catch (e: Exception) {
             null
