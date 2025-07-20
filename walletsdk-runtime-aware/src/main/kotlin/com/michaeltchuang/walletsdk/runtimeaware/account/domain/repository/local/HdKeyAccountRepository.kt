@@ -4,7 +4,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.HdWa
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
 import kotlinx.coroutines.flow.Flow
 
-internal interface HdKeyAccountRepository {
+interface HdKeyAccountRepository {
 
     fun getAllAsFlow(): Flow<List<LocalAccount.HdKey>>
 

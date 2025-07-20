@@ -11,9 +11,9 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.dao.HdKey
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.dao.HdSeedDao
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.dao.LedgerBleDao
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.dao.NoAuthDao
+import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.Algo25Entity
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.CustomAccountInfoEntity
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.CustomHdSeedInfoEntity
-import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.Algo25Entity
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.HdKeyEntity
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.HdSeedEntity
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.LedgerBleEntity

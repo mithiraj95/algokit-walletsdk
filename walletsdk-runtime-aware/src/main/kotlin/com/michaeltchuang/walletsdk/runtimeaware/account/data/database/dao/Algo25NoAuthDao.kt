@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
-import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.NoAuthEntity
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.Algo25Entity
+import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.model.NoAuthEntity
 
 @Dao
 internal interface Algo25NoAuthDao {

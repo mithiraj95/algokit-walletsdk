@@ -6,14 +6,17 @@ import android.util.Log
 import androidx.privacysandbox.sdkruntime.client.SdkSandboxManagerCompat
 import androidx.privacysandbox.sdkruntime.core.LoadSdkCompatException
 import com.michaeltchuang.walletsdk.runtimeaware.account.di.accountCoreModule
+import com.michaeltchuang.walletsdk.runtimeaware.account.di.customInfoModule
 import com.michaeltchuang.walletsdk.runtimeaware.account.di.localAccountsModule
-import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.NameRegistrationPreviewUseCase
+import com.michaeltchuang.walletsdk.runtimeaware.account.di.viewModelModule
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.NameRegistrationUseCase
 import com.michaeltchuang.walletsdk.runtimeaware.encryption.di.encryptionModule
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.commonModule
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.delegateModule
-import com.michaeltchuang.walletsdk.runtimeaware.account.di.viewModelModule
-import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
+import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.sdk.Bip39Wallet
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
+import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoKitBip39Sdk
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkService
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkServiceFactory
 import org.koin.android.ext.koin.androidContext
@@ -21,7 +24,6 @@ import org.koin.core.context.GlobalContext
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
-
 
 class RuntimeAwareSdk(private val context: Context) {
 
@@ -44,16 +46,27 @@ class RuntimeAwareSdk(private val context: Context) {
         return loadSdkIfNeeded(context)?.createAlgo25Account()
     }
 
-    suspend fun fetchAccounts(): List<LocalAccount.Algo25> {
-        return GlobalContext.get().get<NameRegistrationPreviewUseCase>().getAccount()
+    suspend fun fetchAccounts(): List<LocalAccount> {
+        return GlobalContext.get().get<NameRegistrationUseCase>().getAccount()
     }
 
     suspend fun deleteAccount(address: String) {
-        GlobalContext.get().get<NameRegistrationPreviewUseCase>().deleteAccount(address)
+        GlobalContext.get().get<NameRegistrationUseCase>().deleteAccount(address)
+        GlobalContext.get().get<NameRegistrationUseCase>().deleteHdKeyAccount(address)
+    }
+
+    suspend fun createBip39Wallet(): Bip39Wallet? {
+        return loadSdkIfNeeded(context)?.createBip39Wallet()
+    }
+
+    suspend fun algoKitBit39Sdk(): AlgoKitBip39Sdk? {
+        return loadSdkIfNeeded(context)?.algoKitBip39Sdk()
     }
 
     /** Keeps a reference to a sandboxed SDK and makes sure it's only loaded once. */
-    companion object Loader {
+    companion
+
+    object Loader {
 
         private const val TAG = "ExistingSdk"
 
@@ -112,6 +125,7 @@ class RuntimeAwareSdk(private val context: Context) {
             commonModule,
             encryptionModule,
             localAccountsModule,
+            customInfoModule,
             accountCoreModule,
             delegateModule,
             viewModelModule,

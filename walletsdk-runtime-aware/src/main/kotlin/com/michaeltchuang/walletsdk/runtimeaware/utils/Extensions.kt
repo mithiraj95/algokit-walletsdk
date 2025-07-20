@@ -1,4 +1,4 @@
-package com.michaeltchuang.walletsdk.runtimeenabled.utils
+package com.michaeltchuang.walletsdk.runtimeaware.utils
 
 import java.util.Base64
 

@@ -1,5 +1,7 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.di
 
+import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.dao.CustomAccountInfoDao
+import com.michaeltchuang.walletsdk.runtimeaware.account.data.database.dao.CustomHdSeedInfoDao
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.mapper.entity.CustomAccountInfoEntityMapper
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.mapper.entity.CustomAccountInfoEntityMapperImpl
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.mapper.entity.CustomHdSeedInfoEntityMapper
@@ -43,8 +45,8 @@ import org.koin.dsl.module
 val customInfoModule = module {
 
     // DAOs
-    single { get<AlgoKitDatabase>().customAccountInfoDao() }
-    single { get<AlgoKitDatabase>().customHdSeedInfoDao() }
+    single<CustomAccountInfoDao> { get<AlgoKitDatabase>().customAccountInfoDao() }
+    single<CustomHdSeedInfoDao> { get<AlgoKitDatabase>().customHdSeedInfoDao() }
 
     // Mappers
     factory<CustomAccountInfoEntityMapper> { CustomAccountInfoEntityMapperImpl() }

@@ -55,7 +55,7 @@ class AccountListViewModel(
 
         data object Loading : AccountsState
 
-        data class Content(val accounts: List<LocalAccount.Algo25>) : AccountsState
+        data class Content(val accounts: List<LocalAccount>) : AccountsState
 
         data class Error(val message: String) : AccountsState
     }

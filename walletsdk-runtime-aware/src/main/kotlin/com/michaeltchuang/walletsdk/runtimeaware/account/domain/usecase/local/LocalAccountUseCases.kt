@@ -11,8 +11,20 @@ internal fun interface DeleteAlgo25Account {
     suspend operator fun invoke(address: String)
 }
 
-internal fun interface GetAlgo25Account {
-    suspend operator fun invoke(): List<LocalAccount.Algo25>
+internal fun interface DeleteHdKeyAccount {
+    suspend operator fun invoke(address: String)
+}
+
+fun interface GetLocalAccounts {
+    suspend operator fun invoke(): List<LocalAccount>
+}
+
+internal fun interface SaveHdKeyAccount {
+    suspend operator fun invoke(account: LocalAccount.HdKey, privateKey: ByteArray)
+}
+
+fun interface GetSeedIdIfExistingEntropy {
+    suspend operator fun invoke(entropy: ByteArray): Int?
 }
 
 
