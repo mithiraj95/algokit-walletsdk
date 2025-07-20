@@ -3,6 +3,7 @@ package com.michaeltchuang.wallet.ui.screens
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -169,8 +170,8 @@ private fun CenteredLoader() {
 
 @Composable
 private fun AccountsList(
-    accounts: List<Any>, // Replace with your actual account type
-    padding: androidx.compose.foundation.layout.PaddingValues,
+    accounts: List<Any>,
+    padding: PaddingValues,
     onDeleteAccount: (String) -> Unit,
 ) {
     if (accounts.isEmpty()) {
@@ -182,7 +183,8 @@ private fun AccountsList(
         ) {
             items(
                 accounts,
-                key = { account -> (account as LocalAccount.HdKey).algoAddress }) { account ->
+                key = { account -> (account as LocalAccount.HdKey).algoAddress },
+            ) { account ->
                 AccountItem(account as LocalAccount.HdKey) { address ->
                     onDeleteAccount(address)
                 }
@@ -234,7 +236,7 @@ private fun handleBottomSheetEvent(
 
         AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
         AlgoKitEvent.HD_ACCOUNT_CREATED,
-            -> {
+        -> {
             onAccountCreated()
         }
     }

@@ -25,7 +25,6 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 
-
 class RuntimeAwareSdk(private val context: Context) {
 
     /**
@@ -53,8 +52,6 @@ class RuntimeAwareSdk(private val context: Context) {
 
     suspend fun deleteAccount(address: String) {
         GlobalContext.get().get<NameRegistrationUseCase>().deleteAccount(address)
-    }
-    suspend fun deleteHdKeyAccount(address: String) {
         GlobalContext.get().get<NameRegistrationUseCase>().deleteHdKeyAccount(address)
     }
 
@@ -65,7 +62,6 @@ class RuntimeAwareSdk(private val context: Context) {
     suspend fun algoKitBit39Sdk(): AlgoKitBip39Sdk? {
         return loadSdkIfNeeded(context)?.algoKitBip39Sdk()
     }
-
 
     /** Keeps a reference to a sandboxed SDK and makes sure it's only loaded once. */
     companion
