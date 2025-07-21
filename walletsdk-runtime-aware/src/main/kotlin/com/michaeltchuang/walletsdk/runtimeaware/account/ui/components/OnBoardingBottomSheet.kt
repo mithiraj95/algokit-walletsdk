@@ -1,5 +1,7 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.ui.components
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
@@ -76,7 +78,11 @@ fun OnBoardingBottomSheetNavHost(
             modifier = Modifier
                 .padding(0.dp)
         ) {
-            NavHost(navController, startDestination = OnBoardingScreens.CREATE_ACCOUNT_TYPE.name) {
+            NavHost(
+                navController,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+                startDestination = OnBoardingScreens.CREATE_ACCOUNT_TYPE.name) {
                 composable(OnBoardingScreens.CREATE_ACCOUNT_TYPE.name) {
                     CreateAccountTypeScreen(navController) {
                         coroutineScope.launch {

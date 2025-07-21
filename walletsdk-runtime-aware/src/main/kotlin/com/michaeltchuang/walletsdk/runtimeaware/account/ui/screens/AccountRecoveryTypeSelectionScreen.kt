@@ -140,7 +140,7 @@ private fun AlgorandSecureBackupWidget(onClick: (message: String) -> Unit) {
 
 @PreviewLightDark
 @Composable
-fun AccountRecoveryTypeSelectionScreenPreview(onClick: (message: String) -> Unit) {
+fun AccountRecoveryTypeSelectionScreenPreview() {
     AlgoKitTheme {
         AccountRecoveryTypeSelectionScreen(rememberNavController()) {}
     }
