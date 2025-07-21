@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import co.algorand.app.ui.widgets.snackbar.SnackBarLayout
+import com.michaeltchuang.wallet.ui.widgets.snackbar.SnackBarLayout
 import com.michaeltchuang.wallet.ui.screens.AccountListScreen
 import com.michaeltchuang.wallet.ui.screens.DiscoverScreen
 import com.michaeltchuang.wallet.ui.screens.SettingsScreen

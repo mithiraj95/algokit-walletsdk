@@ -19,6 +19,7 @@ class NameRegistrationUseCase(
     suspend fun getAccount(): List<LocalAccount> {
         return getLocalAccountUseCase()
     }
+
     suspend fun deleteHdKeyAccount(address: String) {
         deleteHdKeyAccountUseCase(address)
     }

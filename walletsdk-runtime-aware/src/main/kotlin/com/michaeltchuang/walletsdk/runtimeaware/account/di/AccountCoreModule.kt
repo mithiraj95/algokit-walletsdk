@@ -26,6 +26,6 @@ val accountCoreModule = module {
 
     single { NameRegistrationUseCase(get(), get(), get(), get()) }
     single<AccountCreationHdKeyTypeMapper> { DefaultAccountCreationHdKeyTypeMapperImpl(get()) }
-    single { GetLocalAccountUseCase(get(), get(),get()) }
-    single<GetLocalAccounts> {get<GetLocalAccountUseCase> () }
+    single { GetLocalAccountUseCase(get(), get(), get()) }
+    single<GetLocalAccounts> { get<GetLocalAccountUseCase>() }
 }

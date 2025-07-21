@@ -16,10 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,12 +27,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitBackArrowButtonIcon
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.PeraSecondaryButton
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.icon.PeraIcon
 import org.koin.androidx.compose.koinViewModel
@@ -43,31 +43,38 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HdWalletSelectionScreen(
+    viewModel: CreateAccountTypeViewModel = koinViewModel(),
     navController: NavController
 ) {
-    val viewModel: CreateAccountTypeViewModel = koinViewModel()
     val viewState by viewModel.state.collectAsStateWithLifecycle()
+    HdWalletSelectionScreenContent(viewState, navController)
+
+}
+
+@Composable
+fun HdWalletSelectionScreenContent(
+    viewState: CreateAccountTypeViewModel.ViewState,
+    navController: NavController
+) {
     Box(
         modifier = Modifier
             .background(color = AlgoKitTheme.colors.background)
-            .fillMaxHeight(.9f)
             .fillMaxWidth()
+            .fillMaxHeight()
             .padding(16.dp)
 
     ) {
-        IconButton(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.align(Alignment.TopStart)
-        ) {
-            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-        }
+        AlgoKitBackArrowButtonIcon(
+            modifier = Modifier.align(Alignment.TopStart),
+            onClick = { navController.popBackStack() }
+        )
 
         Column(
             modifier = Modifier.fillMaxHeight(.9f),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            when (val currentState = viewState) {
+            when (viewState) {
                 is CreateAccountTypeViewModel.ViewState.Idle -> {}
                 is CreateAccountTypeViewModel.ViewState.Loading -> {}
                 is CreateAccountTypeViewModel.ViewState.Content -> {
@@ -190,4 +197,17 @@ fun WalletItem(
             )
         }
     }
+}
+
+@PreviewLightDark
+@Composable
+fun HdWalletSelectionScreenContentPreview() {
+    val fakeViewState = CreateAccountTypeViewModel.ViewState.Content
+    AlgoKitTheme {
+        HdWalletSelectionScreenContent(
+            viewState = fakeViewState,
+            navController = rememberNavController()
+        )
+    }
+
 }

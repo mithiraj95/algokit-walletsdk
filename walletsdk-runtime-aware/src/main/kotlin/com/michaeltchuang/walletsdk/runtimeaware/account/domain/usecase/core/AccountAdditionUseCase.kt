@@ -34,30 +34,31 @@ class AccountAdditionUseCase(
         createAccount: CreateAccount,
         type: CreateAccount.Type.HdKey
     ) {
-          with(createAccount) {
-              aesPlatformManager.decryptByteArray(type.encryptedPrivateKey).let { privateKey ->
-                  aesPlatformManager.decryptByteArray(type.encryptedEntropy).let { entropy ->
-                      val seedIdResult = addHdSeed(entropy)
-                      val seedId = seedIdResult.getDataOrNull()
-                      if (seedIdResult.isSuccess && seedId != null) {
-                          addHdKeyAccount(
-                              address,
-                              type.publicKey,
-                              privateKey,
-                              seedId,
-                              type.account,
-                              type.change,
-                              type.keyIndex,
-                              type.derivationType,
-                              isBackedUp,
-                              customName,
-                              createAccount.orderIndex
-                          )
-                      }
-                  }
-              }
-          }
+        with(createAccount) {
+            aesPlatformManager.decryptByteArray(type.encryptedPrivateKey).let { privateKey ->
+                aesPlatformManager.decryptByteArray(type.encryptedEntropy).let { entropy ->
+                    val seedIdResult = addHdSeed(entropy)
+                    val seedId = seedIdResult.getDataOrNull()
+                    if (seedIdResult.isSuccess && seedId != null) {
+                        addHdKeyAccount(
+                            address,
+                            type.publicKey,
+                            privateKey,
+                            seedId,
+                            type.account,
+                            type.change,
+                            type.keyIndex,
+                            type.derivationType,
+                            isBackedUp,
+                            customName,
+                            createAccount.orderIndex
+                        )
+                    }
+                }
+            }
+        }
     }
+
     private suspend fun createAlgo25Account(
         createAccount: CreateAccount,
         type: CreateAccount.Type.Algo25

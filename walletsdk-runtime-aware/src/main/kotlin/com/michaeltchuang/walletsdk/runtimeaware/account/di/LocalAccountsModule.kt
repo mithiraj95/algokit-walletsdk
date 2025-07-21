@@ -74,7 +74,7 @@ val localAccountsModule = module {
     single<HdSeedMapper> { HdSeedMapperImpl() }
     single<HdSeedRepository> { HdSeedRepositoryImpl(get(), get(), get(), get(), get()) }
     factory { GetSeedIdIfExistingEntropy(get<HdSeedRepository>()::getSeedIdIfExistingEntropy) }
-    single<AddHdSeed> { AddHdSeedUseCase(get(),get(),get(),get()) }
+    single<AddHdSeed> { AddHdSeedUseCase(get(), get(), get(), get()) }
 }
 
 

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -30,13 +29,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core.AccountCreation
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountNameViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitBackArrowButtonIcon
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.PeraPrimaryButton
 import com.michaeltchuang.walletsdk.runtimeaware.utils.toShortenedAddress
 import org.koin.androidx.compose.koinViewModel
@@ -77,22 +79,15 @@ fun CreateAccountNameScreen(
     Box(
         modifier = Modifier
             .background(color = AlgoKitTheme.colors.background)
-            .fillMaxHeight(.9f)
             .fillMaxWidth()
+            .fillMaxHeight()
             .padding(16.dp)
 
     ) {
-        // Top Back Button
-        IconButton(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.align(Alignment.TopStart)
-        ) {
-            Icon(
-                tint = AlgoKitTheme.colors.textMain,
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back"
-            )
-        }
+        AlgoKitBackArrowButtonIcon(
+            modifier = Modifier.align(Alignment.TopStart),
+            onClick = { navController.popBackStack() }
+        )
 
         // Main Content
         Column(
@@ -186,3 +181,14 @@ fun CustomBasicTextField(
     }
 }
 
+@PreviewLightDark
+@Composable
+fun CreateAccountNameScreenPreview() {
+    AlgoKitTheme {
+        CreateAccountNameScreen(
+            navController = rememberNavController()
+        ) {
+
+        }
+    }
+}

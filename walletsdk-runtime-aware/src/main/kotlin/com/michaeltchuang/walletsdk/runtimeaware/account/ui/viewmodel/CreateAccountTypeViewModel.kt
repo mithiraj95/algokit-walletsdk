@@ -32,7 +32,7 @@ class CreateAccountTypeViewModel(
     fun createHdKeyAccount() {
         viewModelScope.launch {
             val wallet = runtimeAwareSdk.createBip39Wallet()
-            val hdKeyAddress = wallet?.generateAddress(HdKeyAddressIndex(0,0,0))
+            val hdKeyAddress = wallet?.generateAddress(HdKeyAddressIndex(0, 0, 0))
             val hdKeyType =
                 accountCreationHdKeyTypeMapper(
                     wallet!!.getEntropy().value.base64DecodeToByteArray(),

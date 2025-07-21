@@ -42,6 +42,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
@@ -58,7 +59,7 @@ const val TERMS_AND_SERVICES_URL = "https://perawallet.app/terms-and-services/"
 const val PRIVACY_POLICY_URL = "https://perawallet.app/privacy-policy/"
 
 @Composable
-fun CreateAccountTypeScreen(navController: NavHostController) {
+fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message: String) -> Unit) {
 
     val viewModel: CreateAccountTypeViewModel = koinViewModel()
     val scope = rememberCoroutineScope()
@@ -84,8 +85,8 @@ fun CreateAccountTypeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .background(color = AlgoKitTheme.colors.background)
-            .fillMaxHeight(.9f)
             .fillMaxWidth()
+            .fillMaxHeight()
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top
     ) {
@@ -114,8 +115,8 @@ fun CreateAccountTypeScreen(navController: NavHostController) {
         }
         Spacer(modifier = Modifier.height(20.dp))
         CreateWalletHdWidget(viewModel, scope)
-        ImportHdWalletWidget()
-        WatchAddressWidget()
+        ImportHdWalletWidget(navController)
+        WatchAddressWidget(onClick)
         Spacer(modifier = Modifier.weight(1f))
         TermsAndPrivacy()
     }
@@ -140,13 +141,13 @@ private fun CreateWalletHdWidget(
 }
 
 @Composable
-private fun ImportHdWalletWidget() {
+private fun ImportHdWalletWidget(navController: NavController) {
     GroupChoiceWidget(
         title = stringResource(id = R.string.import_an_account),
         description = stringResource(id = R.string.import_an_existing),
         iconContentDescription = stringResource(id = R.string.import_an_existing),
         icon = ImageVector.vectorResource(R.drawable.ic_key),
-        onClick = {}
+        onClick = { navController.navigate(OnBoardingScreens.ACCOUNT_RECOVERY_TYPE_SCREEN.name) }
     )
 }
 
@@ -232,13 +233,13 @@ fun CreateNewAccountCard(
 }
 
 @Composable
-private fun WatchAddressWidget() {
+private fun WatchAddressWidget(onClick: (message: String) -> Unit) {
     GroupChoiceWidget(
         title = stringResource(id = R.string.watch_an_address),
         description = stringResource(id = R.string.monitor_an_algorand_address),
         iconContentDescription = stringResource(id = R.string.monitor_an_algorand_address),
         icon = ImageVector.vectorResource(R.drawable.ic_eye),
-        onClick = {}
+        onClick = { onClick("feature not supported yet") }
     )
 }
 
