@@ -51,6 +51,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.GroupChoiceWidget
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.icon.PeraIcon
+import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -239,7 +240,7 @@ private fun WatchAddressWidget(onClick: (message: String) -> Unit) {
         description = stringResource(id = R.string.monitor_an_algorand_address),
         iconContentDescription = stringResource(id = R.string.monitor_an_algorand_address),
         icon = ImageVector.vectorResource(R.drawable.ic_eye),
-        onClick = { onClick("feature not supported yet") }
+        onClick = { onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET) }
     )
 }
 

@@ -6,10 +6,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.michaeltchuang.wallet.ui.widgets.snackbar.SnackBarLayout
 import com.michaeltchuang.wallet.ui.screens.AccountListScreen
 import com.michaeltchuang.wallet.ui.screens.DiscoverScreen
 import com.michaeltchuang.wallet.ui.screens.SettingsScreen
+import com.michaeltchuang.wallet.ui.widgets.snackbar.SnackBarLayout
 import com.michaeltchuang.wallet.ui.widgets.snackbar.SnackbarViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI

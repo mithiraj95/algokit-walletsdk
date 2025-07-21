@@ -27,6 +27,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.GroupChoiceWidget
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitBackArrowButtonIcon
+import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants
 
 @Composable
 fun AccountRecoveryTypeSelectionScreen(
@@ -94,7 +95,7 @@ private fun RecoverAnAccountWidget(
         description = stringResource(id = descriptionRes),
         icon = ImageVector.vectorResource(R.drawable.ic_key),
         iconContentDescription = stringResource(id = R.string.key),
-        onClick = { onClick("feature not supported yet") })
+        onClick = { onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET) })
 }
 
 @Composable
@@ -104,7 +105,7 @@ private fun RecoverAnAccountWithQRWidget(onClick: (message: String) -> Unit) {
         description = stringResource(id = R.string.i_want_to_recover_qr),
         icon = ImageVector.vectorResource(R.drawable.ic_qr),
         iconContentDescription = stringResource(id = R.string.qr_code),
-        onClick = { onClick("feature not supported yet") })
+        onClick = { onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET) })
 }
 
 @Composable
@@ -114,7 +115,7 @@ private fun PairLedgerDeviceWidget(onClick: (message: String) -> Unit) {
         description = stringResource(id = R.string.i_want_to_recover_an),
         iconContentDescription = stringResource(id = R.string.ledger),
         icon = ImageVector.vectorResource(R.drawable.ic_ledger),
-        onClick = { onClick("feature not supported yet") })
+        onClick = { onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET) })
 }
 
 @Composable
@@ -124,7 +125,7 @@ private fun ImportPeraWebWidget(onClick: (message: String) -> Unit) {
         description = stringResource(id = R.string.i_want_to_import_algorand),
         iconContentDescription = stringResource(id = R.string.import_from_pera_web),
         icon = ImageVector.vectorResource(R.drawable.ic_global),
-        onClick = { onClick("feature not supported yet") })
+        onClick = { onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET) })
 }
 
 @Composable
@@ -134,7 +135,7 @@ private fun AlgorandSecureBackupWidget(onClick: (message: String) -> Unit) {
         description = stringResource(id = R.string.i_want_to_restore_my),
         iconContentDescription = stringResource(id = R.string.i_want_to_restore_my),
         icon = ImageVector.vectorResource(R.drawable.ic_backup),
-        onClick = { onClick("feature not supported yet") })
+        onClick = { onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET) })
 }
 
 @PreviewLightDark
