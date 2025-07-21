@@ -6,7 +6,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.custom.S
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.local.SaveHdKeyAccount
 
 
-internal class AddHdKeyAccountUseCase (
+internal class AddHdKeyAccountUseCase(
     private val saveHdKeyAccount: SaveHdKeyAccount,
     private val setCustomInfo: SetAccountCustomInfo
 ) : AddHdKeyAccount {
@@ -24,7 +24,15 @@ internal class AddHdKeyAccountUseCase (
         customName: String?,
         orderIndex: Int
     ) {
-        val account = LocalAccount.HdKey(address, publicKey, seedId, account, change, keyIndex, derivationType)
+        val account = LocalAccount.HdKey(
+            address,
+            publicKey,
+            seedId,
+            account,
+            change,
+            keyIndex,
+            derivationType
+        )
         saveHdKeyAccount(account, privateKey)
         setCustomInfo(CustomAccountInfo(address, customName, orderIndex, isBackedUp))
     }

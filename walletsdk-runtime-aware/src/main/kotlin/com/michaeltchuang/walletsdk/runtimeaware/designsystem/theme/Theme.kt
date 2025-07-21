@@ -27,7 +27,6 @@ fun AlgoKitTheme(
         LocalThemeIsDark provides isDarkState,
         LocalCustomColors provides customColors
     ) {
-        val isDark by isDarkState
         content()
     }
 }

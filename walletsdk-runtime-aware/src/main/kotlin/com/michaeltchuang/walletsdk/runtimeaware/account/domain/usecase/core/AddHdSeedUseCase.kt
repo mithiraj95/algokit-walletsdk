@@ -11,10 +11,10 @@ import com.michaeltchuang.walletsdk.runtimeaware.utils.base64DecodeToByteArray
 import com.michaeltchuang.walletsdk.runtimeaware.utils.base64EncodeToString
 
 
-internal class AddHdSeedUseCase (
+internal class AddHdSeedUseCase(
     private val hdSeedRepository: HdSeedRepository,
     private val customHdSeedInfoRepository: CustomHdSeedInfoRepository,
-   // private val peraBip39Sdk: AlgoKitBip39Sdk,
+    // private val peraBip39Sdk: AlgoKitBip39Sdk,
     private val runtimeAwareSdk: RuntimeAwareSdk,
     private val getSeedIdIfExistingEntropy: GetSeedIdIfExistingEntropy
 ) : AddHdSeed {
@@ -29,8 +29,10 @@ internal class AddHdSeedUseCase (
     }
 
     private suspend fun createNewSeed(entropy: ByteArray): AlgoKitResult<Int> {
-        val seed = runtimeAwareSdk.algoKitBit39Sdk()?.getSeedFromEntropy(entropy.base64EncodeToString())?.base64DecodeToByteArray()
-            ?: return AlgoKitResult.Error(Exception("Failed to generate seed from entropy"))
+        val seed =
+            runtimeAwareSdk.algoKitBit39Sdk()?.getSeedFromEntropy(entropy.base64EncodeToString())
+                ?.base64DecodeToByteArray()
+                ?: return AlgoKitResult.Error(Exception("Failed to generate seed from entropy"))
         val newSeedId = addHdSeed(seed.copyOf(), entropy)
         setCustomInfo(newSeedId)
         seed.clearFromMemory()
