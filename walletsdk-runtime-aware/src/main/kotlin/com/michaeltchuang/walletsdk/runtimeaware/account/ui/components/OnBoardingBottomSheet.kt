@@ -116,14 +116,9 @@ fun OnBoardingBottomSheetNavHost(
                         }
                     }
                 }
-
-
-
             }
         }
-
     }
-
 }
 
 
