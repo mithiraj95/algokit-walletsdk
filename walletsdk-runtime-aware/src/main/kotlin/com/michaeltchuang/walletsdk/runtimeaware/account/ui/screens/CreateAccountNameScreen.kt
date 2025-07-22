@@ -38,7 +38,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core.Accou
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountNameViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
-import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitBackArrowButtonIcon
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.PeraPrimaryButton
 import com.michaeltchuang.walletsdk.runtimeaware.utils.toShortenedAddress
 import org.koin.androidx.compose.koinViewModel
@@ -81,20 +81,17 @@ fun CreateAccountNameScreen(
             .background(color = AlgoKitTheme.colors.background)
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(16.dp)
 
     ) {
-        AlgoKitBackArrowButtonIcon(
+        AlgoKitTopBar(
             modifier = Modifier.align(Alignment.TopStart),
             onClick = { navController.popBackStack() }
         )
-
         // Main Content
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
-                .padding(top = 56.dp, bottom = 80.dp)
+                .padding(top = 64.dp, start = 32.dp, end = 32.dp)
         ) {
             Text(
                 style = typography.title.regular.sansBold,

@@ -24,6 +24,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.AccountRecov
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountNameScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountTypeScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.HdWalletSelectionScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.QRCodeScannerScreen
 import kotlinx.coroutines.launch
 
 enum class AlgoKitEvent {
@@ -34,7 +35,8 @@ enum class OnBoardingScreens() {
     CREATE_ACCOUNT_TYPE,
     CREATE_ACCOUNT_NAME,
     HD_WALLET_SELECTION_SCREEN,
-    ACCOUNT_RECOVERY_TYPE_SCREEN
+    ACCOUNT_RECOVERY_TYPE_SCREEN,
+    QR_CODE_SCANNER_SCREEN
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -107,12 +109,16 @@ fun OnBoardingBottomSheetNavHost(
                         }
                     }
                 }
-
+                composable (OnBoardingScreens.QR_CODE_SCANNER_SCREEN.name){
+                    QRCodeScannerScreen(navController = navController){
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(it)
+                        }
+                    }
+                }
             }
         }
-
     }
-
 }
 
 

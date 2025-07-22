@@ -79,7 +79,9 @@ sealed interface TopLevelRoute {
     val details: TopLevelRouteDetails<*>
 
     sealed interface Type {
-        data class NavButton(val label: String) : Type
+        data class NavButton(
+            val label: String,
+        ) : Type
 
         data object CircularButton : Type
     }

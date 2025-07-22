@@ -26,40 +26,40 @@ android {
 }
 
 dependencies {
+    // --- Module dependencies ---
     debugImplementation(project(":walletsdk-runtime-enabled-bundle"))
-    // Note that here we depend on the bundle modules, not the sdk modules.
-    // While the libraries contain the SDK's logic, they lack the shim generated classes,
-    // and apps won't compile using its full classpath.
-    // Instead, the bundle contains information the SDK's API,
-    // and the AGP Plugin used to generate sources and compile the app.
-    implementation(libs.androidx.appcompat)
+
+    // --- Privacy Sandbox + SDK Runtime ---
     implementation(libs.bundles.sdkruntimeRASDK)
-    implementation(libs.androidx.activity.compose)
-    // Correctly apply the Compose BOM as a platform
-    implementation(platform(libs.androidx.compose.bom))
+
+    // --- AndroidX & Compose UI ---
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.ui.tooling.preview)
     debugImplementation(libs.androidx.ui.tooling)
+    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.material)
+    implementation(libs.androidx.material3)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.ui.tooling.preview)
+
+    // --- Dependency Injection ---
     implementation(libs.koin.android)
-    implementation(libs.room.runtime)
+    implementation(libs.koin.androidx.compose)
+
+    // --- Room/Database ---
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
-    implementation(libs.converter.gson)
+    implementation(libs.room.runtime)
     ksp(libs.room.compiler)
-    implementation(libs.koin.androidx.compose) // or latest
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
+    // --- Utility & Other ---
+    implementation(libs.accompanist.permissions)
+    implementation(libs.converter.gson)
+    implementation(libs.qr.kit)
 }
 
 room {
     schemaDirectory("$projectDir/schemas")
 }
-
-/*
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
-}*/
