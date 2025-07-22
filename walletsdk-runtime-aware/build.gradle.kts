@@ -52,6 +52,8 @@ dependencies {
     implementation(libs.koin.androidx.compose) // or latest
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.qr.kit)
+    implementation(libs.accompanist.permissions)
 
 }
 

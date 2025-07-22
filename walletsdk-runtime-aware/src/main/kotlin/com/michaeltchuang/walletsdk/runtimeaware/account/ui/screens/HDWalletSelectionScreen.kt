@@ -35,7 +35,7 @@ import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
-import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitBackArrowButtonIcon
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.PeraSecondaryButton
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.icon.PeraIcon
 import org.koin.androidx.compose.koinViewModel
@@ -61,16 +61,18 @@ fun HdWalletSelectionScreenContent(
             .background(color = AlgoKitTheme.colors.background)
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(16.dp)
+
 
     ) {
-        AlgoKitBackArrowButtonIcon(
+        AlgoKitTopBar(
             modifier = Modifier.align(Alignment.TopStart),
             onClick = { navController.popBackStack() }
         )
 
         Column(
-            modifier = Modifier.fillMaxHeight(.9f),
+            modifier = Modifier
+                .fillMaxHeight(.9f)
+                .padding(top = 16.dp, start = 32.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -88,7 +90,7 @@ fun HdWalletSelectionScreenContent(
 @Suppress("LongMethod")
 @Composable
 private fun ContentState(navController: NavController) {
-    Box(Modifier.padding(horizontal = 24.dp)) {
+    Box {
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -32,6 +32,8 @@ bip39 = "1.0.9"
 androidxTestRunner = "1.6.2"
 room = "2.7.2"
 converterGson = "3.0.0"
+qrkit = "3.0.5"
+accompanist = "0.37.3"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -110,6 +112,10 @@ lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "
 
 # Networking
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+
+# Camera
+qr-kit = { module = "network.chaintech:qr-kit", version.ref = "qrkit" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 
 [bundles]
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
