@@ -81,6 +81,7 @@ fun CreateAccountNameScreen(
             .background(color = AlgoKitTheme.colors.background)
             .fillMaxWidth()
             .fillMaxHeight()
+            .padding(16.dp)
 
     ) {
         AlgoKitTopBar(
@@ -90,7 +91,7 @@ fun CreateAccountNameScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 64.dp, start = 32.dp, end = 32.dp)
+                .padding(top = 64.dp)
         ) {
             Text(
                 style = typography.title.regular.sansBold,

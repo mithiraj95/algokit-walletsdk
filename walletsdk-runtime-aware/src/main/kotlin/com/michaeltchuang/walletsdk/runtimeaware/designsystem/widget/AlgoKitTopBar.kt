@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 
 @Composable
-fun AlgoKitTopBar(onClick: () -> Unit) {
+fun AlgoKitTopBar(modifier: Modifier = Modifier ,onClick: () -> Unit) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .height(50.dp)
             .fillMaxWidth()
     ) {

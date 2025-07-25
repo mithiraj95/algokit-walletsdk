@@ -43,11 +43,12 @@ fun AccountRecoveryTypeSelectionScreen(
         verticalArrangement = Arrangement.Top
     ) {
         AlgoKitTopBar(
+            modifier = Modifier.padding(horizontal = 24.dp),
             onClick = { navController.popBackStack() }
         )
         TitleWidget()
         Spacer(modifier = Modifier.height(30.dp))
-        RecoverAnAccountWidget(navController = navController)
+        RecoverAnAccountWidget(onClick = onClick)
         RecoverAnAccountWithQRWidget(navController)
         PairLedgerDeviceWidget(onClick)
         ImportPeraWebWidget(onClick)
@@ -56,7 +57,7 @@ fun AccountRecoveryTypeSelectionScreen(
 }
 
 @Composable
-private fun TitleWidget(isOnHdWallet: Boolean = true) {
+private fun TitleWidget(isOnHdWallet: Boolean = false) {
     val titleRes = if (isOnHdWallet) {
         R.string.import_a_wallet
     } else {
@@ -74,8 +75,8 @@ private fun TitleWidget(isOnHdWallet: Boolean = true) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RecoverAnAccountWidget(
-    isOnHdWallet: Boolean = true,
-    navController: NavController
+    isOnHdWallet: Boolean = false,
+    onClick: (message: String) -> Unit
 ) {
     val titleRes: Int
     val descriptionRes: Int
@@ -92,7 +93,7 @@ private fun RecoverAnAccountWidget(
         description = stringResource(id = descriptionRes),
         icon = ImageVector.vectorResource(R.drawable.ic_key),
         iconContentDescription = stringResource(id = R.string.key),
-        onClick = { navController.navigate(OnBoardingScreens.RECOVER_PHRASE_SCREEN.name) })
+        onClick = { onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET) })
 }
 
 @Composable

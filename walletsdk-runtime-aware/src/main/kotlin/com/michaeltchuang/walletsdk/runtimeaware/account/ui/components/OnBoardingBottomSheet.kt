@@ -2,6 +2,7 @@ package com.michaeltchuang.walletsdk.runtimeaware.account.ui.components
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccoun
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.HdWalletSelectionScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.QRCodeScannerScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoveryPhraseScreen
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import kotlinx.coroutines.launch
 
 enum class AlgoKitEvent {
@@ -80,6 +82,7 @@ fun OnBoardingBottomSheetNavHost(
     ) { padding ->
         Box(
             modifier = Modifier
+                .background(color = AlgoKitTheme.colors.background)
                 .padding(0.dp)
         ) {
             NavHost(
