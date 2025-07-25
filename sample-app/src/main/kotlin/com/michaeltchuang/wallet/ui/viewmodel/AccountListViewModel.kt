@@ -55,14 +55,22 @@ class AccountListViewModel(
 
         data object Loading : AccountsState
 
-        data class Content(val accounts: List<LocalAccount>) : AccountsState
+        data class Content(
+            val accounts: List<LocalAccount>,
+        ) : AccountsState
 
-        data class Error(val message: String) : AccountsState
+        data class Error(
+            val message: String,
+        ) : AccountsState
     }
 
     sealed interface AccountsEvent {
-        data class ShowError(val message: String) : AccountsEvent
+        data class ShowError(
+            val message: String,
+        ) : AccountsEvent
 
-        data class ShowMessage(val message: String) : AccountsEvent
+        data class ShowMessage(
+            val message: String,
+        ) : AccountsEvent
     }
 }

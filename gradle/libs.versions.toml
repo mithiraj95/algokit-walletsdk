@@ -1,39 +1,39 @@
 [versions]
-agp = "8.9.2"
-algoSdk = "2.8.2"
-algoGoMobilesdk = "1.0.1"
+accompanist = "0.37.3"
 activityCompose = "1.10.1"
-composeBom = "2025.06.01"
+activityKtx = "1.10.1"
+agp = "8.9.2"
+algoGoMobilesdk = "1.0.1"
+algoSdk = "2.8.2"
+androidxTestRunner = "1.6.2"
+annotation = "1.9.1"
+appcompat = "1.7.1"
+bip39 = "1.0.9"
+composeBom = "2025.07.00"
+converterGson = "3.0.0"
+coroutines = "1.10.2"
+khex = "1.1.2"
+koin = "4.1.0"
 koinAndroidxCompose = "4.1.0"
-kotlin = "2.1.20"
-ksp = "2.1.20-1.0.31"
-ktlint = "12.3.0"
-lifecycleViewmodelCompose = "2.7.0"
+kotlin = "2.2.0"
+kotlinStdlibJdk8 = "2.1.10"
+kotlinxSerialization = "1.9.0"
+ksp = "2.2.0-2.0.2"
+ktlint = "13.0.0"
+lifecycleCommon = "2.9.2"
+lifecycleViewmodelCompose = "2.9.2"
 lottieCompose = "6.6.7"
-navigationCompose = "2.9.1"
+material = "1.12.0"
+navigationCompose = "2.9.2"
+peraCompactDecimalFormat = "1.0.1"
 privacySandboxBuildPlugin = "1.0.0-alpha02"
-sdkRuntimeBackcompat = "1.0.0-alpha17"
+qrkit = "3.1.2"
+room = "2.7.2"
+sdkRuntimeActivity = "1.0.0-alpha02"
+sdkRuntimeBackcompat = "1.0.0-alpha18"
 sdkRuntimeShim = "1.0.0-alpha13"
 sdkRuntimeUi = "1.0.0-alpha16"
-sdkRuntimeActivity = "1.0.0-alpha02"
-appcompat = "1.7.1"
-material = "1.12.0"
-activityKtx = "1.10.1"
-lifecycleCommon = "2.9.1"
-coroutines = "1.10.2"
-annotation = "1.9.1"
-koin = "4.1.0"
-kotlinStdlibJdk8 = "2.1.10"
-kotlinxSerialization = "1.7.3"
-khex = "1.1.2"
-peraCompactDecimalFormat = "1.0.1"
 xhdwalletapi = "1.1.0"
-bip39 = "1.0.9"
-androidxTestRunner = "1.6.2"
-room = "2.7.2"
-converterGson = "3.0.0"
-qrkit = "3.0.5"
-accompanist = "0.37.3"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -85,9 +85,9 @@ sdkruntime-tools-apipackager = { module = "androidx.privacysandbox.tools:tools-a
 algosdk = { module = "com.algorand:algosdk", version.ref = "algoSdk" }
 algorand-go-mobile = { group = "io.github.perawallet", name = "algorand-go-mobile-sdk", version.ref = "algoGoMobilesdk" }
 khex = { module = "com.github.komputing:khex", version.ref = "khex" }
+kotlin-bip39 = { module = "cash.z.ecc.android:kotlin-bip39", version.ref = "bip39" }
 pera-compact-decimal-format = { group = "io.github.perawallet", name = "peracompactdecimalformat", version.ref = "peraCompactDecimalFormat" }
 xhdwalletapi = { module = "foundation.algorand.xhdwalletapi:xhdwalletapi-android", version.ref = "xhdwalletapi" }
-kotlin-bip39 = { module = "cash.z.ecc.android:kotlin-bip39", version.ref = "bip39" }
 
 # Dependency Injection
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
@@ -114,8 +114,8 @@ lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 
 # Camera
-qr-kit = { module = "network.chaintech:qr-kit", version.ref = "qrkit" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+qr-kit = { module = "network.chaintech:qr-kit", version.ref = "qrkit" }
 
 [bundles]
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
@@ -128,7 +128,7 @@ sdkruntimeBackcompat = ["sdkruntime-backcompat-core", "sdkruntime-backcompat-cli
 [plugins]
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 room = { id = "androidx.room", version.ref = "room" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
