@@ -12,14 +12,11 @@ internal class CreateDeepLinkImpl(
         val payload = parseDeepLinkPayload(url)
 
         return when {
-
             mnemonicDeepLinkBuilder.doesDeeplinkMeetTheRequirements(payload) -> {
                 mnemonicDeepLinkBuilder.createDeepLink(payload)
             }
 
             else -> DeepLink.Undefined(url)
         }
-
-
     }
 }
