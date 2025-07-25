@@ -18,7 +18,10 @@ class QRScannerViewModel(
             deeplinkHandler.deepLinkState.collect {
                 when (it) {
                     is DeeplinkHandler.DeepLinkState.OnImportAccountDeepLink -> {
-                        eventDelegate.sendEvent(ViewEvent.NavigateToRecoveryPharaseScreen(it.mnemonic))
+                        eventDelegate.sendEvent(ViewEvent.NavigateToRecoveryPhraseScreen(it.mnemonic))
+                    }
+                    is DeeplinkHandler.DeepLinkState.OnUnrecognizedDeepLink -> {
+                        eventDelegate.sendEvent(ViewEvent.ShowUnrecognizedDeeplink)
                     }
                 }
             }
@@ -32,8 +35,7 @@ class QRScannerViewModel(
     }
 
     interface ViewEvent {
-        data class NavigateToRecoveryPharaseScreen(val mnemonic: String) : ViewEvent
-        data class ShowKeyRegDeeplinkError(val address: String) : ViewEvent
+        data class NavigateToRecoveryPhraseScreen(val mnemonic: String) : ViewEvent
+        object ShowUnrecognizedDeeplink : ViewEvent
     }
-
 }

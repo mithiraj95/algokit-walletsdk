@@ -235,7 +235,7 @@ private fun handleBottomSheetEvent(
 
         AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
         AlgoKitEvent.HD_ACCOUNT_CREATED,
-            -> {
+        -> {
             onAccountCreated()
         }
     }

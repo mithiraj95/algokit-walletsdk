@@ -1,6 +1,5 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -43,7 +42,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun RecoveryPhraseScreen(
     navController: NavController,
-    menemonic: String
+    mnemonic: String
 ) {
     val viewModel: RecoverPassphraseViewModel = koinViewModel()
 
@@ -69,13 +68,12 @@ fun RecoveryPhraseScreen(
 
     ) {
         Column {
-
             AlgoKitTopBar(
                 onClick = { navController.popBackStack() }
             )
             RecoveryPhraseContent(
                 modifier = Modifier.fillMaxHeight(0.8f),
-                predefinedWords = menemonic.toList()
+                predefinedWords = mnemonic.toList()
             )
             Spacer(modifier = Modifier.height(32.dp))
             PeraPrimaryButton(
@@ -83,10 +81,9 @@ fun RecoveryPhraseScreen(
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
                 {
-                    Log.d("Mithilesh", menemonic.toList().size.toString())
-                    when (menemonic.toList().size) {
+                    when (mnemonic.toList().size) {
                         OnboardingAccountType.Algo25.wordCount -> {
-                            viewModel.onRecoverButtonClick(menemonic, OnboardingAccountType.Algo25)
+                            viewModel.onRecoverButtonClick(mnemonic, OnboardingAccountType.Algo25)
                         }
 
                         OnboardingAccountType.HdKey.wordCount -> {}
@@ -95,11 +92,7 @@ fun RecoveryPhraseScreen(
                 text = stringResource(R.string.finish_account_creation),
             )
         }
-
-
     }
-
-
 }
 
 @Composable
@@ -151,7 +144,6 @@ fun RecoveryPhraseContent(
     }
 }
 
-
 @Composable
 fun RecoveryWordField(
     index: Int, value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier
@@ -188,7 +180,7 @@ fun String.toList(): List<String> {
         .filter { it.isNotBlank() }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun RecoveryPhraseScreenPreview() {
     val words = SAMPLE_ALGO25_MNEMONIC

@@ -26,15 +26,17 @@ fun AccountItem(
     onDelete: (address: String) -> Unit,
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 6.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 6.dp),
         elevation = CardDefaults.cardElevation(4.dp),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             horizontalArrangement = Arrangement.Center,
         ) {
             Column(Modifier.fillMaxWidth(.9f)) {
@@ -57,15 +59,16 @@ fun AccountItem(
 @Composable
 fun AccountItemPreview() {
     // Create a sample account for preview
-    val sampleAccount = LocalAccount.HdKey(
-        algoAddress = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-        publicKey = ByteArray(0),
-        seedId = 0,
-        account = 0,
-        change = 0,
-        keyIndex = 0,
-        derivationType = 0,
-    )
+    val sampleAccount =
+        LocalAccount.HdKey(
+            algoAddress = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            publicKey = ByteArray(0),
+            seedId = 0,
+            account = 0,
+            change = 0,
+            keyIndex = 0,
+            derivationType = 0,
+        )
 
     AlgoKitTheme {
         AccountItem(

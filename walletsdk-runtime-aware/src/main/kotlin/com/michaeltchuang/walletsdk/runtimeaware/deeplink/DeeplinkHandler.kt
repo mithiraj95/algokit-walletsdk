@@ -25,7 +25,9 @@ class DeeplinkHandler(
     private fun handleDeepLink(deepLink: DeepLink) {
         when (deepLink) {
             is DeepLink.Mnemonic -> handleMnemonicDeepLink(deepLink)
-            else -> {}
+            else -> {
+                handleUnrecognizedDeepLink()
+            }
         }
     }
 
@@ -35,7 +37,14 @@ class DeeplinkHandler(
         }
     }
 
+    private fun handleUnrecognizedDeepLink() {
+        CoroutineScope(Dispatchers.Main).launch {
+            _deepLinkState.emit(DeepLinkState.OnUnrecognizedDeepLink)
+        }
+    }
+
     sealed class DeepLinkState {
         data class OnImportAccountDeepLink(var mnemonic: String) : DeepLinkState()
+        object OnUnrecognizedDeepLink : DeepLinkState()
     }
 }
