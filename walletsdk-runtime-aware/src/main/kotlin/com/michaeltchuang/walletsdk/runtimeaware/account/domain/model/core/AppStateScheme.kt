@@ -1,4 +1,4 @@
-package com.algorand.wallet.account.info.domain.model
+package com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core
 
 data class AppStateScheme(
     val numByteSlice: Long,

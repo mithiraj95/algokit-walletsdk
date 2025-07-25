@@ -84,7 +84,6 @@ fun CreateAccountNameScreen(
 
     ) {
         AlgoKitTopBar(
-            modifier = Modifier.align(Alignment.TopStart),
             onClick = { navController.popBackStack() }
         )
         // Main Content

@@ -65,7 +65,6 @@ fun HdWalletSelectionScreenContent(
 
     ) {
         AlgoKitTopBar(
-            modifier = Modifier.align(Alignment.TopStart),
             onClick = { navController.popBackStack() }
         )
 

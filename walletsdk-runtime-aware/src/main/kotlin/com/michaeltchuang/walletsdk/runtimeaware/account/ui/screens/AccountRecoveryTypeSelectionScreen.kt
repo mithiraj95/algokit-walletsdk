@@ -13,7 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -44,13 +43,11 @@ fun AccountRecoveryTypeSelectionScreen(
         verticalArrangement = Arrangement.Top
     ) {
         AlgoKitTopBar(
-            modifier = Modifier
-                .align(Alignment.Start),
             onClick = { navController.popBackStack() }
         )
         TitleWidget()
         Spacer(modifier = Modifier.height(30.dp))
-        RecoverAnAccountWidget(onClick = onClick)
+        RecoverAnAccountWidget(navController = navController)
         RecoverAnAccountWithQRWidget(navController)
         PairLedgerDeviceWidget(onClick)
         ImportPeraWebWidget(onClick)
@@ -78,7 +75,7 @@ private fun TitleWidget(isOnHdWallet: Boolean = true) {
 @Composable
 private fun RecoverAnAccountWidget(
     isOnHdWallet: Boolean = true,
-    onClick: (message: String) -> Unit
+    navController: NavController
 ) {
     val titleRes: Int
     val descriptionRes: Int
@@ -95,7 +92,7 @@ private fun RecoverAnAccountWidget(
         description = stringResource(id = descriptionRes),
         icon = ImageVector.vectorResource(R.drawable.ic_key),
         iconContentDescription = stringResource(id = R.string.key),
-        onClick = { onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET) })
+        onClick = { navController.navigate(OnBoardingScreens.RECOVER_PHRASE_SCREEN.name) })
 }
 
 @Composable

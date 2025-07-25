@@ -35,6 +35,8 @@ internal class AlgoAccountSdkImpl : AlgoAccountSdk {
     }
 
     override fun recoverAlgo25Account(mnemonic: String): Algo25Account? {
+        Security.removeProvider("BC")
+        Security.insertProviderAt(BouncyCastleProvider(), 0)
         return try {
             val account = Account(mnemonic)
             val secretKey = Mnemonic.toKey(account.toMnemonic())

@@ -116,7 +116,7 @@ fun AccountListScreen(
 @Composable
 private fun AccountListContent(
     state: AccountsState,
-    padding: androidx.compose.foundation.layout.PaddingValues,
+    padding: PaddingValues,
     onDeleteAccount: (String) -> Unit,
 ) {
     when (state) {
@@ -170,7 +170,7 @@ private fun CenteredLoader() {
 
 @Composable
 private fun AccountsList(
-    accounts: List<Any>,
+    accounts: List<LocalAccount>,
     padding: PaddingValues,
     onDeleteAccount: (String) -> Unit,
 ) {
@@ -183,9 +183,8 @@ private fun AccountsList(
         ) {
             items(
                 accounts,
-                key = { account -> (account as LocalAccount.HdKey).algoAddress },
             ) { account ->
-                AccountItem(account as LocalAccount.HdKey) { address ->
+                AccountItem(account) { address ->
                     onDeleteAccount(address)
                 }
                 Log.d("AccountItem", "Total accounts: ${accounts.size}")
@@ -236,7 +235,7 @@ private fun handleBottomSheetEvent(
 
         AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
         AlgoKitEvent.HD_ACCOUNT_CREATED,
-        -> {
+            -> {
             onAccountCreated()
         }
     }
