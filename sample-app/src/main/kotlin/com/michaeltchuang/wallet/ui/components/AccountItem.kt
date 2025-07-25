@@ -22,7 +22,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 
 @Composable
 fun AccountItem(
-    account: LocalAccount.HdKey,
+    account: LocalAccount,
     onDelete: (address: String) -> Unit,
 ) {
     Card(

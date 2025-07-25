@@ -1,4 +1,4 @@
-package com.michaeltchuang.walletsdk.runtimeaware.utils
+package com.michaeltchuang.walletsdk.runtimeaware.deeplink.utils
 
 import java.math.BigDecimal
 

@@ -11,9 +11,11 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.di.localAccountsModule
 import com.michaeltchuang.walletsdk.runtimeaware.account.di.viewModelModule
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.NameRegistrationUseCase
+import com.michaeltchuang.walletsdk.runtimeaware.deeplink.di.deepLinkModule
 import com.michaeltchuang.walletsdk.runtimeaware.encryption.di.encryptionModule
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.commonModule
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.delegateModule
+import com.michaeltchuang.walletsdk.runtimeaware.foundation.json.jsonModule
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.sdk.Bip39Wallet
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoKitBip39Sdk
@@ -44,6 +46,10 @@ class RuntimeAwareSdk(private val context: Context) {
 
     suspend fun createAlgo25Account(): Algo25Account? {
         return loadSdkIfNeeded(context)?.createAlgo25Account()
+    }
+
+    suspend fun recoverAlgo25Account(mnemonic: String): Algo25Account? {
+        return loadSdkIfNeeded(context)?.recoverAlgo25Account(mnemonic)
     }
 
     suspend fun fetchAccounts(): List<LocalAccount> {
@@ -128,6 +134,8 @@ class RuntimeAwareSdk(private val context: Context) {
             customInfoModule,
             accountCoreModule,
             delegateModule,
+            jsonModule,
+            deepLinkModule,
             viewModelModule,
         )
     }
