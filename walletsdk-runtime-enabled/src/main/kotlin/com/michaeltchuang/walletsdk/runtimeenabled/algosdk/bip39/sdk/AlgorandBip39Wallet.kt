@@ -30,9 +30,7 @@ internal class AlgorandBip39Wallet internal constructor(private val entropy: Bip
     init {
         Security.removeProvider("BC")
         Security.insertProviderAt(BouncyCastleProvider(), 0)
-        Log.d("Mithilesh 28", entropy.value.decodeToByteArray().size.toString())
         val mnemonicCode = Mnemonics.MnemonicCode(entropy.value.decodeToByteArray())
-        Log.d("Mithilesh 31", mnemonicCode.words.size.toString())
         val code = Base64.getEncoder().encodeToString(mnemonicCode.toSeed())
         seed = Bip39Seed(code)
         mnemonic = Bip39Mnemonic(mnemonicCode.words.map { it.toString() })

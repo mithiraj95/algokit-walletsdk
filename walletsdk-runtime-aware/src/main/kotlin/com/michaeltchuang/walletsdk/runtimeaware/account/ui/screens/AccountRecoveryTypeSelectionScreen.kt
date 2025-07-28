@@ -13,7 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -44,8 +43,7 @@ fun AccountRecoveryTypeSelectionScreen(
         verticalArrangement = Arrangement.Top
     ) {
         AlgoKitTopBar(
-            modifier = Modifier
-                .align(Alignment.Start),
+            modifier = Modifier.padding(horizontal = 24.dp),
             onClick = { navController.popBackStack() }
         )
         TitleWidget()
@@ -59,7 +57,7 @@ fun AccountRecoveryTypeSelectionScreen(
 }
 
 @Composable
-private fun TitleWidget(isOnHdWallet: Boolean = true) {
+private fun TitleWidget(isOnHdWallet: Boolean = false) {
     val titleRes = if (isOnHdWallet) {
         R.string.import_a_wallet
     } else {
@@ -77,7 +75,7 @@ private fun TitleWidget(isOnHdWallet: Boolean = true) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RecoverAnAccountWidget(
-    isOnHdWallet: Boolean = true,
+    isOnHdWallet: Boolean = false,
     onClick: (message: String) -> Unit
 ) {
     val titleRes: Int

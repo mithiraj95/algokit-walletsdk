@@ -1,7 +1,6 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core
 
-import com.algorand.wallet.account.info.domain.model.AppStateScheme
-import com.michaeltchuang.walletsdk.runtimeaware.utils.AssetConstants.ALGO_ID
+import com.michaeltchuang.walletsdk.runtimeaware.deeplink.utils.AssetConstants.ALGO_ID
 import java.math.BigInteger
 
 data class AccountInformation(

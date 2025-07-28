@@ -2,6 +2,7 @@ package com.michaeltchuang.walletsdk.runtimeaware.account.ui.components
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
@@ -25,6 +26,8 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccoun
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountTypeScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.HdWalletSelectionScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.QRCodeScannerScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoveryPhraseScreen
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import kotlinx.coroutines.launch
 
 enum class AlgoKitEvent {
@@ -36,7 +39,8 @@ enum class OnBoardingScreens() {
     CREATE_ACCOUNT_NAME,
     HD_WALLET_SELECTION_SCREEN,
     ACCOUNT_RECOVERY_TYPE_SCREEN,
-    QR_CODE_SCANNER_SCREEN
+    QR_CODE_SCANNER_SCREEN,
+    RECOVER_PHRASE_SCREEN
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,13 +82,15 @@ fun OnBoardingBottomSheetNavHost(
     ) { padding ->
         Box(
             modifier = Modifier
+                .background(color = AlgoKitTheme.colors.background)
                 .padding(0.dp)
         ) {
             NavHost(
                 navController,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
-                startDestination = OnBoardingScreens.CREATE_ACCOUNT_TYPE.name) {
+                startDestination = OnBoardingScreens.CREATE_ACCOUNT_TYPE.name
+            ) {
                 composable(OnBoardingScreens.CREATE_ACCOUNT_TYPE.name) {
                     CreateAccountTypeScreen(navController) {
                         coroutineScope.launch {
@@ -109,11 +115,14 @@ fun OnBoardingBottomSheetNavHost(
                         }
                     }
                 }
-                composable (OnBoardingScreens.QR_CODE_SCANNER_SCREEN.name){
-                    QRCodeScannerScreen(navController = navController){
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar(it)
-                        }
+                composable(OnBoardingScreens.QR_CODE_SCANNER_SCREEN.name) {
+                    QRCodeScannerScreen(navController = navController) {
+
+                    }
+                }
+                composable(route = OnBoardingScreens.RECOVER_PHRASE_SCREEN.name + "/{mnemonic}") { it ->
+                    it.arguments?.getString("mnemonic")?.let {
+                        RecoveryPhraseScreen(navController = navController, it)
                     }
                 }
             }

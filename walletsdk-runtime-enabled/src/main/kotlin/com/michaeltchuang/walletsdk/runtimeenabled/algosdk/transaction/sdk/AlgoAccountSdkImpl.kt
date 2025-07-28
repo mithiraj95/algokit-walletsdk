@@ -9,10 +9,13 @@ import java.security.NoSuchAlgorithmException
 import java.security.Security
 
 internal class AlgoAccountSdkImpl : AlgoAccountSdk {
+    init {
+        Security.removeProvider("BC")
+        Security.insertProviderAt(BouncyCastleProvider(), 0)
+    }
+
     override fun createAlgo25Account(): Algo25Account? {
         return try {
-            Security.removeProvider("BC")
-            Security.insertProviderAt(BouncyCastleProvider(), 0)
             val account = Account()
             val secretKey = Mnemonic.toKey(account.toMnemonic())
             val output = Algo25Account(

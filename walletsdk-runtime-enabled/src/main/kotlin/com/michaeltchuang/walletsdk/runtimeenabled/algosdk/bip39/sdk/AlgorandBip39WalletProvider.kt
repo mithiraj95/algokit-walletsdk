@@ -14,9 +14,7 @@ class AlgorandBip39WalletProvider : Bip39WalletProvider {
     @OptIn(ExperimentalStdlibApi::class)
     override fun createBip39Wallet(): Bip39Wallet {
         val entropy = Mnemonics.MnemonicCode(Mnemonics.WordCount.COUNT_24).toEntropy()
-        Log.d("Mithilesh", entropy.size.toString())
         val base64 = Base64.getEncoder().encodeToString(entropy)
-
         return AlgorandBip39Wallet(Bip39Entropy(base64))
     }
 }
