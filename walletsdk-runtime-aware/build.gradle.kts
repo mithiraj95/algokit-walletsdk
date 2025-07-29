@@ -58,6 +58,10 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.converter.gson)
     implementation(libs.qr.kit)
+
+    // ---webview
+    implementation(libs.compose.webview.multiplatform)
+    implementation(libs.webview.multiplatform.mobile)
 }
 
 room {

@@ -39,7 +39,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAcco
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
-import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.PeraPrimaryButton
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitPrimaryButton
 import com.michaeltchuang.walletsdk.runtimeaware.utils.toShortenedAddress
 import org.koin.androidx.compose.koinViewModel
 
@@ -116,7 +116,7 @@ fun CreateAccountNameScreen(
             })
         }
 
-        PeraPrimaryButton(
+        AlgoKitPrimaryButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter),

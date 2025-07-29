@@ -22,12 +22,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.AccountRecoveryTypeSelectionScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.AlgoKitWebViewPlatformScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountNameScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountTypeScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.HdWalletSelectionScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.QRCodeScannerScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoverAnAccountScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoveryPhraseScreen
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
+import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.REPO_URL
 import kotlinx.coroutines.launch
 
 enum class AlgoKitEvent {
@@ -35,19 +38,13 @@ enum class AlgoKitEvent {
 }
 
 enum class OnBoardingScreens() {
-    CREATE_ACCOUNT_TYPE,
-    CREATE_ACCOUNT_NAME,
-    HD_WALLET_SELECTION_SCREEN,
-    ACCOUNT_RECOVERY_TYPE_SCREEN,
-    QR_CODE_SCANNER_SCREEN,
-    RECOVER_PHRASE_SCREEN
+    CREATE_ACCOUNT_TYPE, CREATE_ACCOUNT_NAME, HD_WALLET_SELECTION_SCREEN, ACCOUNT_RECOVERY_TYPE_SCREEN, QR_CODE_SCANNER_SCREEN, RECOVER_PHRASE_SCREEN, RECOVER_AN_ACCOUNT_SCREEN, ALGOKIT_WEBVIEW_PLATFORM_SCREEN
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnBoardingBottomSheet(
-    showSheet: Boolean,
-    onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
+    showSheet: Boolean, onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
 ) {
     if (showSheet) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -65,21 +62,16 @@ fun OnBoardingBottomSheet(
 
 @Composable
 fun OnBoardingBottomSheetNavHost(
-    navController: NavHostController = rememberNavController(),
-    onFinish: () -> Unit
+    navController: NavHostController = rememberNavController(), onFinish: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
-        modifier = Modifier.fillMaxHeight(.9f),
-        snackbarHost = {
+        modifier = Modifier.fillMaxHeight(.9f), snackbarHost = {
             SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier
-                    .padding(bottom = 64.dp)
+                hostState = snackbarHostState, modifier = Modifier.padding(bottom = 64.dp)
             )
-        }
-    ) { padding ->
+        }) { padding ->
         Box(
             modifier = Modifier
                 .background(color = AlgoKitTheme.colors.background)
@@ -122,8 +114,22 @@ fun OnBoardingBottomSheetNavHost(
                 }
                 composable(route = OnBoardingScreens.RECOVER_PHRASE_SCREEN.name + "/{mnemonic}") { it ->
                     it.arguments?.getString("mnemonic")?.let {
-                        RecoveryPhraseScreen(navController = navController, it)
+                        RecoveryPhraseScreen(navController = navController, it) {
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar(it)
+                            }
+                        }
                     }
+                }
+                composable(route = OnBoardingScreens.RECOVER_AN_ACCOUNT_SCREEN.name) {
+                    RecoverAnAccountScreen(navController = navController) {
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(it)
+                        }
+                    }
+                }
+                composable(route = OnBoardingScreens.ALGOKIT_WEBVIEW_PLATFORM_SCREEN.name) {
+                    AlgoKitWebViewPlatformScreen(url = REPO_URL, navController)
                 }
             }
         }
