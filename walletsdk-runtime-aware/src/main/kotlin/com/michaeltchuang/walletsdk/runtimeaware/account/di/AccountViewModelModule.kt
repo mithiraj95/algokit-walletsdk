@@ -39,11 +39,18 @@ internal val viewModelModule = module {
     }
 
     viewModel {
-        QRScannerViewModel(get(), get())
+        QRScannerViewModel(
+            get(),
+            get()
+        )
     }
 
     viewModel {
-        RecoverPassphraseViewModel(get(), get(),get())
+        RecoverPassphraseViewModel(
+            get(),
+            get(),
+            get()
+        )
     }
 }
 
