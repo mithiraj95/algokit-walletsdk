@@ -48,7 +48,7 @@ fun AccountRecoveryTypeSelectionScreen(
         )
         TitleWidget()
         Spacer(modifier = Modifier.height(30.dp))
-        RecoverAnAccountWidget(onClick = onClick)
+        RecoverAnAccountWidget(navController = navController)
         RecoverAnAccountWithQRWidget(navController)
         PairLedgerDeviceWidget(onClick)
         ImportPeraWebWidget(onClick)
@@ -76,7 +76,7 @@ private fun TitleWidget(isOnHdWallet: Boolean = false) {
 @Composable
 private fun RecoverAnAccountWidget(
     isOnHdWallet: Boolean = false,
-    onClick: (message: String) -> Unit
+    navController: NavController
 ) {
     val titleRes: Int
     val descriptionRes: Int
@@ -93,7 +93,7 @@ private fun RecoverAnAccountWidget(
         description = stringResource(id = descriptionRes),
         icon = ImageVector.vectorResource(R.drawable.ic_key),
         iconContentDescription = stringResource(id = R.string.key),
-        onClick = { onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET) })
+        onClick = { navController.navigate(OnBoardingScreens.RECOVER_AN_ACCOUNT_SCREEN.name) })
 }
 
 @Composable

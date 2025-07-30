@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -19,7 +20,6 @@ fun AlgoKitTopBar(modifier: Modifier = Modifier ,onClick: () -> Unit) {
     Box(
         modifier = modifier
             .height(50.dp)
-            .fillMaxWidth()
     ) {
         IconButton(
             onClick = { onClick() },

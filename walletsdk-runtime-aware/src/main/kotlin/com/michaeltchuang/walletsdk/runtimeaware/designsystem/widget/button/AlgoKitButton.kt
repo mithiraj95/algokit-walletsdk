@@ -76,7 +76,7 @@ private fun PeraCoreButton(modifier: AlgoKitButtonModifier) {
 }
 
 @Composable
-fun PeraPrimaryButton(
+fun AlgoKitPrimaryButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     text: String,
@@ -106,7 +106,7 @@ fun PeraPrimaryButton(
 }
 
 @Composable
-fun PeraSecondaryButton(
+fun AlgoKitSecondaryButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     text: String,
@@ -138,7 +138,7 @@ fun PeraSecondaryButton(
 }
 
 @Composable
-fun PeraTertiaryButton(
+fun AlgoKitTertiaryButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     text: String,
