@@ -38,28 +38,30 @@ fun AccountItem(
         elevation = CardDefaults.cardElevation(4.dp),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             PeraIconRoundShape(
                 modifier = Modifier,
                 imageVector = ImageVector.vectorResource(getWalletIcon(account)),
-                contentDescription = "Wallet Icon"
+                contentDescription = "Wallet Icon",
             )
             Column(
-                modifier = Modifier
-                    .fillMaxWidth(.9f)
-                    .padding(horizontal = 8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth(.9f)
+                        .padding(horizontal = 8.dp),
             ) {
                 Text(
                     text = account.algoAddress.toShortenedAddress(),
-                    style = typography.body.large.sansMedium
+                    style = typography.body.large.sansMedium,
                 )
                 Text(
                     text = getAccountType(account),
-                    style = typography.body.regular.mono
+                    style = typography.footnote.mono,
                 )
             }
 
@@ -72,8 +74,8 @@ fun AccountItem(
     }
 }
 
-fun getWalletIcon(localAccount: LocalAccount): Int {
-    return when (localAccount) {
+fun getWalletIcon(localAccount: LocalAccount): Int =
+    when (localAccount) {
         is LocalAccount.HdKey -> {
             R.drawable.ic_hd_wallet
         }
@@ -86,12 +88,11 @@ fun getWalletIcon(localAccount: LocalAccount): Int {
             R.drawable.ic_wallet
         }
     }
-}
 
-fun getAccountType(localAccount: LocalAccount): String {
-    return when (localAccount) {
+fun getAccountType(localAccount: LocalAccount): String =
+    when (localAccount) {
         is LocalAccount.HdKey -> {
-            "HD Wallet"
+            "HD"
         }
 
         is LocalAccount.Algo25 -> {
@@ -105,8 +106,7 @@ fun getAccountType(localAccount: LocalAccount): String {
         is LocalAccount.LedgerBle -> {
             "Ledger"
         }
-    }
-}
+    } + " Account"
 
 @Preview(showBackground = true)
 @Composable
