@@ -183,6 +183,7 @@ private fun AccountsList(
         ) {
             items(
                 accounts,
+                key = { it.algoAddress },
             ) { account ->
                 AccountItem(account) { address ->
                     onDeleteAccount(address)
