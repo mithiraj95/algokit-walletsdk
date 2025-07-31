@@ -60,19 +60,21 @@ fun PeraIcon(
 fun PeraIconRoundShape(
     modifier: Modifier = Modifier,
     imageVector: ImageVector,
-    contentDescription: String
+    contentDescription: String,
+    backgroundColor: Color = AlgoKitTheme.colors.wallet4,
+    tintColor: Color = AlgoKitTheme.colors.wallet4Icon
 ) {
     Box(
         modifier = modifier
             .padding(start = 10.dp)
             .size(40.dp)
             .clip(shape = CircleShape)
-            .background(color = AlgoKitTheme.colors.layerGrayLighter)
+            .background(color = backgroundColor)
     ) {
         Icon(
             modifier = Modifier.align(Alignment.Center),
             imageVector = imageVector,
-            tint = AlgoKitTheme.colors.textMain,
+            tint = tintColor,
             contentDescription = contentDescription
         )
     }

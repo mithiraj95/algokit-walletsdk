@@ -182,7 +182,7 @@ private fun AccountsList(
             modifier = Modifier.fillMaxSize(),
         ) {
             items(
-                accounts,
+                accounts, key = { it.algoAddress },
             ) { account ->
                 AccountItem(account) { address ->
                     onDeleteAccount(address)
@@ -235,7 +235,7 @@ private fun handleBottomSheetEvent(
 
         AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
         AlgoKitEvent.HD_ACCOUNT_CREATED,
-        -> {
+            -> {
             onAccountCreated()
         }
     }
