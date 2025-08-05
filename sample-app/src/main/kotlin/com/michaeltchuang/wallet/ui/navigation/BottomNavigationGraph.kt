@@ -20,16 +20,10 @@ import org.koin.core.annotation.KoinExperimentalAPI
 fun NavGraphBuilder.getBottomNavigationGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
-    showTransactionSheet: MutableState<Boolean>,
 ) {
     composable<Accounts> {
         val backStackEntry = remember(it) { navController.getBackStackEntry<Accounts>() }
         val sharedViewModel: SnackbarViewModel = koinViewModel(viewModelStoreOwner = backStackEntry)
-        if (showTransactionSheet.value){
-            Log.d("Mithi",showTransactionSheet.value.toString())
-        } else {
-            Log.d("Mithi",showTransactionSheet.value.toString())
-        }
         AccountListScreen(
             tag = backStackEntry.toRoute<Accounts>().details.name,
             navController = navController,

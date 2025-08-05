@@ -20,7 +20,6 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val snackbarHostState = remember { SnackbarHostState() }
     val isBottomSheetVisible = remember { mutableStateOf(false) }
-    var showTransactionSheet = remember { mutableStateOf(false) }
 
     Scaffold(
         modifier =
@@ -28,13 +27,7 @@ fun AppNavigation() {
                 .background(color = AlgoKitTheme.colors.background)
                 .fillMaxSize(),
         topBar = {
-            TopBar {
-                if (showTransactionSheet.value.not()){
-                    showTransactionSheet.value = true
-                } else {
-                    showTransactionSheet.value = false
-                }
-            }
+            TopBar()
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState, modifier = Modifier)
@@ -50,12 +43,7 @@ fun AppNavigation() {
             startDestination = Accounts,
             modifier = Modifier.padding(paddingValues = paddingValues),
         ) {
-            if (showTransactionSheet.value){
-                Log.d("Mithi",showTransactionSheet.value.toString())
-            } else {
-                Log.d("Mithi",showTransactionSheet.value.toString())
-            }
-            getBottomNavigationGraph(navController, snackbarHostState, showTransactionSheet)
+            getBottomNavigationGraph(navController, snackbarHostState)
         }
     }
 }

@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(onQrClick: () -> Unit) {
+fun TopBar() {
     val scop = rememberCoroutineScope()
     TopAppBar(
         colors =
@@ -61,6 +61,5 @@ object QREvent {
 @Composable
 fun TopBarPreview() {
     AlgoKitTheme {
-        TopBar {}
     }
 }
