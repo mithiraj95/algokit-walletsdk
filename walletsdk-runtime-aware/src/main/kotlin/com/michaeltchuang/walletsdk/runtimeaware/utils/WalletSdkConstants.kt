@@ -6,4 +6,6 @@ object WalletSdkConstants {
     const val SAMPLE_HD_MNEMONIC =
         "borrow among leopard smooth trade cake profit proud matrix bottom goose charge oxygen shine punch hotel era monitor fossil violin tip notice any visit"
     const val FEATURE_NOT_SUPPORTED_YET = "Feature not supported yet"
+
+    const val REPO_URL = "https://github.com/michaeltchuang/algokit-walletsdk-kmp"
 }

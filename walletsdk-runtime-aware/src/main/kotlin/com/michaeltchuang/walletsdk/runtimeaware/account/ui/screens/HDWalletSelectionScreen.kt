@@ -36,7 +36,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
-import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.PeraSecondaryButton
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitSecondaryButton
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.icon.PeraIcon
 import org.koin.androidx.compose.koinViewModel
 
@@ -125,7 +125,7 @@ private fun ContentState(navController: NavController) {
                 }
             }
         }
-        PeraSecondaryButton(
+        AlgoKitSecondaryButton(
             onClick = {},
             text = stringResource(id = R.string.create_a_new_wallet),
             modifier = Modifier

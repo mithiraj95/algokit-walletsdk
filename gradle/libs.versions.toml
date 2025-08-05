@@ -9,6 +9,7 @@ androidxTestRunner = "1.6.2"
 annotation = "1.9.1"
 appcompat = "1.7.1"
 bip39 = "1.0.9"
+composeWebview = "1.9.40"
 composeBom = "2025.07.00"
 converterGson = "3.0.0"
 coroutines = "1.10.2"
@@ -33,6 +34,7 @@ sdkRuntimeActivity = "1.0.0-alpha02"
 sdkRuntimeBackcompat = "1.0.0-alpha18"
 sdkRuntimeShim = "1.0.0-alpha13"
 sdkRuntimeUi = "1.0.0-alpha16"
+webviewMultiplatform = "1.2.0"
 xhdwalletapi = "1.1.0"
 
 [libraries]
@@ -116,6 +118,10 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 # Camera
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 qr-kit = { module = "network.chaintech:qr-kit", version.ref = "qrkit" }
+
+# webview
+compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebview" }
+webview-multiplatform-mobile = { module = "io.github.final-class:webview-multiplatform-mobile", version.ref = "webviewMultiplatform" }
 
 [bundles]
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]

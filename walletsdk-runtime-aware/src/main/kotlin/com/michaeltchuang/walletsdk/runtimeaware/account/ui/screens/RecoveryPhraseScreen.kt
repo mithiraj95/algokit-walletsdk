@@ -11,17 +11,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -34,17 +42,24 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardin
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.RecoverPassphraseViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
-import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.PeraPrimaryButton
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitPrimaryButton
+import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET
 import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.SAMPLE_ALGO25_MNEMONIC
+import com.michaeltchuang.walletsdk.runtimeaware.utils.getTextFromClipboard
+import com.michaeltchuang.walletsdk.runtimeaware.utils.splitMnemonic
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecoveryPhraseScreen(
     navController: NavController,
-    mnemonic: String
+    mnemonicString: String,
+    snackBar: (message: String) -> Unit,
 ) {
+    val context = LocalContext.current
     val viewModel: RecoverPassphraseViewModel = koinViewModel()
+    var mnemonic by rememberSaveable { mutableStateOf(mnemonicString) }
+    var mnemonicList by rememberSaveable { mutableStateOf(mnemonicString.splitMnemonic()) }
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect {
@@ -54,6 +69,10 @@ fun RecoveryPhraseScreen(
                         ?.savedStateHandle
                         ?.set("accountCreation", it.accountCreation)
                     navController.navigate(OnBoardingScreens.CREATE_ACCOUNT_NAME.name)
+                }
+
+                is RecoverPassphraseViewModel.ViewEvent.ShowError -> {
+                    snackBar(it.error)
                 }
             }
         }
@@ -65,25 +84,79 @@ fun RecoveryPhraseScreen(
             .fillMaxWidth()
             .fillMaxHeight()
             .padding(horizontal = 16.dp)
-
     ) {
         Column {
-            AlgoKitTopBar(
-                onClick = { navController.popBackStack() }
-            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween
+            ) {
+                AlgoKitTopBar(
+                    modifier = Modifier
+                        .wrapContentSize(),
+                    onClick = { navController.popBackStack() }
+                )
+                Row(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(end = 16.dp)
+                ) {
+                    IconButton(
+                        onClick = {
+                            context.getTextFromClipboard()?.let {
+                                viewModel.onClipBoardPastedMnemonic(it) {
+                                    mnemonicList = it.splitMnemonic()
+                                    mnemonic = it
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .size(32.dp)
+                            .padding(end = 8.dp)
+                    ) {
+                        Icon(
+                            tint = AlgoKitTheme.colors.textMain,
+                            painter = painterResource(id = R.drawable.ic_clipboard),
+                            contentDescription = "Back"
+                        )
+                    }
+
+                    IconButton(
+                        onClick = {
+                            snackBar(FEATURE_NOT_SUPPORTED_YET)
+                            //navController.navigate(OnBoardingScreens.ALGOKIT_WEBVIEW_PLATFORM_SCREEN.name)
+                        },
+                        modifier = Modifier
+                            .size(32.dp)
+                            .padding(start = 8.dp)
+                    ) {
+                        Icon(
+                            tint = AlgoKitTheme.colors.textMain,
+                            painter = painterResource(id = R.drawable.ic_info),
+                            contentDescription = "Back"
+                        )
+                    }
+                }
+
+            }
+
             RecoveryPhraseContent(
                 modifier = Modifier.fillMaxHeight(0.8f),
-                predefinedWords = mnemonic.toList()
+                predefinedWords = mnemonicList
             )
             Spacer(modifier = Modifier.height(32.dp))
-            PeraPrimaryButton(
+            AlgoKitPrimaryButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
                 {
-                    when (mnemonic.toList().size) {
+                    when (mnemonicList.size) {
                         OnboardingAccountType.Algo25.wordCount -> {
-                            viewModel.onRecoverButtonClick(mnemonic, OnboardingAccountType.Algo25)
+                            viewModel.onRecoverAccount(
+                                mnemonic,
+                                OnboardingAccountType.Algo25
+                            )
                         }
 
                         OnboardingAccountType.HdKey.wordCount -> {}
@@ -99,7 +172,6 @@ fun RecoveryPhraseScreen(
 fun RecoveryPhraseContent(
     modifier: Modifier, predefinedWords: List<String>
 ) {
-    val recoveryWords = remember { mutableStateListOf(*predefinedWords.toTypedArray()) }
     Column(modifier = modifier) {
         Text(
             style = AlgoKitTheme.typography.title.regular.sansMedium,
@@ -110,7 +182,7 @@ fun RecoveryPhraseContent(
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxSize()
         ) {
-            val wordCount = recoveryWords.size
+            val wordCount = if (predefinedWords.isNotEmpty()) predefinedWords.size else 25
             items((wordCount + 1) / 2) { rowIndex ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -122,8 +194,8 @@ fun RecoveryPhraseContent(
                     if (leftIndex < wordCount) {
                         RecoveryWordField(
                             index = leftIndex,
-                            value = recoveryWords[leftIndex],
-                            onValueChange = { recoveryWords[leftIndex] = it },
+                            value = if (predefinedWords.isNotEmpty()) predefinedWords[leftIndex] else "",
+                            onValueChange = { /*recoveryWords[leftIndex] = it*/ },
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -131,8 +203,8 @@ fun RecoveryPhraseContent(
                     if (rightIndex < wordCount) {
                         RecoveryWordField(
                             index = rightIndex,
-                            value = recoveryWords[rightIndex],
-                            onValueChange = { recoveryWords[rightIndex] = it },
+                            value = if (predefinedWords.isNotEmpty()) predefinedWords[leftIndex] else "",
+                            onValueChange = {/* recoveryWords[rightIndex] = it*/ },
                             modifier = Modifier.weight(1f)
                         )
                     } else {
@@ -175,10 +247,6 @@ fun RecoveryWordField(
     }
 }
 
-fun String.toList(): List<String> {
-    return this.trim().split("\\s+".toRegex())
-        .filter { it.isNotBlank() }
-}
 
 @PreviewLightDark
 @Composable
@@ -186,5 +254,5 @@ fun RecoveryPhraseScreenPreview() {
     val words = SAMPLE_ALGO25_MNEMONIC
     RecoveryPhraseScreen(
         rememberNavController(), words
-    )
+    ) {}
 }
