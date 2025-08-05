@@ -6,6 +6,8 @@ import com.michaeltchuang.walletsdk.runtimeaware.deeplink.model.DeepLink
 internal class CreateDeepLinkImpl(
     private val parseDeepLinkPayload: ParseDeepLinkPayload,
     private val mnemonicDeepLinkBuilder: DeepLinkBuilder,
+    private val keyRegTransactionDeepLinkBuilder: DeepLinkBuilder,
+
 ) : CreateDeepLink {
 
     override fun invoke(url: String): DeepLink {
@@ -15,7 +17,9 @@ internal class CreateDeepLinkImpl(
             mnemonicDeepLinkBuilder.doesDeeplinkMeetTheRequirements(payload) -> {
                 mnemonicDeepLinkBuilder.createDeepLink(payload)
             }
-
+            keyRegTransactionDeepLinkBuilder.doesDeeplinkMeetTheRequirements(payload) -> {
+                keyRegTransactionDeepLinkBuilder.createDeepLink(payload)
+            }
             else -> DeepLink.Undefined(url)
         }
     }

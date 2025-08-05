@@ -33,6 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.michaeltchuang.wallet.ui.components.AccountItem
 import com.michaeltchuang.wallet.ui.components.LottieConfetti
+import com.michaeltchuang.wallet.ui.navigation.QREvent
 import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel
 import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel.AccountsEvent
 import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel.AccountsState
@@ -59,8 +60,15 @@ fun AccountListScreen(
     var showSheet by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     var showConfetti by remember { mutableStateOf(false) }
+    var qrScanFlow by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
+    LaunchedEffect(Unit) {
+        QREvent.qrClickEvent.collect {
+            qrScanFlow = it
+            showSheet = it
+        }
+    }
     LaunchedEffect(Unit) {
         viewModel.fetchAccounts()
     }
@@ -74,7 +82,10 @@ fun AccountListScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { showSheet = true },
+                onClick = {
+                    qrScanFlow = false
+                    showSheet = true
+                },
                 modifier = Modifier.padding(end = FAB_PADDING, bottom = FAB_PADDING),
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Account")
@@ -92,7 +103,7 @@ fun AccountListScreen(
         )
     }
 
-    OnBoardingBottomSheet(showSheet) { event ->
+    OnBoardingBottomSheet(showSheet = showSheet, qrScanFlow = qrScanFlow) { event ->
         handleBottomSheetEvent(
             event = event,
             onCloseSheet = { showSheet = false },
