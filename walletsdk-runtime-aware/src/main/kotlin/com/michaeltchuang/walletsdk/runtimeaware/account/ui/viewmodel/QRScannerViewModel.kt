@@ -1,8 +1,11 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.QRScannerViewModel.ViewEvent.NavigateToRecoveryPhraseScreen
 import com.michaeltchuang.walletsdk.runtimeaware.deeplink.DeeplinkHandler
+import com.michaeltchuang.walletsdk.runtimeaware.deeplink.model.DeepLink
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventDelegate
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +21,18 @@ class QRScannerViewModel(
             deeplinkHandler.deepLinkState.collect {
                 when (it) {
                     is DeeplinkHandler.DeepLinkState.OnImportAccountDeepLink -> {
-                        eventDelegate.sendEvent(ViewEvent.NavigateToRecoveryPhraseScreen(it.mnemonic))
+                        eventDelegate.sendEvent(NavigateToRecoveryPhraseScreen(it.mnemonic))
                     }
+
+                    is DeeplinkHandler.DeepLinkState.KeyReg -> {
+                        Log.d("Mithilesh",  it.keyReg.toString())
+                        eventDelegate.sendEvent(
+                            ViewEvent.NavigateToTransactionSignatureRequestScreen(
+                                it.keyReg
+                            )
+                        )
+                    }
+
                     is DeeplinkHandler.DeepLinkState.OnUnrecognizedDeepLink -> {
                         eventDelegate.sendEvent(ViewEvent.ShowUnrecognizedDeeplink)
                     }
@@ -36,6 +49,9 @@ class QRScannerViewModel(
 
     interface ViewEvent {
         data class NavigateToRecoveryPhraseScreen(val mnemonic: String) : ViewEvent
+        data class NavigateToTransactionSignatureRequestScreen(val keyReg: DeepLink.KeyReg) :
+            ViewEvent
+
         object ShowUnrecognizedDeeplink : ViewEvent
     }
 }

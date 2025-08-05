@@ -1,5 +1,6 @@
 package com.michaeltchuang.wallet.ui.navigation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val snackbarHostState = remember { SnackbarHostState() }
     val isBottomSheetVisible = remember { mutableStateOf(false) }
+    var showTransactionSheet = remember { mutableStateOf(false) }
 
     Scaffold(
         modifier =
@@ -26,7 +28,13 @@ fun AppNavigation() {
                 .background(color = AlgoKitTheme.colors.background)
                 .fillMaxSize(),
         topBar = {
-            TopBar()
+            TopBar {
+                if (showTransactionSheet.value.not()){
+                    showTransactionSheet.value = true
+                } else {
+                    showTransactionSheet.value = false
+                }
+            }
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState, modifier = Modifier)
@@ -42,7 +50,12 @@ fun AppNavigation() {
             startDestination = Accounts,
             modifier = Modifier.padding(paddingValues = paddingValues),
         ) {
-            getBottomNavigationGraph(navController, snackbarHostState)
+            if (showTransactionSheet.value){
+                Log.d("Mithi",showTransactionSheet.value.toString())
+            } else {
+                Log.d("Mithi",showTransactionSheet.value.toString())
+            }
+            getBottomNavigationGraph(navController, snackbarHostState, showTransactionSheet)
         }
     }
 }

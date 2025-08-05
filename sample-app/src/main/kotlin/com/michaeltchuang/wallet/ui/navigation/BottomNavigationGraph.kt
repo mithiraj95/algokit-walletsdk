@@ -1,6 +1,8 @@
 package com.michaeltchuang.wallet.ui.navigation
 
+import android.util.Log
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -18,14 +20,20 @@ import org.koin.core.annotation.KoinExperimentalAPI
 fun NavGraphBuilder.getBottomNavigationGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
+    showTransactionSheet: MutableState<Boolean>,
 ) {
     composable<Accounts> {
         val backStackEntry = remember(it) { navController.getBackStackEntry<Accounts>() }
         val sharedViewModel: SnackbarViewModel = koinViewModel(viewModelStoreOwner = backStackEntry)
+        if (showTransactionSheet.value){
+            Log.d("Mithi",showTransactionSheet.value.toString())
+        } else {
+            Log.d("Mithi",showTransactionSheet.value.toString())
+        }
         AccountListScreen(
             tag = backStackEntry.toRoute<Accounts>().details.name,
             navController = navController,
-            snackbarViewModel = sharedViewModel,
+            snackbarViewModel = sharedViewModel
         )
         SnackBarLayout(sharedViewModel, snackbarHostState)
     }

@@ -29,8 +29,12 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.HdWalletSele
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.QRCodeScannerScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoverAnAccountScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoveryPhraseScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.TransactionSignatureRequestScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.TransactionSuccessScreen
+import com.michaeltchuang.walletsdk.runtimeaware.deeplink.model.DeepLink
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.REPO_URL
+import com.michaeltchuang.walletsdk.runtimeaware.utils.getData
 import kotlinx.coroutines.launch
 
 enum class AlgoKitEvent {
@@ -38,13 +42,21 @@ enum class AlgoKitEvent {
 }
 
 enum class OnBoardingScreens() {
-    CREATE_ACCOUNT_TYPE, CREATE_ACCOUNT_NAME, HD_WALLET_SELECTION_SCREEN, ACCOUNT_RECOVERY_TYPE_SCREEN, QR_CODE_SCANNER_SCREEN, RECOVER_PHRASE_SCREEN, RECOVER_AN_ACCOUNT_SCREEN, ALGOKIT_WEBVIEW_PLATFORM_SCREEN
+    CREATE_ACCOUNT_TYPE, CREATE_ACCOUNT_NAME,
+    HD_WALLET_SELECTION_SCREEN,
+    ACCOUNT_RECOVERY_TYPE_SCREEN,
+    QR_CODE_SCANNER_SCREEN,
+    RECOVER_PHRASE_SCREEN,
+    RECOVER_AN_ACCOUNT_SCREEN,
+    ALGOKIT_WEBVIEW_PLATFORM_SCREEN,
+    TRANSACTION_SIGNATURE_SCREEN,
+    TRANSACTION_SUCCESS_SCREEN
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnBoardingBottomSheet(
-    showSheet: Boolean, onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
+    showSheet: Boolean, qrScanFlow: Boolean = false, onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
 ) {
     if (showSheet) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -53,7 +65,11 @@ fun OnBoardingBottomSheet(
                 onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
             }, sheetState = sheetState, dragHandle = null
         ) {
-            OnBoardingBottomSheetNavHost {
+            OnBoardingBottomSheetNavHost(
+                startDestination = startDestination(qrScanFlow),
+                closeSheet = {
+                    onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
+                }) {
                 onAlgoKitEvent(AlgoKitEvent.ALGO25_ACCOUNT_CREATED)
             }
         }
@@ -62,7 +78,10 @@ fun OnBoardingBottomSheet(
 
 @Composable
 fun OnBoardingBottomSheetNavHost(
-    navController: NavHostController = rememberNavController(), onFinish: () -> Unit
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = OnBoardingScreens.CREATE_ACCOUNT_TYPE.name,
+    closeSheet: () -> Unit,
+    onFinish: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -81,7 +100,7 @@ fun OnBoardingBottomSheetNavHost(
                 navController,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
-                startDestination = OnBoardingScreens.CREATE_ACCOUNT_TYPE.name
+                startDestination = startDestination
             ) {
                 composable(OnBoardingScreens.CREATE_ACCOUNT_TYPE.name) {
                     CreateAccountTypeScreen(navController) {
@@ -109,7 +128,9 @@ fun OnBoardingBottomSheetNavHost(
                 }
                 composable(OnBoardingScreens.QR_CODE_SCANNER_SCREEN.name) {
                     QRCodeScannerScreen(navController = navController) {
-
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(it)
+                        }
                     }
                 }
                 composable(route = OnBoardingScreens.RECOVER_PHRASE_SCREEN.name + "/{mnemonic}") { it ->
@@ -131,9 +152,26 @@ fun OnBoardingBottomSheetNavHost(
                 composable(route = OnBoardingScreens.ALGOKIT_WEBVIEW_PLATFORM_SCREEN.name) {
                     AlgoKitWebViewPlatformScreen(url = REPO_URL, navController)
                 }
+
+                composable(route = OnBoardingScreens.TRANSACTION_SIGNATURE_SCREEN.name) {
+                    navController.getData<DeepLink.KeyReg>()?.let {
+                        TransactionSignatureRequestScreen(navController = navController, it)
+                    }
+                }
+                composable(route = OnBoardingScreens.TRANSACTION_SUCCESS_SCREEN.name) {
+                    TransactionSuccessScreen {
+                        closeSheet()
+                    }
+                }
             }
         }
     }
 }
 
-
+fun startDestination(qrScanFlow: Boolean): String {
+    return if (qrScanFlow) {
+        OnBoardingScreens.QR_CODE_SCANNER_SCREEN.name
+    } else {
+        OnBoardingScreens.CREATE_ACCOUNT_TYPE.name
+    }
+}

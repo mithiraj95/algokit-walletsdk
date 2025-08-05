@@ -1,6 +1,7 @@
 package com.michaeltchuang.walletsdk.runtimeaware.deeplink.di
 
 import com.michaeltchuang.walletsdk.runtimeaware.deeplink.DeeplinkHandler
+import com.michaeltchuang.walletsdk.runtimeaware.deeplink.builder.KeyRegTransactionDeepLinkBuilder
 import com.michaeltchuang.walletsdk.runtimeaware.deeplink.builder.MnemonicDeepLinkBuilder
 import com.michaeltchuang.walletsdk.runtimeaware.deeplink.parser.CreateDeepLink
 import com.michaeltchuang.walletsdk.runtimeaware.deeplink.parser.CreateDeepLinkImpl
@@ -28,7 +29,8 @@ val deepLinkModule = module {
     single<CreateDeepLink> {
         CreateDeepLinkImpl(
             parseDeepLinkPayload = get(),
-            mnemonicDeepLinkBuilder = MnemonicDeepLinkBuilder()
+            mnemonicDeepLinkBuilder = MnemonicDeepLinkBuilder(),
+            keyRegTransactionDeepLinkBuilder = KeyRegTransactionDeepLinkBuilder()
         )
     }
 
