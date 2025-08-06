@@ -1,5 +1,8 @@
 package com.michaeltchuang.walletsdk.runtimeaware.deeplink.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  * Model classes for supported DeepLinks & AppLinks
  * Can be tested by executing the command below;
@@ -84,6 +87,7 @@ sealed interface DeepLink {
      * &fee=2000000
      * &note=Consensus%2Bparticipation%2Bftw
      */
+    @Parcelize
     data class KeyReg(
         val senderAddress: String,
         val type: String,
@@ -96,7 +100,7 @@ sealed interface DeepLink {
         val fee: String?,
         val note: String?,
         val xnote: String?
-    ) : DeepLink
+    ) : Parcelable, DeepLink
 
     data class Undefined(val url: String) : DeepLink
 }
