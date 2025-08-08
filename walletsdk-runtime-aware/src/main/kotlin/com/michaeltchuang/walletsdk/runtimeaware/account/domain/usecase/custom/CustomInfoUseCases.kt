@@ -85,7 +85,7 @@ fun interface GetHdSeedCustomInfoOrNull {
 }
 
 fun interface DeleteHdSeedCustomInfo {
-    suspend operator fun invoke(aseedId: Int)
+    suspend operator fun invoke(seedId: Int)
 }
 
 fun interface GetHdSeedCustomInfo {

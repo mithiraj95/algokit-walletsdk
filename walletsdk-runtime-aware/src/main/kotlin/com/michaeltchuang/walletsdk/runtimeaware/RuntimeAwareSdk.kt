@@ -9,6 +9,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.di.accountCoreModule
 import com.michaeltchuang.walletsdk.runtimeaware.account.di.customInfoModule
 import com.michaeltchuang.walletsdk.runtimeaware.account.di.localAccountsModule
 import com.michaeltchuang.walletsdk.runtimeaware.account.di.viewModelModule
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.custom.AccountLite
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.NameRegistrationUseCase
 import com.michaeltchuang.walletsdk.runtimeaware.deeplink.di.deepLinkModule
@@ -54,6 +55,10 @@ class RuntimeAwareSdk(private val context: Context) {
 
     suspend fun fetchAccounts(): List<LocalAccount> {
         return GlobalContext.get().get<NameRegistrationUseCase>().getAccount()
+    }
+
+    suspend fun fetchAccountLite(): List<AccountLite> {
+        return GlobalContext.get().get<NameRegistrationUseCase>().getAccountLite()
     }
 
     suspend fun deleteAccount(address: String) {

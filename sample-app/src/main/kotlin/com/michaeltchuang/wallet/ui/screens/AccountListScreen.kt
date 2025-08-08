@@ -38,7 +38,7 @@ import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel
 import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel.AccountsEvent
 import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel.AccountsState
 import com.michaeltchuang.wallet.ui.widgets.snackbar.SnackbarViewModel
-import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.custom.AccountLite
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitEvent
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingBottomSheet
 import kotlinx.coroutines.delay
@@ -181,7 +181,7 @@ private fun CenteredLoader() {
 
 @Composable
 private fun AccountsList(
-    accounts: List<LocalAccount>,
+    accounts: List<AccountLite>,
     padding: PaddingValues,
     onDeleteAccount: (String) -> Unit,
 ) {
@@ -194,7 +194,7 @@ private fun AccountsList(
         ) {
             items(
                 accounts,
-                key = { it.algoAddress },
+                key = { it.customName },
             ) { account ->
                 AccountItem(account) { address ->
                     onDeleteAccount(address)
