@@ -33,7 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.R
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountTypeViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitSecondaryButton
@@ -43,7 +43,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HdWalletSelectionScreen(
-    viewModel: CreateAccountTypeViewModel = koinViewModel(),
+    viewModel: OnboardingAccountTypeViewModel = koinViewModel(),
     navController: NavController
 ) {
     val viewState by viewModel.state.collectAsStateWithLifecycle()
@@ -53,7 +53,7 @@ fun HdWalletSelectionScreen(
 
 @Composable
 fun HdWalletSelectionScreenContent(
-    viewState: CreateAccountTypeViewModel.ViewState,
+    viewState: OnboardingAccountTypeViewModel.ViewState,
     navController: NavController
 ) {
     Box(
@@ -76,9 +76,9 @@ fun HdWalletSelectionScreenContent(
             verticalArrangement = Arrangement.Center
         ) {
             when (viewState) {
-                is CreateAccountTypeViewModel.ViewState.Idle -> {}
-                is CreateAccountTypeViewModel.ViewState.Loading -> {}
-                is CreateAccountTypeViewModel.ViewState.Content -> {
+                is OnboardingAccountTypeViewModel.ViewState.Idle -> {}
+                is OnboardingAccountTypeViewModel.ViewState.Loading -> {}
+                is OnboardingAccountTypeViewModel.ViewState.Content -> {
                     ContentState(navController)
                 }
             }
@@ -203,7 +203,7 @@ fun WalletItem(
 @PreviewLightDark
 @Composable
 fun HdWalletSelectionScreenContentPreview() {
-    val fakeViewState = CreateAccountTypeViewModel.ViewState.Content
+    val fakeViewState = OnboardingAccountTypeViewModel.ViewState.Content
     AlgoKitTheme {
         HdWalletSelectionScreenContent(
             viewState = fakeViewState,

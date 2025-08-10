@@ -44,9 +44,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
+import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountTypeViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.GroupChoiceWidget
@@ -62,13 +64,13 @@ const val PRIVACY_POLICY_URL = "https://perawallet.app/privacy-policy/"
 @Composable
 fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message: String) -> Unit) {
 
-    val viewModel: CreateAccountTypeViewModel = koinViewModel()
+    val viewModel: OnboardingAccountTypeViewModel = koinViewModel()
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect {
             when (it) {
-                is CreateAccountTypeViewModel.ViewEvent.AccountCreated -> {
+                is OnboardingAccountTypeViewModel.ViewEvent.AccountCreated -> {
                     navController.currentBackStackEntry
                         ?.savedStateHandle
                         ?.set("accountCreation", it.accountCreation)
@@ -76,7 +78,7 @@ fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message:
                     Log.d("CreateAccountTypeScreen", it.accountCreation.address)
                 }
 
-                is CreateAccountTypeViewModel.ViewEvent.Error -> {
+                is OnboardingAccountTypeViewModel.ViewEvent.Error -> {
                     Log.d("CreateAccountTypeScreen", it.message)
                 }
             }
@@ -125,7 +127,7 @@ fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message:
 
 @Composable
 private fun CreateWalletHdWidget(
-    viewModel: CreateAccountTypeViewModel,
+    viewModel: OnboardingAccountTypeViewModel,
     scope: CoroutineScope,
 ) {
     GroupChoiceWidget(
@@ -250,28 +252,31 @@ fun TermsAndPrivacy(modifier: Modifier = Modifier) {
         mutableStateOf<TextLayoutResult?>(null)
     }
     val annotatedString = createAnnotatedString()
-
+    val webViewController by rememberWebViewController()
+    WebViewPlatform(webViewController = webViewController)
     Text(
         style = typography.footnote.sans,
         color = AlgoKitTheme.colors.textGray,
         modifier = modifier
-            .pointerInput(Unit) {
+            .pointerInput(annotatedString) {
                 detectTapGestures { pos ->
                     layoutResult.value?.let { layoutResult ->
-                        val offset = layoutResult.getOffsetForPosition(pos)
+                        // Adjust the position to account for padding
+                        val adjustedPos = pos.copy(x = pos.x - 43.dp.toPx(), y = pos.y - 24.dp.toPx())
+                        val offset = layoutResult.getOffsetForPosition(adjustedPos)
                         annotatedString.getStringAnnotations(
                             tag = "TERMS_AND_CONDITIONS",
                             start = offset,
-                            end = offset
+                            end = offset + 1
                         ).firstOrNull()?.let {
-
+                            webViewController.open(WalletSdkConstants.TERMS_AND_SERVICES_URL)
                         }
                         annotatedString.getStringAnnotations(
                             tag = "PRIVACY_POLICY",
                             start = offset,
-                            end = offset
+                            end = offset + 1
                         ).firstOrNull()?.let {
-
+                            webViewController.open(WalletSdkConstants.PRIVACY_POLICY_URL)
                         }
                     }
                 }

@@ -25,7 +25,6 @@ class QRScannerViewModel(
                     }
 
                     is DeeplinkHandler.DeepLinkState.KeyReg -> {
-                        Log.d("Mithilesh",  it.keyReg.toString())
                         eventDelegate.sendEvent(
                             ViewEvent.NavigateToTransactionSignatureRequestScreen(
                                 it.keyReg

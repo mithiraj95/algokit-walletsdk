@@ -100,10 +100,10 @@ data object Accounts : TopLevelRoute {
 
 @Serializable
 data object Discover : TopLevelRoute {
-    override val type: TopLevelRoute.Type = TopLevelRoute.Type.NavButton("Discover")
+    override val type: TopLevelRoute.Type = TopLevelRoute.Type.NavButton("GitHub Repo")
     override val details =
         TopLevelRouteDetails(
-            name = "Search",
+            name = "Discover",
             route = this,
             icon = R.drawable.ic_global,
         )

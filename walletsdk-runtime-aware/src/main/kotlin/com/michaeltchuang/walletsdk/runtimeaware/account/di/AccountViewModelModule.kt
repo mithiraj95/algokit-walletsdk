@@ -2,7 +2,7 @@ package com.michaeltchuang.walletsdk.runtimeaware.account.di
 
 
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountNameViewModel
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountTypeViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.HDWalletSelectionViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.QRScannerViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.RecoverPassphraseViewModel
@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 internal val viewModelModule = module {
     viewModel {
-        CreateAccountTypeViewModel(
+        OnboardingAccountTypeViewModel(
             get(),
             get(),
             get(),
