@@ -3,7 +3,7 @@ package com.michaeltchuang.wallet.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
-import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.custom.AccountLite
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventDelegate
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.StateDelegate
@@ -25,9 +25,9 @@ class AccountListViewModel(
         stateDelegate.updateState { AccountsState.Loading }
         viewModelScope.launch {
             try {
-                val accounts = runtimeAwareSdk.fetchAccounts()
+                val accountLite = runtimeAwareSdk.fetchAccountLite()
                 stateDelegate.updateState {
-                    AccountsState.Content(accounts)
+                    AccountsState.Content(accountLite)
                 }
             } catch (e: Exception) {
                 stateDelegate.updateState { AccountsState.Error(e.message ?: "Unknown error") }
@@ -56,7 +56,7 @@ class AccountListViewModel(
         data object Loading : AccountsState
 
         data class Content(
-            val accounts: List<LocalAccount>,
+            val accounts: List<AccountLite>,
         ) : AccountsState
 
         data class Error(

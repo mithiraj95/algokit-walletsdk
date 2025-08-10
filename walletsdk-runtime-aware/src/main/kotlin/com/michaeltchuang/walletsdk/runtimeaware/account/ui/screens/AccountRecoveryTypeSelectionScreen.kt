@@ -52,7 +52,7 @@ fun AccountRecoveryTypeSelectionScreen(
         RecoverAnAccountWithQRWidget(navController)
         PairLedgerDeviceWidget(onClick)
         ImportPeraWebWidget(onClick)
-        AlgorandSecureBackupWidget(onClick)
+        // AlgorandSecureBackupWidget(onClick)
     }
 }
 

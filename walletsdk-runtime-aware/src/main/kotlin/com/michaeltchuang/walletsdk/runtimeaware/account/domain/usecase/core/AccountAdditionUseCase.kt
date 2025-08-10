@@ -64,7 +64,7 @@ class AccountAdditionUseCase(
         type: CreateAccount.Type.Algo25
     ) {
         with(createAccount) {
-            //var secretKey = aesPlatformManager.decryptByteArray(type.encryptedSecretKey)
+            // var secretKey = aesPlatformManager.decryptByteArray(type.encryptedSecretKey)
             addAlgo25Account(
                 address,
                 type.encryptedSecretKey,

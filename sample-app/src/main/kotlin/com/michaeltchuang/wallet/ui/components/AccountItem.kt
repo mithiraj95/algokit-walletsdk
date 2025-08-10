@@ -19,7 +19,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.michaeltchuang.wallet.R
-import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core.AccountRegistrationType
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.custom.AccountLite
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.icon.PeraIconRoundShape
@@ -27,7 +28,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.utils.toShortenedAddress
 
 @Composable
 fun AccountItem(
-    account: LocalAccount,
+    account: AccountLite,
     onDelete: (address: String) -> Unit,
 ) {
     Card(
@@ -46,7 +47,7 @@ fun AccountItem(
         ) {
             PeraIconRoundShape(
                 modifier = Modifier,
-                imageVector = ImageVector.vectorResource(getWalletIcon(account)),
+                imageVector = ImageVector.vectorResource(getWalletIcon(account.registrationType)),
                 contentDescription = "Wallet Icon",
             )
             Column(
@@ -56,17 +57,17 @@ fun AccountItem(
                         .padding(horizontal = 8.dp),
             ) {
                 Text(
-                    text = account.algoAddress.toShortenedAddress(),
+                    text = account.customName.ifEmpty { account.address.toShortenedAddress() },
                     style = typography.body.large.sansMedium,
                 )
                 Text(
-                    text = getAccountType(account),
+                    text = getAccountType(account.registrationType),
                     style = typography.footnote.mono,
                 )
             }
 
             IconButton(onClick = {
-                onDelete(account.algoAddress)
+                onDelete(account.address)
             }) {
                 Icon(Icons.Default.Delete, contentDescription = "Delete Account")
             }
@@ -74,13 +75,13 @@ fun AccountItem(
     }
 }
 
-fun getWalletIcon(localAccount: LocalAccount): Int =
+fun getWalletIcon(localAccount: AccountRegistrationType): Int =
     when (localAccount) {
-        is LocalAccount.HdKey -> {
+        is AccountRegistrationType.HdKey -> {
             R.drawable.ic_hd_wallet
         }
 
-        is LocalAccount.Algo25 -> {
+        is AccountRegistrationType.Algo25 -> {
             R.drawable.ic_wallet
         }
 
@@ -89,21 +90,21 @@ fun getWalletIcon(localAccount: LocalAccount): Int =
         }
     }
 
-fun getAccountType(localAccount: LocalAccount): String =
+fun getAccountType(localAccount: AccountRegistrationType): String =
     when (localAccount) {
-        is LocalAccount.HdKey -> {
+        is AccountRegistrationType.HdKey -> {
             "HD"
         }
 
-        is LocalAccount.Algo25 -> {
+        is AccountRegistrationType.Algo25 -> {
             "Algo25"
         }
 
-        is LocalAccount.NoAuth -> {
+        is AccountRegistrationType.NoAuth -> {
             "Watch"
         }
 
-        is LocalAccount.LedgerBle -> {
+        is AccountRegistrationType.LedgerBle -> {
             "Ledger"
         }
     } + " Account"
@@ -113,14 +114,10 @@ fun getAccountType(localAccount: LocalAccount): String =
 fun AccountItemPreview() {
     // Create a sample account for preview
     val sampleAccount =
-        LocalAccount.HdKey(
-            algoAddress = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-            publicKey = ByteArray(0),
-            seedId = 0,
-            account = 0,
-            change = 0,
-            keyIndex = 0,
-            derivationType = 0,
+        AccountLite(
+            address = "ASDFGHJKLASDFGHJKL",
+            customName = "Sample Account",
+            registrationType = AccountRegistrationType.Algo25,
         )
 
     AlgoKitTheme {
