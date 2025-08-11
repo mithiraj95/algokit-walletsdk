@@ -17,6 +17,8 @@ class AccountListViewModel(
 ) : ViewModel(),
     StateViewModel<AccountListViewModel.AccountsState> by stateDelegate,
     EventViewModel<AccountListViewModel.AccountsEvent> by eventDelegate {
+    var accountLite = emptyList<AccountLite>()
+
     init {
         stateDelegate.setDefaultState(AccountsState.Idle)
     }
@@ -25,13 +27,17 @@ class AccountListViewModel(
         stateDelegate.updateState { AccountsState.Loading }
         viewModelScope.launch {
             try {
-                val accountLite = runtimeAwareSdk.fetchAccountLite()
+                accountLite = runtimeAwareSdk.fetchAccountLite()
                 stateDelegate.updateState {
                     AccountsState.Content(accountLite)
                 }
             } catch (e: Exception) {
                 stateDelegate.updateState { AccountsState.Error(e.message ?: "Unknown error") }
-                eventDelegate.sendEvent(AccountsEvent.ShowError(e.message ?: "Failed to fetch accounts."))
+                eventDelegate.sendEvent(
+                    AccountsEvent.ShowError(
+                        e.message ?: "Failed to fetch accounts.",
+                    ),
+                )
             }
         }
     }
@@ -45,7 +51,11 @@ class AccountListViewModel(
                 fetchAccounts() // Refresh the list after deletion
             } catch (e: Exception) {
                 stateDelegate.updateState { AccountsState.Error(e.message ?: "Unknown error") }
-                eventDelegate.sendEvent(AccountsEvent.ShowError(e.message ?: "Failed to delete account."))
+                eventDelegate.sendEvent(
+                    AccountsEvent.ShowError(
+                        e.message ?: "Failed to delete account.",
+                    ),
+                )
             }
         }
     }

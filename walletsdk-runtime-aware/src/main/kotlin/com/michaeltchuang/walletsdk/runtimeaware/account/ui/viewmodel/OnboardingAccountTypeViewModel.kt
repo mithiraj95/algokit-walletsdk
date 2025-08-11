@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 import com.michaeltchuang.walletsdk.runtimeaware.account.data.mapper.entity.AccountCreationHdKeyTypeMapper
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core.AccountCreation
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.repository.local.HdSeedRepository
 import com.michaeltchuang.walletsdk.runtimeaware.encryption.domain.manager.AESPlatformManager
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventDelegate
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventViewModel
@@ -19,6 +20,7 @@ class OnboardingAccountTypeViewModel(
     private val aesPlatformManager: AESPlatformManager,
     private val runtimeAwareSdk: RuntimeAwareSdk,
     private val accountCreationHdKeyTypeMapper: AccountCreationHdKeyTypeMapper,
+    private val hdSeedRepository: HdSeedRepository,
     private val stateDelegate: StateDelegate<ViewState>,
     private val eventDelegate: EventDelegate<ViewEvent>,
 ) : ViewModel(),
@@ -26,7 +28,18 @@ class OnboardingAccountTypeViewModel(
     EventViewModel<OnboardingAccountTypeViewModel.ViewEvent> by eventDelegate {
 
     init {
-        stateDelegate.setDefaultState(ViewState.Content)
+        stateDelegate.setDefaultState(ViewState.Loading)
+        hasAnySeedExist()
+    }
+
+    private fun hasAnySeedExist() {
+        viewModelScope.launch {
+            hdSeedRepository.hasAnySeed().let { hasAnySeed ->
+                stateDelegate.updateState {
+                    ViewState.Content(hasAnySeed)
+                }
+            }
+        }
     }
 
     fun createHdKeyAccount() {
@@ -51,26 +64,23 @@ class OnboardingAccountTypeViewModel(
     }
 
     fun createAlgo25Account() {
-        stateDelegate.onState<ViewState.Idle> {
-            stateDelegate.updateState { ViewState.Loading }
-            viewModelScope.launch {
-                try {
-                    runtimeAwareSdk.createAlgo25Account()?.let {
-                        val secretKey = it.secretKey.toByteArray()
-                        val accountCreation = AccountCreation(
-                            address = it.address,
-                            customName = null,
-                            isBackedUp = false,
-                            type = AccountCreation.Type.Algo25(secretKey),
-                            creationType = CreationType.CREATE
-                        )
-                        eventDelegate.sendEvent(ViewEvent.AccountCreated(accountCreation))
-                    } ?: run {
-                        displayError("Failed to create account")
-                    }
-                } catch (e: Exception) {
-                    displayError(e.message ?: "Unknown error")
+        viewModelScope.launch {
+            try {
+                runtimeAwareSdk.createAlgo25Account()?.let {
+                    val secretKey = it.secretKey.toByteArray()
+                    val accountCreation = AccountCreation(
+                        address = it.address,
+                        customName = null,
+                        isBackedUp = false,
+                        type = AccountCreation.Type.Algo25(secretKey),
+                        creationType = CreationType.CREATE
+                    )
+                    eventDelegate.sendEvent(ViewEvent.AccountCreated(accountCreation))
+                } ?: run {
+                    displayError("Failed to create account")
                 }
+            } catch (e: Exception) {
+                displayError(e.message ?: "Unknown error")
             }
         }
     }
@@ -84,7 +94,7 @@ class OnboardingAccountTypeViewModel(
     sealed interface ViewState {
         data object Idle : ViewState
         data object Loading : ViewState
-        data object Content : ViewState
+        data class Content(val hasAnySeed: Boolean) : ViewState
     }
 
     sealed interface ViewEvent {

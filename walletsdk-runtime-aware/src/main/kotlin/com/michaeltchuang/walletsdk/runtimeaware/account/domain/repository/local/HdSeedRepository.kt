@@ -3,7 +3,7 @@ package com.michaeltchuang.walletsdk.runtimeaware.account.domain.repository.loca
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.HdSeed
 import kotlinx.coroutines.flow.Flow
 
-internal interface HdSeedRepository {
+interface HdSeedRepository {
 
     fun getAllAsFlow(): Flow<List<HdSeed>>
 
