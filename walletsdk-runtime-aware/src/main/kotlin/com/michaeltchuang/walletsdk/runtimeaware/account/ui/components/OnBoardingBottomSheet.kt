@@ -150,7 +150,7 @@ fun OnBoardingBottomSheetNavHost(
                     }
                 }
                 composable(route = OnBoardingScreens.ALGOKIT_WEBVIEW_PLATFORM_SCREEN.name) {
-                    AlgoKitWebViewPlatformScreen(url = REPO_URL, navController)
+                    AlgoKitWebViewPlatformScreen(url = REPO_URL)
                 }
 
                 composable(route = OnBoardingScreens.TRANSACTION_SIGNATURE_SCREEN.name) {

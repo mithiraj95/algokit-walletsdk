@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
+import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core.OnboardingAccountType
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
@@ -43,7 +45,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.RecoverPas
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitPrimaryButton
-import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET
+import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants
 import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.SAMPLE_ALGO25_MNEMONIC
 import com.michaeltchuang.walletsdk.runtimeaware.utils.getTextFromClipboard
 import com.michaeltchuang.walletsdk.runtimeaware.utils.splitMnemonic
@@ -60,6 +62,8 @@ fun RecoveryPhraseScreen(
     val viewModel: RecoverPassphraseViewModel = koinViewModel()
     var mnemonic by rememberSaveable { mutableStateOf(mnemonicString) }
     var mnemonicList by rememberSaveable { mutableStateOf(mnemonicString.splitMnemonic()) }
+    val webViewController by rememberWebViewController()
+    WebViewPlatform(webViewController = webViewController)
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect {
@@ -124,8 +128,7 @@ fun RecoveryPhraseScreen(
 
                     IconButton(
                         onClick = {
-                            snackBar(FEATURE_NOT_SUPPORTED_YET)
-                            //navController.navigate(OnBoardingScreens.ALGOKIT_WEBVIEW_PLATFORM_SCREEN.name)
+                            webViewController.open(WalletSdkConstants.RECOVER_ACCOUNT_LEARN_MORE)
                         },
                         modifier = Modifier
                             .size(32.dp)
