@@ -14,23 +14,20 @@ internal class AESPlatformManagerImpl(
     }
 
     override fun encryptByteArray(data: ByteArray): ByteArray {
-
-        /* val cipher = Cipher.getInstance(AES_MODE)
-         cipher.init(Cipher.ENCRYPT_MODE, getEncryptionSecretKey())
-         val iv = cipher.iv
-         val encryptedData = cipher.doFinal(data)
-         //return iv + encryptedData // Append IV to the encrypted data*/
-        return data
+        val cipher = Cipher.getInstance(AES_MODE)
+        cipher.init(Cipher.ENCRYPT_MODE, getEncryptionSecretKey())
+        val iv = cipher.iv
+        val encryptedData = cipher.doFinal(data)
+        return iv + encryptedData // Append IV to the encrypted data
     }
 
     override fun decryptByteArray(encryptedData: ByteArray): ByteArray {
-        /* val iv = encryptedData.copyOfRange(0, 12) // First 12 bytes are the IV
-         val cipherData = encryptedData.copyOfRange(12, encryptedData.size)
-         val cipher = Cipher.getInstance(AES_MODE)
-         val spec = GCMParameterSpec(128, iv)
-         cipher.init(Cipher.DECRYPT_MODE, getEncryptionSecretKey(), spec)*/
-        // return cipher.doFinal(cipherData)
-        return encryptedData
+        val iv = encryptedData.copyOfRange(0, 12) // First 12 bytes are the IV
+        val cipherData = encryptedData.copyOfRange(12, encryptedData.size)
+        val cipher = Cipher.getInstance(AES_MODE)
+        val spec = GCMParameterSpec(128, iv)
+        cipher.init(Cipher.DECRYPT_MODE, getEncryptionSecretKey(), spec)
+        return cipher.doFinal(cipherData)
     }
 
     @Throws(Exception::class)

@@ -38,6 +38,7 @@ class RuntimeAwareSdk(private val context: Context) {
         // runtime, initialize as you usually would.
         val isRuntimeEnabledSdkLoaded = loadSdkIfNeeded(context) != null
         initializeKoin()
+        loadSdkIfNeeded(context)?.initialize()
         return isRuntimeEnabledSdkLoaded
     }
 

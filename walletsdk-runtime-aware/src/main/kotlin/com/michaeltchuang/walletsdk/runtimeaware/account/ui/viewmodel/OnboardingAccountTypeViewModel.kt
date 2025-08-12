@@ -7,6 +7,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.data.mapper.entity.Acco
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core.AccountCreation
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.repository.local.HdSeedRepository
 import com.michaeltchuang.walletsdk.runtimeaware.encryption.domain.manager.AESPlatformManager
+import com.michaeltchuang.walletsdk.runtimeaware.encryption.domain.usecase.AndroidEncryptionManager
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventDelegate
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.EventViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.StateDelegate
@@ -17,6 +18,7 @@ import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.model.HdKeyAddr
 import kotlinx.coroutines.launch
 
 class OnboardingAccountTypeViewModel(
+    private val androidEncryptionManager: AndroidEncryptionManager,
     private val aesPlatformManager: AESPlatformManager,
     private val runtimeAwareSdk: RuntimeAwareSdk,
     private val accountCreationHdKeyTypeMapper: AccountCreationHdKeyTypeMapper,
@@ -29,6 +31,7 @@ class OnboardingAccountTypeViewModel(
 
     init {
         stateDelegate.setDefaultState(ViewState.Loading)
+        viewModelScope.launch { androidEncryptionManager.initializeEncryptionManager() }
         hasAnySeedExist()
     }
 
