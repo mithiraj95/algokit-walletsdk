@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +44,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
@@ -54,19 +57,18 @@ import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.GroupChoiceWidget
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.icon.PeraIcon
 import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants
+import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.PRIVACY_POLICY_URL
+import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.TERMS_AND_SERVICES_URL
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-
-const val TERMS_AND_SERVICES_URL = "https://perawallet.app/terms-and-services/"
-const val PRIVACY_POLICY_URL = "https://perawallet.app/privacy-policy/"
 
 @Composable
 fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message: String) -> Unit) {
 
     val viewModel: OnboardingAccountTypeViewModel = koinViewModel()
     val scope = rememberCoroutineScope()
-
+    val viewState = viewModel.state.collectAsStateWithLifecycle().value
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect {
             when (it) {
@@ -84,7 +86,27 @@ fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message:
             }
         }
     }
+    when (viewState) {
+        is OnboardingAccountTypeViewModel.ViewState.Idle -> {}
+        is OnboardingAccountTypeViewModel.ViewState.Loading -> LoadingState()
+        is OnboardingAccountTypeViewModel.ViewState.Content -> ContentState(
+            isHasAnySeed = viewState.hasAnySeed,
+            viewModel = viewModel,
+            scope = scope,
+            navController = navController,
+            onClick = onClick
+        )
+    }
+}
 
+@Composable
+private fun ContentState(
+    isHasAnySeed: Boolean,
+    viewModel: OnboardingAccountTypeViewModel,
+    scope: CoroutineScope,
+    navController: NavHostController,
+    onClick: (message: String) -> Unit
+) {
     Column(
         modifier = Modifier
             .background(color = AlgoKitTheme.colors.background)
@@ -113,9 +135,10 @@ fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message:
             )
         }
         Spacer(modifier = Modifier.weight(1f))
-        CreateNewAccountCard {
-            navController.navigate(OnBoardingScreens.HD_WALLET_SELECTION_SCREEN.name)
-        }
+        if (isHasAnySeed)
+            CreateNewAccountCard {
+                navController.navigate(OnBoardingScreens.HD_WALLET_SELECTION_SCREEN.name)
+            }
         Spacer(modifier = Modifier.height(20.dp))
         CreateWalletHdWidget(viewModel, scope)
         ImportHdWalletWidget(navController)
@@ -262,21 +285,22 @@ fun TermsAndPrivacy(modifier: Modifier = Modifier) {
                 detectTapGestures { pos ->
                     layoutResult.value?.let { layoutResult ->
                         // Adjust the position to account for padding
-                        val adjustedPos = pos.copy(x = pos.x - 43.dp.toPx(), y = pos.y - 24.dp.toPx())
+                        val adjustedPos =
+                            pos.copy(x = pos.x - 43.dp.toPx(), y = pos.y - 24.dp.toPx())
                         val offset = layoutResult.getOffsetForPosition(adjustedPos)
                         annotatedString.getStringAnnotations(
                             tag = "TERMS_AND_CONDITIONS",
                             start = offset,
                             end = offset + 1
                         ).firstOrNull()?.let {
-                            webViewController.open(WalletSdkConstants.TERMS_AND_SERVICES_URL)
+                            webViewController.open(TERMS_AND_SERVICES_URL)
                         }
                         annotatedString.getStringAnnotations(
                             tag = "PRIVACY_POLICY",
                             start = offset,
                             end = offset + 1
                         ).firstOrNull()?.let {
-                            webViewController.open(WalletSdkConstants.PRIVACY_POLICY_URL)
+                            webViewController.open(PRIVACY_POLICY_URL)
                         }
                     }
                 }
@@ -331,4 +355,11 @@ private fun createAnnotatedString() = buildAnnotatedString {
         start = privacyPolicyStartIndex,
         end = privacyPolicyEndIndex
     )
+}
+
+@Composable
+private fun LoadingState() {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator()
+    }
 }

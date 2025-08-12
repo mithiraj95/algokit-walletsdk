@@ -26,6 +26,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.AlgoKitWebVi
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountNameScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountTypeScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.HdWalletSelectionScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.InitialRegisterIntroScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.QRCodeScannerScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoverAnAccountScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoveryPhraseScreen
@@ -50,13 +51,17 @@ enum class OnBoardingScreens() {
     RECOVER_AN_ACCOUNT_SCREEN,
     ALGOKIT_WEBVIEW_PLATFORM_SCREEN,
     TRANSACTION_SIGNATURE_SCREEN,
-    TRANSACTION_SUCCESS_SCREEN
+    TRANSACTION_SUCCESS_SCREEN,
+    INITIAL_REGISTER_INTRO_SCREEN
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnBoardingBottomSheet(
-    showSheet: Boolean, qrScanFlow: Boolean = false, onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
+    showSheet: Boolean,
+    accounts: Int,
+    qrScanFlow: Boolean = false,
+    onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
 ) {
     if (showSheet) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -66,7 +71,7 @@ fun OnBoardingBottomSheet(
             }, sheetState = sheetState, dragHandle = null
         ) {
             OnBoardingBottomSheetNavHost(
-                startDestination = startDestination(qrScanFlow),
+                startDestination = startDestination(qrScanFlow, accounts),
                 closeSheet = {
                     onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
                 }) {
@@ -163,15 +168,18 @@ fun OnBoardingBottomSheetNavHost(
                         closeSheet()
                     }
                 }
+                composable(route = OnBoardingScreens.INITIAL_REGISTER_INTRO_SCREEN.name) {
+                    InitialRegisterIntroScreen(navController)
+                }
             }
         }
     }
 }
 
-fun startDestination(qrScanFlow: Boolean): String {
-    return if (qrScanFlow) {
-        OnBoardingScreens.QR_CODE_SCANNER_SCREEN.name
-    } else {
-        OnBoardingScreens.CREATE_ACCOUNT_TYPE.name
+fun startDestination(qrScanFlow: Boolean, accounts: Int): String {
+    return when {
+        qrScanFlow -> OnBoardingScreens.QR_CODE_SCANNER_SCREEN.name
+        accounts == 0 -> OnBoardingScreens.INITIAL_REGISTER_INTRO_SCREEN.name
+        else -> OnBoardingScreens.CREATE_ACCOUNT_TYPE.name
     }
 }
