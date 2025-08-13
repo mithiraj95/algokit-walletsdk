@@ -10,13 +10,22 @@ import org.koin.dsl.module
 
 
 val securityModule = module {
-    single<SecurityManager> {
+    single {
         SecurityManagerImpl()
     }
-    single<SecurityProvidersFactory> {
+    single<SecurityManager> {
+        get<SecurityManagerImpl>()
+    }
+    single {
         SecurityProvidersFactoryImpl()
     }
-    single<AlgoKitSecurityManager> {
+    single<SecurityProvidersFactory> {
+        get<SecurityProvidersFactoryImpl>()
+    }
+    single {
         AlgoKitSecurityManagerImpl(get(), get()) // singleton equivalent to @Singleton
+    }
+    single<AlgoKitSecurityManager> {
+        get<AlgoKitSecurityManagerImpl>() // singleton equivalent to @Singleton
     }
 }

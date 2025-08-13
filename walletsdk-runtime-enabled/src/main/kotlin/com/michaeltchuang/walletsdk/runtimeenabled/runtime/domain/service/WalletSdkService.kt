@@ -23,4 +23,6 @@ interface WalletSdkService {
     suspend fun createBip39Wallet(): Bip39Wallet
 
     suspend fun algoKitBip39Sdk(): AlgoKitBip39Sdk
+
+    suspend fun initializeSecurityManager()
 }

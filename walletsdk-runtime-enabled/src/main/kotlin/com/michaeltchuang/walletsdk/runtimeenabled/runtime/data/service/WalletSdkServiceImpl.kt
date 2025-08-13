@@ -10,18 +10,20 @@ import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoA
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoKitBip39Sdk
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoKitBip39SdkImpl
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkService
+import com.michaeltchuang.walletsdk.runtimeenabled.security.AlgoKitSecurityManagerImpl
 import com.michaeltchuang.walletsdk.runtimeenabled.security.di.securityModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext
+import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 
 
 class WalletSdkServiceImpl(private val context: Context) : WalletSdkService {
 
     override suspend fun initialize() {
-        startKoin {
-            modules(securityModule)
-            modules(algoSdkModule)
-            modules(bip39Module)
-        }
+        initializeKoin()
+        initializeSecurityManager()
     }
 
     override suspend fun getEntropyFromMnemonic(mnemonic: String): String {
@@ -62,6 +64,30 @@ class WalletSdkServiceImpl(private val context: Context) : WalletSdkService {
 
     override suspend fun algoKitBip39Sdk(): AlgoKitBip39Sdk {
         return AlgoKitBip39SdkImpl()
+    }
+
+    override suspend fun initializeSecurityManager() {
+        return GlobalContext.get().get<AlgoKitSecurityManagerImpl>().initializeSecurityManager()
+    }
+
+    private fun initializeKoin() {
+        GlobalContext.getOrNull()?.let {
+            // Koin already started
+            loadKoinModules(
+                getModules()
+            )
+        } ?: run {
+            startKoin {
+                androidContext(context)
+                modules(getModules())
+            }
+        }
+    }
+
+    private fun getModules(): List<Module> {
+        return listOf(
+            securityModule, algoSdkModule, bip39Module
+        )
     }
 
 }
