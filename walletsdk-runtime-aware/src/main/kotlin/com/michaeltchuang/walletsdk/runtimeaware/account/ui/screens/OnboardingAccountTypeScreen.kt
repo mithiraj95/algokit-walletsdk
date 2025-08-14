@@ -50,7 +50,7 @@ import androidx.navigation.NavHostController
 import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
 import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
@@ -76,7 +76,7 @@ fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message:
                     navController.currentBackStackEntry
                         ?.savedStateHandle
                         ?.set("accountCreation", it.accountCreation)
-                    navController.navigate(OnBoardingScreens.CREATE_ACCOUNT_NAME.name)
+                    navController.navigate(AlgoKitScreens.CREATE_ACCOUNT_NAME.name)
                     Log.d("CreateAccountTypeScreen", it.accountCreation.address)
                 }
 
@@ -137,7 +137,7 @@ private fun ContentState(
         Spacer(modifier = Modifier.weight(1f))
         if (isHasAnySeed)
             CreateNewAccountCard {
-                navController.navigate(OnBoardingScreens.HD_WALLET_SELECTION_SCREEN.name)
+                navController.navigate(AlgoKitScreens.HD_WALLET_SELECTION_SCREEN.name)
             }
         Spacer(modifier = Modifier.height(20.dp))
         CreateWalletHdWidget(viewModel, scope)
@@ -173,7 +173,7 @@ private fun ImportHdWalletWidget(navController: NavController) {
         description = stringResource(id = R.string.import_an_existing),
         iconContentDescription = stringResource(id = R.string.import_an_existing),
         icon = ImageVector.vectorResource(R.drawable.ic_key),
-        onClick = { navController.navigate(OnBoardingScreens.ACCOUNT_RECOVERY_TYPE_SCREEN.name) }
+        onClick = { navController.navigate(AlgoKitScreens.ACCOUNT_RECOVERY_TYPE_SCREEN.name) }
     )
 }
 

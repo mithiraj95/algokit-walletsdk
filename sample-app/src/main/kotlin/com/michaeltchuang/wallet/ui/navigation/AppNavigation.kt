@@ -32,7 +32,7 @@ fun AppNavigation() {
             SnackbarHost(hostState = snackbarHostState, modifier = Modifier)
         },
         bottomBar = {
-            AlgoKitNavigationBar(navController) {
+            AppNavigationBar(navController) {
                 isBottomSheetVisible.value = true
             }
         },

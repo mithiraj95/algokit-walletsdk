@@ -25,6 +25,7 @@ class WalletApplication : Application() {
                 Log.i("AlgoKit", "runtimeAwareSdk not initialize")
             }
         }
+
         super.onCreate()
     }
 }

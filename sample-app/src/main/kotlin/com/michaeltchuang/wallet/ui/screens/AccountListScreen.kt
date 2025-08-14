@@ -16,6 +16,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.michaeltchuang.wallet.ui.components.AccountItem
 import com.michaeltchuang.wallet.ui.components.LottieConfetti
-import com.michaeltchuang.wallet.ui.navigation.QREvent
+import com.michaeltchuang.wallet.ui.navigation.ACTIONS
 import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel
 import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel.AccountsEvent
 import com.michaeltchuang.wallet.ui.viewmodel.AccountListViewModel.AccountsState
@@ -41,6 +44,7 @@ import com.michaeltchuang.wallet.ui.widgets.snackbar.SnackbarViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.custom.AccountLite
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitEvent
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingBottomSheet
+import com.michaeltchuang.walletsdk.runtimeaware.utils.getSavedThemePreferenceFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -60,12 +64,33 @@ fun AccountListScreen(
     var showSheet by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     var showConfetti by remember { mutableStateOf(false) }
-    var qrScanFlow by remember { mutableStateOf(false) }
+    var qrScanClick by remember { mutableStateOf(false) }
+    var settingsClick by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
+    var lastThemePrefKey by rememberSaveable { mutableStateOf<String?>(null) }
+    val themePrefFlow = remember { getSavedThemePreferenceFlow(context) }
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(themePrefFlow) {
+        themePrefFlow.collect { pref ->
+            val currentKey = pref.name
+            if (lastThemePrefKey != null && lastThemePrefKey != currentKey) {
+                snackbarHostState.showSnackbar("Theme updated")
+            }
+            lastThemePrefKey = currentKey
+        }
+    }
+
     LaunchedEffect(Unit) {
-        QREvent.qrClickEvent.collect {
-            qrScanFlow = it
+        ACTIONS.qrClickEvent.collect {
+            qrScanClick = it
+            showSheet = it
+        }
+    }
+    LaunchedEffect(Unit) {
+        ACTIONS.settingsClickEvent.collect {
+            settingsClick = it
             showSheet = it
         }
     }
@@ -83,13 +108,19 @@ fun AccountListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    qrScanFlow = false
+                    settingsClick = false
+                    qrScanClick = false
                     showSheet = true
                 },
                 modifier = Modifier.padding(end = FAB_PADDING, bottom = FAB_PADDING),
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Account")
             }
+        },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+            )
         },
     ) { padding ->
         AccountListContent(
@@ -106,7 +137,8 @@ fun AccountListScreen(
     OnBoardingBottomSheet(
         showSheet = showSheet,
         accounts = viewModel.accountLite.size,
-        qrScanFlow = qrScanFlow,
+        launchQRScanScreen = qrScanClick,
+        launchSettingsScreen = settingsClick,
     ) { event ->
         handleBottomSheetEvent(
             event = event,

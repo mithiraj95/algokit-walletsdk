@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.R
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
 import com.michaeltchuang.walletsdk.runtimeaware.deeplink.model.DeepLink
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
@@ -64,7 +64,7 @@ fun TransactionSignatureRequestScreen(
 
         AlgoKitPrimaryButton(
             onClick = {
-                navController.navigate(OnBoardingScreens.TRANSACTION_SUCCESS_SCREEN.name)
+                navController.navigate(AlgoKitScreens.TRANSACTION_SUCCESS_SCREEN.name)
             },
             text = stringResource(id = R.string.confirm_transaction),
             modifier = Modifier

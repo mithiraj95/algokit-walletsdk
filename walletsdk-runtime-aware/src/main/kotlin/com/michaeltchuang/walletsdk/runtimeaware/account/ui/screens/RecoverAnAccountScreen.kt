@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.R
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.PeraCard
@@ -74,7 +74,7 @@ fun RecoverAnAccountScreen(
                 )
             },
             onClick = {
-                navController.navigate(OnBoardingScreens.RECOVER_PHRASE_SCREEN.name + "/")
+                navController.navigate(AlgoKitScreens.RECOVER_PHRASE_SCREEN.name + "/")
             }
         )
     }
