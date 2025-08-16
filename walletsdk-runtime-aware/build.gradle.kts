@@ -54,6 +54,12 @@ dependencies {
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
 
+    // --- DataStore ---
+    implementation(libs.androidx.datastore.preferences)
+
+    // --- Coroutines ---
+    implementation(libs.bundles.coroutines)
+
     // --- Utility & Other ---
     implementation(libs.accompanist.permissions)
     implementation(libs.converter.gson)

@@ -1,8 +1,11 @@
 package com.michaeltchuang.wallet.ui.navigation
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -35,26 +38,44 @@ fun TopBar() {
             )
         },
         actions = {
-            Icon(
-                modifier =
-                    Modifier
-                        .size(55.dp)
-                        .padding(horizontal = 8.dp)
-                        .clickable(onClick = {
-                            scop.launch {
-                                QREvent.qrClickEvent.emit(true)
-                            }
-                        }),
-                painter = painterResource(com.michaeltchuang.wallet.R.drawable.ic_qr_scan),
-                contentDescription = "qr",
-                tint = AlgoKitTheme.colors.textMain,
-            )
+            Row {
+                Icon(
+                    modifier =
+                        Modifier
+                            .size(44.dp)
+                            .padding(horizontal = 8.dp)
+                            .clickable(onClick = {
+                                scop.launch {
+                                    ACTIONS.qrClickEvent.emit(true)
+                                }
+                            }),
+                    painter = painterResource(com.michaeltchuang.wallet.R.drawable.ic_qr_scan),
+                    contentDescription = "qr",
+                    tint = AlgoKitTheme.colors.textMain,
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Icon(
+                    modifier =
+                        Modifier
+                            .size(44.dp)
+                            .padding(horizontal = 8.dp)
+                            .clickable(onClick = {
+                                scop.launch {
+                                    ACTIONS.settingsClickEvent.emit(true)
+                                }
+                            }),
+                    painter = painterResource(com.michaeltchuang.wallet.R.drawable.ic_settings),
+                    contentDescription = "qr",
+                    tint = AlgoKitTheme.colors.textMain,
+                )
+            }
         },
     )
 }
 
-object QREvent {
+object ACTIONS {
     val qrClickEvent = MutableSharedFlow<Boolean>()
+    val settingsClickEvent = MutableSharedFlow<Boolean>()
 }
 
 @PreviewLightDark

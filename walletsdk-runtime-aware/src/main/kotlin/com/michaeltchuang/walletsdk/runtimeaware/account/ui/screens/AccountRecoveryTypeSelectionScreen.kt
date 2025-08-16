@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.R
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
@@ -93,7 +93,7 @@ private fun RecoverAnAccountWidget(
         description = stringResource(id = descriptionRes),
         icon = ImageVector.vectorResource(R.drawable.ic_key),
         iconContentDescription = stringResource(id = R.string.key),
-        onClick = { navController.navigate(OnBoardingScreens.RECOVER_AN_ACCOUNT_SCREEN.name) })
+        onClick = { navController.navigate(AlgoKitScreens.RECOVER_AN_ACCOUNT_SCREEN.name) })
 }
 
 @Composable
@@ -105,7 +105,7 @@ private fun RecoverAnAccountWithQRWidget(
         description = stringResource(id = R.string.i_want_to_recover_qr),
         icon = ImageVector.vectorResource(R.drawable.ic_qr),
         iconContentDescription = stringResource(id = R.string.qr_code),
-        onClick = { navController.navigate(OnBoardingScreens.QR_CODE_SCANNER_SCREEN.name) })
+        onClick = { navController.navigate(AlgoKitScreens.QR_CODE_SCANNER_SCREEN.name) })
 }
 
 @Composable

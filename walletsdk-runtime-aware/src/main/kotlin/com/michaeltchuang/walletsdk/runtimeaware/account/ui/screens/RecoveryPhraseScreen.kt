@@ -40,7 +40,7 @@ import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
 import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core.OnboardingAccountType
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.RecoverPassphraseViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
@@ -72,7 +72,7 @@ fun RecoveryPhraseScreen(
                     navController.currentBackStackEntry
                         ?.savedStateHandle
                         ?.set("accountCreation", it.accountCreation)
-                    navController.navigate(OnBoardingScreens.CREATE_ACCOUNT_NAME.name)
+                    navController.navigate(AlgoKitScreens.CREATE_ACCOUNT_NAME.name)
                 }
 
                 is RecoverPassphraseViewModel.ViewEvent.ShowError -> {

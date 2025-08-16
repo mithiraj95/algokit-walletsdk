@@ -15,7 +15,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.PermissionRationaleDialog
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.QRScannerViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
@@ -38,12 +38,12 @@ fun QRCodeScannerScreen(
         viewModel.viewEvent.collect {
             when (it) {
                 is QRScannerViewModel.ViewEvent.NavigateToRecoveryPhraseScreen -> {
-                    navController.navigate(OnBoardingScreens.RECOVER_PHRASE_SCREEN.name + "/${it.mnemonic}")
+                    navController.navigate(AlgoKitScreens.RECOVER_PHRASE_SCREEN.name + "/${it.mnemonic}")
                 }
 
                 is QRScannerViewModel.ViewEvent.NavigateToTransactionSignatureRequestScreen -> {
                     navController.navigateWithArgument(
-                        OnBoardingScreens.TRANSACTION_SIGNATURE_SCREEN.name,
+                        AlgoKitScreens.TRANSACTION_SIGNATURE_SCREEN.name,
                         it.keyReg
                     )
                 }

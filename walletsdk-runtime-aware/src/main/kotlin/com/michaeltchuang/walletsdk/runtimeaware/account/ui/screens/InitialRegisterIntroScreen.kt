@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.R
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
@@ -46,7 +46,7 @@ fun InitialRegisterIntroScreen(navController: NavController = rememberNavControl
                     navController.currentBackStackEntry
                         ?.savedStateHandle
                         ?.set("accountCreation", it.accountCreation)
-                    navController.navigate(OnBoardingScreens.CREATE_ACCOUNT_NAME.name)
+                    navController.navigate(AlgoKitScreens.CREATE_ACCOUNT_NAME.name)
                     Log.d("CreateAccountTypeScreen", it.accountCreation.address)
                 }
 
@@ -164,7 +164,7 @@ private fun ImportAccountWidget(navController: NavController) {
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             onClick = {
-                navController.navigate(OnBoardingScreens.ACCOUNT_RECOVERY_TYPE_SCREEN.name)
+                navController.navigate(AlgoKitScreens.ACCOUNT_RECOVERY_TYPE_SCREEN.name)
             },
             text = stringResource(id = R.string.import_an_account),
             leftIcon = {
