@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -32,6 +33,7 @@ import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
 import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.SettingsItem
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants
 
@@ -63,7 +65,9 @@ fun SettingsScreen(navController: NavController) {
             style = AlgoKitTheme.typography.body.regular.sansMedium,
             modifier = Modifier.padding(vertical = 8.dp)
         )
-        SettingsItem(R.drawable.ic_moon, stringResource(R.string.theme), navController)
+        SettingsItem(R.drawable.ic_moon, stringResource(R.string.theme)) {
+            navController.navigate(AlgoKitScreens.THEME_SCREEN.name)
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -88,41 +92,12 @@ fun SettingsScreen(navController: NavController) {
             stringResource(R.string.terms_and_services),
             WalletSdkConstants.TERMS_AND_SERVICES_URL
         )
-//        SettingsItem(
-//            R.drawable.ic_code,
-//            stringResource(R.string.developer_settings),
-//            navController
-//        )
-    }
-}
-
-@Composable
-fun SettingsItem(icon: Int, title: String, navController: NavController) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { navController.navigate(AlgoKitScreens.THEME_SCREEN.name) }
-            .padding(vertical = 12.dp)
-    ) {
-        Icon(
-            painter = painterResource(icon),
-            contentDescription = title,
-            tint = AlgoKitTheme.colors.textMain,
-            modifier = Modifier.size(24.dp)
-        )
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(
-            text = title,
-            color = AlgoKitTheme.colors.textMain,
-            modifier = Modifier.weight(1f),
-            style = AlgoKitTheme.typography.body.regular.sansMedium,
-        )
-        Icon(
-            Icons.Default.KeyboardArrowRight,
-            tint = AlgoKitTheme.colors.textMain,
-            contentDescription = stringResource(R.string.next)
-        )
+        SettingsItem(
+            R.drawable.ic_code,
+            stringResource(R.string.developer_settings)
+        ) {
+            navController.navigate(AlgoKitScreens.DEVELOPER_SETTINGS_SCREEN.name)
+        }
     }
 }
 
@@ -152,7 +127,7 @@ fun SettingsWebviewItem(icon: Int, title: String, url: String) {
             style = AlgoKitTheme.typography.body.regular.sansMedium,
         )
         Icon(
-            Icons.Default.KeyboardArrowRight,
+            Icons.AutoMirrored.Filled.KeyboardArrowRight,
             tint = AlgoKitTheme.colors.textMain,
             contentDescription = stringResource(R.string.next)
         )
