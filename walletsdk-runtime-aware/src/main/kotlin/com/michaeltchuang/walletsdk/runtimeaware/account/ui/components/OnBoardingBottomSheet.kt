@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.AccountRecov
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.AlgoKitWebViewPlatformScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountNameScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.CreateAccountTypeScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.DeveloperSettingsScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.HdWalletSelectionScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.InitialRegisterIntroScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.QRCodeScannerScreen
@@ -64,7 +66,8 @@ enum class AlgoKitScreens() {
     THEME_SCREEN,
     TRANSACTION_SIGNATURE_SCREEN,
     TRANSACTION_SUCCESS_SCREEN,
-    WEBVIEW_PLATFORM_SCREEN
+    WEBVIEW_PLATFORM_SCREEN,
+    DEVELOPER_SETTINGS_SCREEN
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -119,7 +122,11 @@ fun OnBoardingBottomSheetNavHost(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxHeight(.9f)
+        modifier = Modifier.fillMaxHeight(.9f), snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+            )
+        }
     ) { padding ->
         Box(
             modifier = Modifier
@@ -201,6 +208,13 @@ fun OnBoardingBottomSheetNavHost(
                 }
                 composable(route = AlgoKitScreens.THEME_SCREEN.name) {
                     ThemeScreen(navController)
+                }
+                composable(route = AlgoKitScreens.DEVELOPER_SETTINGS_SCREEN.name) {
+                    DeveloperSettingsScreen(navController) {
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(it)
+                        }
+                    }
                 }
             }
         }
