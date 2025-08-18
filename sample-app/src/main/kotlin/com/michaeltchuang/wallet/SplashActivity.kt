@@ -12,12 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.utils.getSavedThemePreferenceFlow
@@ -70,8 +68,8 @@ private fun SplashLoading() {
     ) {
         val composition by rememberLottieComposition(
             LottieCompositionSpec.RawRes(
-                R.raw.confetti_animation
-            )
+                R.raw.confetti_animation,
+            ),
         )
         LottieAnimation(
             composition = composition,
