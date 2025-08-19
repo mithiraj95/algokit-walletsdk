@@ -1,6 +1,7 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.local
 
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.core.AccountRegistrationType
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.HdWalletSummary
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
 
 
@@ -33,3 +34,14 @@ interface GetAccountRegistrationType {
     operator fun invoke(account: LocalAccount): AccountRegistrationType
 }
 
+fun interface GetHdWalletSummaries {
+    suspend operator fun invoke(): List<HdWalletSummary>?
+}
+
+fun interface GetMaxHdSeedId {
+    suspend operator fun invoke(): Int?
+}
+
+fun interface GetHdEntropy {
+    suspend operator fun invoke(seedId: Int): ByteArray?
+}

@@ -68,6 +68,14 @@ dependencies {
     // ---webview
     implementation(libs.compose.webview.multiplatform)
     implementation(libs.webview.multiplatform.mobile)
+
+    api(libs.algosdk)
+    implementation(libs.kotlin.stdlib.jdk8)
+    // toml files don't support aar files yet
+    implementation("net.java.dev.jna:jna:5.17.0@aar")
+    implementation(libs.xhdwalletapi)
+    implementation(libs.kotlin.bip39)
+    implementation(libs.koin.android)
 }
 
 room {

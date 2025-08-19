@@ -12,12 +12,12 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.di.viewModelModule
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.custom.AccountLite
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.local.LocalAccount
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.NameRegistrationUseCase
+import com.michaeltchuang.walletsdk.runtimeaware.algosdk.bip39.di.bip39Module
 import com.michaeltchuang.walletsdk.runtimeaware.deeplink.di.deepLinkModule
 import com.michaeltchuang.walletsdk.runtimeaware.encryption.di.encryptionModule
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.commonModule
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.delegateModule
 import com.michaeltchuang.walletsdk.runtimeaware.foundation.json.jsonModule
-import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.sdk.Bip39Wallet
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoKitBip39Sdk
 import com.michaeltchuang.walletsdk.runtimeenabled.runtime.domain.service.WalletSdkService
@@ -67,9 +67,9 @@ class RuntimeAwareSdk(private val context: Context) {
         GlobalContext.get().get<NameRegistrationUseCase>().deleteHdKeyAccount(address)
     }
 
-    suspend fun createBip39Wallet(): Bip39Wallet? {
+  /*  suspend fun createBip39Wallet(): Bip39Wallet? {
         return loadSdkIfNeeded(context)?.createBip39Wallet()
-    }
+    }*/
 
     suspend fun algoKitBit39Sdk(): AlgoKitBip39Sdk? {
         return loadSdkIfNeeded(context)?.algoKitBip39Sdk()
@@ -142,7 +142,8 @@ class RuntimeAwareSdk(private val context: Context) {
             delegateModule,
             jsonModule,
             deepLinkModule,
-            viewModelModule,
+            bip39Module,
+            viewModelModule
         )
     }
 }
