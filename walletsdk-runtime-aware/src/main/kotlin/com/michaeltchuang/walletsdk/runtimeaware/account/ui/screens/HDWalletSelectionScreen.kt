@@ -1,5 +1,6 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,10 +16,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +36,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.michaeltchuang.walletsdk.runtimeaware.R
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.HDWalletSelectionViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.button.AlgoKitSecondaryButton
@@ -43,44 +47,76 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HdWalletSelectionScreen(
-    viewModel: OnboardingAccountTypeViewModel = koinViewModel(),
+    viewModel: HDWalletSelectionViewModel = koinViewModel(),
     navController: NavController
 ) {
     val viewState by viewModel.state.collectAsStateWithLifecycle()
-    HdWalletSelectionScreenContent(viewState, navController)
+    LaunchedEffect(Unit) {
+        viewModel.viewEvent.collect {
+            when (it) {
+                is HDWalletSelectionViewModel.ViewEvent.AccountCreated -> {
+                    navController.currentBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("accountCreation", it.accountCreation)
+                    navController.navigate(AlgoKitScreens.CREATE_ACCOUNT_NAME.name)
+                    Log.d("CreateAccountTypeScreen", it.accountCreation.address)
+                }
 
+                is HDWalletSelectionViewModel.ViewEvent.Error -> {
+                    Log.d("CreateAccountTypeScreen", it.message)
+                }
+            }
+        }
+    }
+
+    HdWalletSelectionScreenContent(
+        viewState = viewState,
+        navController = navController,
+        createNewWalletClick = { viewModel.createHdKeyAccount() },
+        walletItemClick = {
+            viewModel.createNewHdAccount(
+                it.seedId,
+                it.maxAccountIndex
+            )
+        })
 }
 
 @Composable
 fun HdWalletSelectionScreenContent(
-    viewState: OnboardingAccountTypeViewModel.ViewState,
-    navController: NavController
+    viewState: HDWalletSelectionViewModel.ViewState,
+    navController: NavController,
+    createNewWalletClick: () -> Unit = {},
+    walletItemClick: (HDWalletSelectionViewModel.WalletItemPreview) -> Unit = {}
 ) {
     Box(
         modifier = Modifier
             .background(color = AlgoKitTheme.colors.background)
             .fillMaxWidth()
             .fillMaxHeight()
-
-
     ) {
-        AlgoKitTopBar(
-            onClick = { navController.popBackStack() }
-        )
 
         Column(
             modifier = Modifier
                 .fillMaxHeight(.9f)
-                .padding(top = 16.dp, start = 32.dp, end = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.Center
         ) {
+            AlgoKitTopBar(
+                onClick = { navController.popBackStack() }
+            )
             when (viewState) {
-                is OnboardingAccountTypeViewModel.ViewState.Idle -> {}
-                is OnboardingAccountTypeViewModel.ViewState.Loading -> {}
-                is OnboardingAccountTypeViewModel.ViewState.Content -> {
-                    ContentState(navController)
+                is HDWalletSelectionViewModel.ViewState.Content -> {
+                    ContentState(
+                        navController,
+                        viewState.walletItemPreviews,
+                        createNewWalletClick,
+                        walletItemClick
+                    )
                 }
+
+                is HDWalletSelectionViewModel.ViewState.Error -> {}
+                is HDWalletSelectionViewModel.ViewState.Idle -> {}
+                is HDWalletSelectionViewModel.ViewState.Loading -> {}
             }
         }
     }
@@ -88,12 +124,17 @@ fun HdWalletSelectionScreenContent(
 
 @Suppress("LongMethod")
 @Composable
-private fun ContentState(navController: NavController) {
+private fun ContentState(
+    navController: NavController,
+    walletItems: List<HDWalletSelectionViewModel.WalletItemPreview>,
+    createNewWalletClick: () -> Unit,
+    walletItemClick: (HDWalletSelectionViewModel.WalletItemPreview) -> Unit
+) {
     Box {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 56.dp),
+                .padding(top = 24.dp),
         ) {
 
             Text(
@@ -108,25 +149,25 @@ private fun ContentState(navController: NavController) {
                 modifier = Modifier.padding(top = 12.dp)
             )
             LazyColumn(modifier = Modifier.padding(top = 24.dp, bottom = 50.dp)) {
-                items(1) { walletItemPreview ->
+                items(walletItems) { walletItemPreview ->
                     with(walletItemPreview) {
                         WalletItem(
                             modifier = Modifier,
-                            walletName = "name",
-                            numberOfAccounts = "3",
-                            primaryValue = "primaryValue",
-                            secondaryValue = "secondaryValue",
+                            walletName = walletItemPreview.name,
+                            numberOfAccounts = walletItemPreview.numberOfAccounts,
                             icon = ImageVector.vectorResource(id = R.drawable.ic_wallet),
                             iconContentDescription = stringResource(
                                 id = R.string.create_a_new_algorand_account_with
                             ),
-                            onClick = { })
+                            onClick = { walletItemClick(walletItemPreview) })
                     }
                 }
             }
         }
         AlgoKitSecondaryButton(
-            onClick = {},
+            onClick = {
+                createNewWalletClick()
+            },
             text = stringResource(id = R.string.create_a_new_wallet),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -146,8 +187,6 @@ fun WalletItem(
     modifier: Modifier = Modifier,
     walletName: String,
     numberOfAccounts: String,
-    primaryValue: String,
-    secondaryValue: String,
     icon: ImageVector,
     iconContentDescription: String,
     onClick: () -> Unit
@@ -184,26 +223,13 @@ fun WalletItem(
                 text = numberOfAccounts
             )
         }
-        Column {
-            Text(
-                style = AlgoKitTheme.typography.body.regular.sansMedium,
-                color = AlgoKitTheme.colors.textMain,
-                text = primaryValue
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                style = AlgoKitTheme.typography.footnote.sans,
-                color = AlgoKitTheme.colors.textGray,
-                text = secondaryValue
-            )
-        }
     }
 }
 
 @PreviewLightDark
 @Composable
 fun HdWalletSelectionScreenContentPreview() {
-    val fakeViewState = OnboardingAccountTypeViewModel.ViewState.Content(hasAnySeed = true)
+    val fakeViewState = HDWalletSelectionViewModel.ViewState.Content()
     AlgoKitTheme {
         HdWalletSelectionScreenContent(
             viewState = fakeViewState,
