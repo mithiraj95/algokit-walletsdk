@@ -31,7 +31,7 @@ class CreateAccountNameViewModel(
 
     fun addNewAccount(accountCreation: AccountCreation, customName: String? = null) {
         val updatedAccountCreation = customName?.let {
-            accountCreation.copy(customName = it)
+            accountCreation.copy(customName = it,)
         } ?: accountCreation
         viewModelScope.launch {
             try {

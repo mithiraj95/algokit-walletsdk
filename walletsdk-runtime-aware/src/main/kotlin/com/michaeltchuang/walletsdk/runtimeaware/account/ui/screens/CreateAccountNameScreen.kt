@@ -130,7 +130,7 @@ fun ScreenContent(
             Text(
                 style = typography.title.regular.sansBold,
                 color = AlgoKitTheme.colors.textMain,
-                text = "Name your account",
+                text = stringResource(R.string.name_your_account),
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(12.dp))

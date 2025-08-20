@@ -13,15 +13,9 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -44,7 +38,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.deeplink.model.DeepLink
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.REPO_URL
 import com.michaeltchuang.walletsdk.runtimeaware.utils.getData
-import com.michaeltchuang.walletsdk.runtimeaware.utils.getSavedThemePreferenceFlow
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 enum class AlgoKitEvent {
@@ -79,18 +73,30 @@ fun OnBoardingBottomSheet(
     launchSettingsScreen: Boolean = false,
     onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
 ) {
+    val scope = rememberCoroutineScope()
     if (showSheet) {
+
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         ModalBottomSheet(
             onDismissRequest = {
-                onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
+                scope.launch {
+                    scope.async {
+                        sheetState.hide()
+                    }.await()
+                    onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
+                }
             }, sheetState = sheetState, dragHandle = null
         ) {
             OnBoardingBottomSheetNavHost(
                 startDestination = startDestination(
                     accounts, launchQRScanScreen, launchSettingsScreen
                 ), closeSheet = {
-                    onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
+                    scope.launch {
+                        scope.async {
+                            sheetState.hide()
+                        }.await()
+                        onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
+                    }
                 }) {
                 onAlgoKitEvent(AlgoKitEvent.ALGO25_ACCOUNT_CREATED)
             }
@@ -104,22 +110,9 @@ fun OnBoardingBottomSheetNavHost(
     closeSheet: () -> Unit,
     onFinish: () -> Unit,
 ) {
-    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val navController = rememberNavController()
-    var lastThemePrefKey by rememberSaveable { mutableStateOf<String?>(null) }
-    val themePrefFlow = remember { getSavedThemePreferenceFlow(context) }
-
-    LaunchedEffect(themePrefFlow) {
-        themePrefFlow.collect { pref ->
-            val currentKey = pref.name
-            if (lastThemePrefKey != null && lastThemePrefKey != currentKey) {
-                navController.popBackStack()
-            }
-            lastThemePrefKey = currentKey
-        }
-    }
 
     Scaffold(
         modifier = Modifier.fillMaxHeight(.9f), snackbarHost = {
@@ -164,11 +157,9 @@ fun OnBoardingBottomSheetNavHost(
                     }
                 }
                 composable(AlgoKitScreens.QR_CODE_SCANNER_SCREEN.name) {
-                    QRCodeScannerScreen(navController = navController) {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar(it)
-                        }
-                    }
+                    QRCodeScannerScreen(navController = navController, onQrScanned = {
+                        coroutineScope.launch { snackbarHostState.showSnackbar(it) }
+                    }, closeSheet = { closeSheet() })
                 }
                 composable(route = AlgoKitScreens.RECOVER_PHRASE_SCREEN.name + "/{mnemonic}") { it ->
                     it.arguments?.getString("mnemonic")?.let {

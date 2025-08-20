@@ -44,7 +44,6 @@ import com.michaeltchuang.wallet.ui.widgets.snackbar.SnackbarViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.model.custom.AccountLite
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitEvent
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingBottomSheet
-import com.michaeltchuang.walletsdk.runtimeaware.utils.getSavedThemePreferenceFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -61,35 +60,25 @@ fun AccountListScreen(
     val viewModel: AccountListViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val events = viewModel.viewEvent.collectAsStateWithLifecycle(initialValue = null)
-    var showSheet by remember { mutableStateOf(false) }
+    var showSheet by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     var showConfetti by remember { mutableStateOf(false) }
-    var qrScanClick by remember { mutableStateOf(false) }
-    var settingsClick by remember { mutableStateOf(false) }
+    var qrScanClick by rememberSaveable { mutableStateOf(false) }
+    var settingsClick by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
-
-    var lastThemePrefKey by rememberSaveable { mutableStateOf<String?>(null) }
-    val themePrefFlow = remember { getSavedThemePreferenceFlow(context) }
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(themePrefFlow) {
-        themePrefFlow.collect { pref ->
-            val currentKey = pref.name
-            if (lastThemePrefKey != null && lastThemePrefKey != currentKey) {
-                snackbarHostState.showSnackbar("Theme updated")
-            }
-            lastThemePrefKey = currentKey
-        }
-    }
 
     LaunchedEffect(Unit) {
         ACTIONS.qrClickEvent.collect {
             qrScanClick = it
+            settingsClick = false
             showSheet = it
         }
     }
     LaunchedEffect(Unit) {
         ACTIONS.settingsClickEvent.collect {
+            qrScanClick = false
             settingsClick = it
             showSheet = it
         }
@@ -283,7 +272,7 @@ private fun handleBottomSheetEvent(
 
         AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
         AlgoKitEvent.HD_ACCOUNT_CREATED,
-        -> {
+            -> {
             onAccountCreated()
         }
     }

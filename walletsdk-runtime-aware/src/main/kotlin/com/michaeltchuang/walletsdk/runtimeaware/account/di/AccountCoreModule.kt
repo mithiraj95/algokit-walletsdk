@@ -24,7 +24,7 @@ val accountCoreModule = module {
     single { DeleteAlgo25AccountUseCase(get(), get()) }
     single<DeleteAlgo25Account> { get<DeleteAlgo25AccountUseCase>() }
 
-    single { DeleteHdKeyAccountUseCase(get(), get()) }
+    single { DeleteHdKeyAccountUseCase(get(), get(),get()) }
 
     single { GetLocalAccountUseCase(get(), get(), get()) }
     single<GetLocalAccounts> { get<GetLocalAccountUseCase>() }

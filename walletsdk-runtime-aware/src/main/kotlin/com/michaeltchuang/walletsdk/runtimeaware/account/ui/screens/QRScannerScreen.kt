@@ -1,8 +1,11 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens
 
 import android.Manifest
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +21,7 @@ import com.google.accompanist.permissions.shouldShowRationale
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.PermissionRationaleDialog
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.QRScannerViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopBar
 import com.michaeltchuang.walletsdk.runtimeaware.utils.navigateWithArgument
 import org.koin.androidx.compose.koinViewModel
@@ -28,7 +32,8 @@ import qrscanner.QrScanner
 @Composable
 fun QRCodeScannerScreen(
     navController: NavController,
-    onQrScanned: (String) -> Unit
+    onQrScanned: (String) -> Unit,
+    closeSheet: () -> Unit
 ) {
     val viewModel: QRScannerViewModel = koinViewModel()
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
@@ -79,13 +84,29 @@ fun QRCodeScannerScreen(
             cameraPermissionState.status.shouldShowRationale || !cameraPermissionState.status.isGranted -> {
                 PermissionRationaleDialog(
                     onRequestPermission = { cameraPermissionState.launchPermissionRequest() },
-                    onDismiss = { navController.popBackStack() }
+                    onDismiss = {
+                        if (navController.popBackStack().not()) {
+                            closeSheet()
+                        }
+                    }
                 )
             }
         }
-        AlgoKitTopBar(
-            modifier = Modifier.padding(horizontal = 24.dp),
-            onClick = { navController.popBackStack() }
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = AlgoKitTheme.colors.background),
+        ) {
+            AlgoKitTopBar(
+                title = "Scan QR Code",
+                modifier = Modifier.padding(start = 16.dp),
+                onClick = {
+                    if (navController.popBackStack().not()) {
+                        closeSheet()
+                    }
+                }
+            )
+        }
+
     }
 }
