@@ -28,6 +28,9 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.Add
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.AddHdKeyAccountUseCase
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.AddHdSeed
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.AddHdSeedUseCase
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.local.GetHdEntropy
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.local.GetHdWalletSummaries
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.local.GetMaxHdSeedId
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.local.GetSeedIdIfExistingEntropy
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.local.SaveAlgo25Account
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.local.SaveHdKeyAccount
@@ -64,7 +67,8 @@ val localAccountsModule = module {
         HdKeyAccountRepositoryImpl(get(), get(), get(), get(), get())
     }
 
-    factory { SaveHdKeyAccount(get<HdKeyAccountRepository>()::addAccount) }
+    single { SaveHdKeyAccount(get<HdKeyAccountRepository>()::addAccount) }
+    single { GetHdWalletSummaries(get<HdKeyAccountRepository>()::getHdWalletSummaries) }
 
     single<AddHdKeyAccount> { AddHdKeyAccountUseCase(get(), get()) }
 
@@ -75,6 +79,8 @@ val localAccountsModule = module {
     single<HdSeedRepository> { HdSeedRepositoryImpl(get(), get(), get(), get(), get()) }
     factory { GetSeedIdIfExistingEntropy(get<HdSeedRepository>()::getSeedIdIfExistingEntropy) }
     single<AddHdSeed> { AddHdSeedUseCase(get(), get(), get(), get()) }
+    single { GetMaxHdSeedId(get<HdSeedRepository>()::getMaxSeedId) }
+    single { GetHdEntropy(get<HdSeedRepository>()::getEntropy) }
 }
 
 

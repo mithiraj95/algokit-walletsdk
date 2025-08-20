@@ -18,7 +18,8 @@ internal val viewModelModule = module {
             get(),
             get(),
             get(),
-            get()
+            get(),
+            get(),
         )
     }
 
@@ -28,6 +29,7 @@ internal val viewModelModule = module {
             get(),
             get(),
             get(),
+            get()
         )
     }
 
@@ -37,6 +39,9 @@ internal val viewModelModule = module {
             get(),
             get(),
             get(),
+            get(),
+            get(),
+            get()
         )
     }
 

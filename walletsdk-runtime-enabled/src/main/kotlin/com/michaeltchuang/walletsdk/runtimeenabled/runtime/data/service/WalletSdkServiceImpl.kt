@@ -1,9 +1,6 @@
 package com.michaeltchuang.walletsdk.runtimeenabled.runtime.data.service
 
 import android.content.Context
-import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.di.bip39Module
-import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.sdk.AlgorandBip39WalletProvider
-import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.sdk.Bip39Wallet
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.di.algoSdkModule
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk.AlgoAccountSdkImpl
@@ -57,10 +54,6 @@ class WalletSdkServiceImpl(private val context: Context) : WalletSdkService {
             .toString()
     }
 
-    override suspend fun createBip39Wallet(): Bip39Wallet {
-        val bip39WalletProvider = AlgorandBip39WalletProvider()
-        return bip39WalletProvider.createBip39Wallet()
-    }
 
     override suspend fun algoKitBip39Sdk(): AlgoKitBip39Sdk {
         return AlgoKitBip39SdkImpl()
@@ -86,7 +79,7 @@ class WalletSdkServiceImpl(private val context: Context) : WalletSdkService {
 
     private fun getModules(): List<Module> {
         return listOf(
-            securityModule, algoSdkModule, bip39Module
+            securityModule, algoSdkModule
         )
     }
 
